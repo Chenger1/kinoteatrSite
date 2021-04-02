@@ -120,3 +120,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
+STATICFILES_DIRS = (
+    ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
+)
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(__file__).parent.parent.joinpath('media/')
