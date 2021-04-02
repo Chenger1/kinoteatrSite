@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Admin panel{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-light">
+                        <div class="card-header">
+                            <h3 class="card-title">Статистика по гендеру</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="pieChart"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-light">
+                        <div class="card-header">
+                            <h3 class="card-title">Сеансы</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="lineChart"
+                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--            Второй ряд. Second row-->
+            <div class="row">
+                <div class="col">
+                    <div class="card card-light">
+                        <div class="card-header">
+                            <h3 class="card-title">Статистика по жанрам</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="pieChart1"
+                                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Последние добавленные фильмы</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <ul class="products-list product-list-in-card pl-2 pr-2">
+                                <li class="item">
+                                    <div class="product-info">
+                                        <a href="javascript:void(0)" class="product-title">Терминатор
+                                            <span class="badge badge-warning float-right">Жанр</span></a>
+                                        <span class="product-description">
+                                        2д 3д
+                                            </span>
+                                    </div>
+                                </li>
+                                <!-- /.item -->
+
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer text-center">
+                            <a href="javascript:void(0)" class="uppercase">Посмотреть все фильмы</a>
+                        </div>
+                        <!-- /.card-footer -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-2">
+            <div class="row">
+                <div class="col">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>44</h3>
+
+                            <p>Зарегестрированных пользователей</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>53<sup style="font-size: 20px"></sup></h3>
+
+                            <p>Фильмов в прокате</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <p>Нагруженность сети</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/chart.js/Chart.min.js' %}"></script>
+
+<script>
+    $(function () {
+        var donutData = {
+            labels: [
+                'Man',
+                'Woman',
+            ],
+            datasets: [
+                {
+                    data: [32, 11,],
+                    backgroundColor: ['#00c0ef', '#f56954',],
+                }
+            ]
+        }
+
+        //-------------
+        //- PIE CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        var pieData = donutData;
+        var pieOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+        })
+
+    })
+</script>
+
+<script>
+    $(function () {
+        var donutData = {
+            labels: [
+                'Комедия',
+                'Ужасы',
+                'Триллер',
+                'Боевик'
+            ],
+            datasets: [
+                {
+                    data: [32, 11, 10, 42],
+                    backgroundColor: ['#00c0ef', '#f56954','#f39c12', '#3c8dbc'],
+                }
+            ]
+        }
+
+        //-------------
+        //- PIE CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart1').get(0).getContext('2d')
+        var pieData = donutData;
+        var pieOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+        })
+
+    })
+</script>
+
+
+<script>
+    var areaChartData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+            {
+                label: 'Digital Goods',
+                backgroundColor: 'rgba(60,141,188,0.9)',
+                borderColor: 'rgba(60,141,188,0.8)',
+                pointRadius: false,
+                pointColor: '#3b8bba',
+                pointStrokeColor: 'rgba(60,141,188,1)',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data: [28, 48, 40, 19, 86, 27, 90]
+            },
+        ]
+    }
+
+    var areaChartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: {
+            display: false
+        },
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display: false,
+                }
+            }],
+            yAxes: [{
+                gridLines: {
+                    display: false,
+                }
+            }]
+        }
+    }
+
+    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+    var lineChartOptions = $.extend(true, {}, areaChartOptions)
+    var lineChartData = $.extend(true, {}, areaChartData)
+    lineChartData.datasets[0].fill = false;
+    lineChartOptions.datasetFill = false
+
+    var lineChart = new Chart(lineChartCanvas, {
+        type: 'line',
+        data: lineChartData,
+        options: lineChartOptions
+    })
+</script>
+{% endblock %}
