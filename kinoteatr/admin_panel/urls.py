@@ -2,6 +2,7 @@ from django.urls import path
 
 from admin_panel.views import views
 from admin_panel.views import news_views
+from admin_panel.views import ad_views
 
 
 app_name = 'admin'
@@ -11,5 +12,8 @@ urlpatterns = [
 
 
     # NEWS
-    path('news/', news_views.ListNews.as_view(), name='list_views_admin'),
+    path('news/', news_views.ListNews.as_view(), name='list_news_admin'),
+
+    # ADS
+    path('advertisement/', ad_views.ListAds.as_view(), name='list_ads_admin'),
 ]
