@@ -1,6 +1,6 @@
 from django.db import models
 
-from cinema.models.movie_model import Movie
+from cinema.models.movie import Movie
 from cinema.models.page import News, Ad, AboutCinema, CafeBar, VipHall, Advertisement, ChildRoom
 from cinema.models.cinema import Cinema
 from cinema.models.banners import OnTopBanner, SliderBanner

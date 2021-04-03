@@ -1,4 +1,4 @@
-from cinema.models.movie_model import *
+from cinema.models.movie import *
 from cinema.models.gallery import *
 from cinema.models.seo import *
 from cinema.models.cinema import *
