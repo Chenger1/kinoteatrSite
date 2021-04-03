@@ -130,3 +130,4 @@ dmypy.json
 kinoteatr_env
 migrations
 /kinoteatr/static/admin/
+/kinoteatr/cinema/migrations/

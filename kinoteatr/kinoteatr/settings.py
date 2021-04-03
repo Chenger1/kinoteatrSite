@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'admin_panel',
+    'cinema',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,5 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(__file__).parent.parent.joinpath('media/')
+
+AUTH_USER_MODEL = 'cinema.User'
