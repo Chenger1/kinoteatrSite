@@ -1,4 +1,6 @@
 from django.urls import path
+from django.contrib.staticfiles.urls import static
+from django.conf import settings
 
 from admin_panel.views import views
 from admin_panel.views import news_views
@@ -20,4 +22,4 @@ urlpatterns = [
 
     # MOVIES
     path('movies/', movie_views.ListMovies.as_view(), name='list_movie_admin'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
