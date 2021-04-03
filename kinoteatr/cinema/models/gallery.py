@@ -2,7 +2,7 @@ from django.db import models
 
 from cinema.models.movie import Movie
 from cinema.models.page import News, Ad, AboutCinema, CafeBar, VipHall, Advertisement, ChildRoom
-from cinema.models.cinema import Cinema
+from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.banners import OnTopBanner, SliderBanner
 
 
@@ -12,6 +12,10 @@ def get_movie_gallery_image_path(instance, filename):
 
 def get_cinema_gallery_image_path(instance, filename):
     return f'cinema/{instance.cinema.name}/gallery/{filename}'
+
+
+def get_cinema_hall_gallery_image_path(instance, filename):
+    return f'cinema/{instance.cinema.number}/gallery/{filename}'
 
 
 class MovieGallery(models.Model):
@@ -57,6 +61,11 @@ class ChildRoomGallery(models.Model):
 class CinemaGallery(models.Model):
     entity = models.ForeignKey(Cinema, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=get_cinema_gallery_image_path)
+
+
+class CinemaHallGallery(models.Model):
+    entity = models.ForeignKey(CinemaHall, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=get_cinema_hall_gallery_image_path)
 
 
 class SliderBannerGallery(models.Model):
