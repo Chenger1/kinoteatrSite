@@ -37,7 +37,7 @@ class TestMovie(TestCase):
         self.assertEqual(image1.entity, ad)
 
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
-    def test_create_news(self):
+    def test_create_cafebar(self):
         cafebar = CafeBar.objects.create(title='Cage', description='Bar', main_image=self.test_image1.name,
                                          url=self.url, status=True, seo=self.seo)
         image1 = CafeBarGallery.objects.create(entity=cafebar, image=self.test_image2.name)
@@ -46,7 +46,7 @@ class TestMovie(TestCase):
         self.assertEqual(cafebar.title, cafebar.load().title)
 
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
-    def test_create_news(self):
+    def test_create_viphall(self):
         vip = VipHall.objects.create(title='Vip', description='Hall', main_image=self.test_image1.name,
                                   url=self.url, status=True, seo=self.seo)
         image1 = VipHallGallery.objects.create(entity=vip, image=self.test_image2.name)
@@ -55,7 +55,7 @@ class TestMovie(TestCase):
         self.assertEqual(vip.title, vip.load().title)
 
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
-    def test_create_news(self):
+    def test_create_ads(self):
         ads = Advertisement.objects.create(title='Ads', description='Page', main_image=self.test_image1.name,
                                            url=self.url, status=True, seo=self.seo)
         image1 = AdvertisementGallery.objects.create(entity=ads, image=self.test_image2.name)
@@ -64,7 +64,7 @@ class TestMovie(TestCase):
         self.assertEqual(ads.title, ads.load().title)
 
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
-    def test_create_news(self):
+    def test_create_child_room(self):
         child_room = ChildRoom.objects.create(title='Child', description='Room', main_image=self.test_image1.name,
                                               url=self.url, status=True, seo=self.seo)
         image1 = ChildRoomGallery.objects.create(entity=child_room, image=self.test_image2.name)
@@ -73,13 +73,21 @@ class TestMovie(TestCase):
         self.assertEqual(child_room.title, child_room.load().title)
 
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
-    def test_create_news(self):
+    def test_create_about_cinema(self):
         about_cinema = AboutCinema.objects.create(title='About', description='Cinema', main_image=self.test_image1.name,
                                                   url=self.url, status=True, seo=self.seo)
         image1 = AboutCinemaGallery.objects.create(entity=about_cinema, image=self.test_image2.name)
         self.assertIsNotNone(about_cinema)
         self.assertEqual(image1.entity, about_cinema)
         self.assertEqual(about_cinema.title, about_cinema.load().title)
+
+    @override_settings(MEDIA_ROOT=tempfile.gettempdir())
+    def test_create_news(self):
+        news = News.objects.create(title='News', description='news', main_image=self.test_image1.name,
+                                   url=self.url, publication_date='2020-03-19', status=True, seo=self.seo)
+        image1 = NewsGallery.objects.create(entity=news, image=self.test_image2.name)
+        self.assertIsNotNone(news)
+        self.assertEqual(image1.entity, news)
 
     def test_create_main_page(self):
         main_page = MainPage.objects.create(phone_number1='212131', phone_number2='121323',
