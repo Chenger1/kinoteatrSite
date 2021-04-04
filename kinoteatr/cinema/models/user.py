@@ -25,7 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=150, blank=True)
     card_number = models.CharField(max_length=50, blank=True)
     language = models.IntegerField(choices=language_choices, default=0)
-    gender = models.IntegerField(choices=gender_choices)
+    gender = models.IntegerField(choices=gender_choices, blank=True, null=True)
     birthday_date = models.DateTimeField(blank=True, null=True)
     city = models.CharField(max_length=100, blank=True)
 
