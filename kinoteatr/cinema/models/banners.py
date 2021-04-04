@@ -1,9 +1,10 @@
 from django.db import models
 from cinema.models.mixin import SingletonModel
+from django_resized import ResizedImageField
 
 
 class BackgroundImage(SingletonModel):
-    image = models.ImageField(upload_to='background_image/')
+    image = ResizedImageField(size=[2000, 3000], quality=100, upload_to='background_image/')
 
 
 class OnTopBanner(models.Model):

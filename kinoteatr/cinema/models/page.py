@@ -1,4 +1,5 @@
 from django.db import models
+from django_resized import ResizedImageField
 
 from cinema.models.seo import Seo
 from cinema.models.mixin import SingletonModel
@@ -8,7 +9,7 @@ from cinema.models.cinema import Cinema
 class News(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
-    main_image = models.ImageField(upload_to='news/main_images/')
+    main_image = ResizedImageField(size=[1020, 680], quality=100, upload_to='news/main_images/')
     url = models.URLField()
     publication_date = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField()
@@ -19,7 +20,7 @@ class News(models.Model):
 class Ad(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
-    main_image = models.ImageField(upload_to='ad/main_images/')
+    main_image = ResizedImageField(size=[1020, 680], quality=100, upload_to='ad/main_images/')
     url = models.URLField()
     publication_date = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField()
@@ -45,7 +46,7 @@ class Contact(SingletonModel):
 class AboutCinema(SingletonModel):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
-    main_image = models.ImageField(upload_to='about_cinema/main_images/')
+    main_image = ResizedImageField(size=[1020, 680], quality=100, upload_to='about_cinema/main_images/')
     url = models.URLField()
     status = models.BooleanField()
 
@@ -55,7 +56,7 @@ class AboutCinema(SingletonModel):
 class CafeBar(SingletonModel):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
-    main_image = models.ImageField(upload_to='cafebar/main_images/')
+    main_image = ResizedImageField(size=[1020, 680], quality=100, upload_to='cafebar/main_images/')
     url = models.URLField()
     status = models.BooleanField()
 
@@ -65,7 +66,7 @@ class CafeBar(SingletonModel):
 class VipHall(SingletonModel):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
-    main_image = models.ImageField(upload_to='vip_hall/main_images/')
+    main_image = ResizedImageField(size=[1020, 680], quality=100, upload_to='vip_hall/main_images/')
     url = models.URLField()
     status = models.BooleanField()
 
@@ -75,7 +76,7 @@ class VipHall(SingletonModel):
 class Advertisement(SingletonModel):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
-    main_image = models.ImageField(upload_to='Advertisement/main_images/')
+    main_image = ResizedImageField(size=[1020, 680], quality=100, upload_to='Advertisement/main_images/')
     url = models.URLField()
     status = models.BooleanField()
 
@@ -85,7 +86,7 @@ class Advertisement(SingletonModel):
 class ChildRoom(SingletonModel):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
-    main_image = models.ImageField(upload_to='child_room/main_images/')
+    main_image = ResizedImageField(size=[1020, 680], quality=100, upload_to='child_room/main_images/')
     url = models.URLField()
     status = models.BooleanField()
 

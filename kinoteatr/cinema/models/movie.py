@@ -1,4 +1,5 @@
 from django.db import models
+from django_resized import ResizedImageField
 
 from cinema.models.seo import Seo
 
@@ -15,7 +16,7 @@ class Movie(models.Model):
 
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
-    main_image = models.ImageField(upload_to=get_main_image_path)
+    main_image = ResizedImageField(size=[218, 320], quality=100,  crop=['middle', 'center'], upload_to=get_main_image_path)
     url = models.URLField()
     is_2d = models.BooleanField(default=False)
     is_3d = models.BooleanField(default=False)
