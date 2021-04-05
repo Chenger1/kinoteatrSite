@@ -87,7 +87,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="{% url 'admin_panel:admin_panel' %}" class="nav-link">Статистика</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Баннеры/Слайдеры</a>
+            <a href="{% url 'admin_panel:banners_admin' %}" class="nav-link">Баннеры/Слайдеры</a>
           </li>
           <li class="nav-item">
             <a href="{% url 'admin_panel:list_movie_admin' %}" class="nav-link">Фильмы</a>
@@ -135,24 +135,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid">
-        <div class="row">
           {% block content %}
             <img src="{% static 'images/logo.png' %}" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
           {% endblock %}
-        </div>
         <!-- /.row -->
-      </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2021 <a href="https://adminlte.io">Мир кино</a>.</strong> All rights reserved.
-  </footer>
 </div>
 <!-- ./wrapper -->
 

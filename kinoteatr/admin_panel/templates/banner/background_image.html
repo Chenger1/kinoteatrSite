@@ -1,0 +1,54 @@
+{% load static %}
+
+<div class="row">
+    <div class="col" style="text-align: center;">
+        <h3>Сквозной баннер на заднем фоне</h3>
+    </div>
+</div>
+<div class="card card-default">
+    <div class="card-body">
+        <form enctype="multipart/form-data" action="{% url 'admin_panel:save_background_image' %}" method="post"
+        id="background_image_form">
+            {% csrf_token %}
+            <div class="row" style="align-items: center;">
+                <div class="col-2">
+                    <small>Размер 2000х3000</small>
+                    <div class="form-check" style="margin-top: 50px;">
+                        <input type="radio" class="form-check-input" id="radio1"
+                               {% if background_image.status and background_image.image %} checked {% endif %} name="status" value="1"
+                        {% if not background_image.image %} disabled {% endif %}>
+                        <label class="form-check-label" for="radio2">Фото на фоне</label>
+                    </div>
+                    <div class="form-check" style="margin-top: 20px;">
+                        <input type="radio" class="form-check-input" id="radio2"
+                               {% if not background_image.status or not background_image.image %} checked {% endif %} name="status" value="0">
+                        <label class="form-check-label" for="radio2">Просто фон</label>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    {% if background_image.image %}
+                        <img src="{{ background_image.image.url }}" alt="" width="200" height="100">
+                    {% else %}
+                        <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100">
+                    {% endif %}
+                </div>
+
+                <div class="col-7">
+                    <div class="row" style="align-items: center;">
+                        <div class="col">
+                            <input type="file" class="form-control-file btn btn-light" id="BackgroundImage"
+                            name="image">
+                        </div>
+                        <div class="col">
+                            <a href="{% url 'admin_panel:delete_background_image' %}" class="btn btn-light">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'admin_panel/js/checkbox_handling.js' %}"></script>
+<script src="{% static 'admin_panel/js/banners/submit_form_after_file_upload.js' %}"></script>

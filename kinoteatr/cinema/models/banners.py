@@ -5,7 +5,8 @@ from cinema.models.receiver import *
 
 
 class BackgroundImage(SingletonModel):
-    image = ResizedImageField(size=[2000, 3000], quality=100, upload_to='background_image/')
+    image = ResizedImageField(size=[2000, 3000], quality=100, upload_to='background_image/', null=True)
+    status = models.BooleanField(default=False)
 
 
 class OnTopBanner(SingletonModel):

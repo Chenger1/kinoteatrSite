@@ -6,6 +6,7 @@ from admin_panel.views import views
 from admin_panel.views import news_views
 from admin_panel.views import ad_views
 from admin_panel.views import movie_views
+from admin_panel.views import banner_views
 
 
 app_name = 'admin'
@@ -13,6 +14,12 @@ app_name = 'admin'
 urlpatterns = [
     path('index/', views.IndexAdmin.as_view(), name='admin_panel'),
 
+    # Banners
+    path('banners/', banner_views.DisplayBanner.as_view(), name='banners_admin'),
+    path('banners/save_background_image/', banner_views.SaveBackgroundImage.as_view(),
+         name='save_background_image'),
+    path('banners/delete_background_image/', banner_views.DeleteBackgroundImage.as_view(),
+         name='delete_background_image'),
 
     # NEWS
     path('news/', news_views.ListNews.as_view(), name='list_news_admin'),
