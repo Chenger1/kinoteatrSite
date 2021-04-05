@@ -14,7 +14,8 @@ def delete_old_image_after_model_update(sender, instance, **kwargs):
     except models.ObjectDoesNotExist:
         return False
 
-    new_image = instance.image
-    if not old_image == new_image:
-        if os.path.isfile(old_image.path):
-            os.remove(old_image.path)
+    if old_image:
+        new_image = instance.image
+        if not old_image == new_image:
+            if os.path.isfile(old_image.path):
+                os.remove(old_image.path)
