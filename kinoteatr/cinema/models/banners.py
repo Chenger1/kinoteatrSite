@@ -1,6 +1,7 @@
-from django.db import models
 from cinema.models.mixin import SingletonModel
 from django_resized import ResizedImageField
+
+from cinema.models.receiver import *
 
 
 class BackgroundImage(SingletonModel):
