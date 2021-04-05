@@ -7,21 +7,21 @@ class BackgroundImage(SingletonModel):
     image = ResizedImageField(size=[2000, 3000], quality=100, upload_to='background_image/')
 
 
-class OnTopBanner(models.Model):
+class OnTopBanner(SingletonModel):
     speed_choices = [
         (1, '5s'),
         (2, '10s')
     ]
 
-    speed = models.IntegerField(choices=speed_choices)
-    status = models.BooleanField()
+    speed = models.IntegerField(choices=speed_choices, default=1)
+    status = models.BooleanField(default=True)
 
 
-class SliderBanner(models.Model):
+class SliderBanner(SingletonModel):
     speed_choices = [
         (1, '5s'),
         (2, '10s')
     ]
 
-    speed = models.IntegerField(choices=speed_choices)
-    status = models.BooleanField()
+    speed = models.IntegerField(choices=speed_choices, default=1)
+    status = models.BooleanField(default=True)
