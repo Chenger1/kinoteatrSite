@@ -35,7 +35,7 @@ class SliderBannerForm(forms.ModelForm):
 class SliderBannerGalleryInlineForm(forms.ModelForm):
     class Meta:
         model = SliderBannerGallery
-        fields = ('image', 'url', 'text')
+        fields = ('image', 'url')
 
 
 SliderBannerGalleryFormSet = forms.inlineformset_factory(SliderBanner, SliderBannerGallery,
