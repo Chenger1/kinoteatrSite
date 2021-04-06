@@ -6,7 +6,7 @@ from cinema.models.seo import Seo
 from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.gallery import CinemaGallery, CinemaHallGallery
 
-from cinema.tests.utils import get_temporary_image
+from test_utils.temporary_image import get_temporary_image
 
 
 class TestCinema(TestCase):

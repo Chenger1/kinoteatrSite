@@ -6,7 +6,7 @@ from cinema.models.movie import Movie, ExtendedInfo
 from cinema.models.seo import Seo
 from cinema.models.gallery import MovieGallery
 
-from cinema.tests.utils import get_temporary_image
+from test_utils.temporary_image import get_temporary_image
 
 
 class TestMovie(TestCase):

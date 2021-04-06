@@ -8,7 +8,7 @@ from cinema.models.cinema import Cinema
 from cinema.models.gallery import NewsGallery, AdsGallery, AboutCinemaGallery, CafeBarGallery, ChildRoomGallery, \
                                   VipHallGallery, AdvertisementGallery
 
-from cinema.tests.utils import get_temporary_image
+from test_utils.temporary_image import get_temporary_image
 
 
 class TestMovie(TestCase):

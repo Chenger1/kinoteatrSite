@@ -6,7 +6,7 @@ import tempfile
 from cinema.models.banners import BackgroundImage, OnTopBanner, SliderBanner
 from cinema.models.gallery import OnTopBannerGallery, SliderBannerGallery
 
-from cinema.tests.utils import get_temporary_image
+from test_utils.temporary_image import get_temporary_image
 
 
 class TestBanners(TestCase):

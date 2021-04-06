@@ -8,7 +8,7 @@ from cinema.models.movie import Movie
 from cinema.models.user import User
 from cinema.models.seo import Seo
 
-from cinema.tests.utils import get_temporary_image
+from test_utils.temporary_image import get_temporary_image
 
 
 class TestMovie(TestCase):
