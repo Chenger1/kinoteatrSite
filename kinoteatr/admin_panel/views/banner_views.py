@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 
 from cinema.models.banners import BackgroundImage, OnTopBanner, SliderBanner
+from cinema.models.gallery import OnTopBannerGallery
 
-from admin_panel.forms.banner_form import BackgroundImageForm
+from admin_panel.forms.banner_form import BackgroundImageForm, OnTopBannerForm, OnTopBannerGalleryFormSet
+
+from admin_panel.utils.messages import beautify_error_messages
 
 
 class DisplayBanner(View):
@@ -14,8 +17,13 @@ class DisplayBanner(View):
         on_top_banner = OnTopBanner.load()
         slider_banner = SliderBanner.load()
 
+        on_top_banner_form = OnTopBannerForm()
+        on_top_banner_gallery_form_set = OnTopBannerGalleryFormSet(instance=on_top_banner, prefix='on_top')
+
         return render(request, self.template_name, {'background_image': background_image,
                                                     'on_top_banner': on_top_banner,
+                                                    'on_top_banner_form': on_top_banner_form,
+                                                    'on_top_banner_form_set': on_top_banner_gallery_form_set,
                                                     'slider_banner': slider_banner})
 
 
@@ -30,6 +38,8 @@ class SaveBackgroundImage(View):
             status = bool(int(request.POST.get('status')))
             instance.status = status
             instance.save()
+        else:
+            beautify_error_messages(background_image_form.errors, request)
 
         return redirect('admin_panel:banners_admin')
 
@@ -40,5 +50,39 @@ class DeleteBackgroundImage(View):
     def get(self, request):
         background_image = self.model.load()
         background_image.image.delete(save=True)
+
+        return redirect('admin_panel:banners_admin')
+
+
+class SaveOnTopBanner(View):
+    model = OnTopBanner
+    inline_model = OnTopBannerGallery
+    form = OnTopBannerForm
+    inline_form = OnTopBannerGalleryFormSet
+
+    def post(self, request):
+        on_top_banner = OnTopBanner.load()
+        form = OnTopBannerForm(request.POST, instance=on_top_banner)
+        inline_form = OnTopBannerGalleryFormSet(request.POST, request.FILES, prefix='on_top', instance=on_top_banner)
+
+        if form.is_valid():
+            form.save()
+            if inline_form.is_valid():
+                inline_form.save()
+            else:
+                beautify_error_messages(inline_form.errors, request)
+        else:
+            beautify_error_messages(form.errors, request)
+
+        return redirect('admin_panel:banners_admin')
+
+
+class DeleteOnTopBannerGalleryImage(View):
+    model = OnTopBannerGallery
+
+    def get(self, request, pk):
+        inst = get_object_or_404(self.model, pk=pk)
+        inst.image.delete()
+        inst.delete()
 
         return redirect('admin_panel:banners_admin')
