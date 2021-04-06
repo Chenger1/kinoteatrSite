@@ -7,142 +7,148 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="{% static 'admin_panel/plugins/fontawesome-free/css/all.min.css'%}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'admin_panel/dist/css/adminlte.min.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'admin_panel/plugins/fontawesome-free/css/all.min.css'%}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'admin_panel/dist/css/adminlte.min.css' %}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <a class="nav-link" href="#" role="button">{{ request.user }}</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" role="button">Выйти</a>
-      </li>
-
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="" class="brand-link">
-      <img src="{% static 'images/logo.png' %}" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Мир кино</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="info">
-          <a href="#" class="d-block">{{ request.user }}</a>
-        </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="{% url 'admin_panel:admin_panel' %}" class="nav-link">Статистика</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'admin_panel:banners_admin' %}" class="nav-link">Баннеры/Слайдеры</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'admin_panel:list_movie_admin' %}" class="nav-link">Фильмы</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Кинотеатры</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'admin_panel:list_news_admin' %}" class="nav-link">Новости</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'admin_panel:list_ads_admin' %}" class="nav-link">Акции</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Страницы</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Пользователи</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Рассылка</a>
-          </li>
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">Home</a>
+            </li>
         </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        {% block header %}
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0">Starter Page</h1>
-              </div><!-- /.col -->
-            </div><!-- /.row -->
-        {% endblock %}
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Navbar Search -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" role="button">{{ request.user }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" role="button">Выйти</a>
+            </li>
 
-    <!-- Main content -->
-    <div class="content">
-          {% block content %}
-            <img src="{% static 'images/logo.png' %}" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
-          {% endblock %}
-        <!-- /.row -->
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="" class="brand-link">
+            <img src="{% static 'images/logo.png' %}" alt="AdminLTE Logo" class="brand-image elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">Мир кино</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info">
+                    <a href="#" class="d-block">{{ request.user }}</a>
+                </div>
+            </div>
+
+            <!-- SidebarSearch Form -->
+            <div class="form-inline">
+                <div class="input-group" data-widget="sidebar-search">
+                    <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                           aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-sidebar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <li class="nav-item">
+                        <a href="{% url 'admin_panel:admin_panel' %}" class="nav-link">Статистика</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'admin_panel:banners_admin' %}" class="nav-link">Баннеры/Слайдеры</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'admin_panel:list_movie_admin' %}" class="nav-link">Фильмы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Кинотеатры</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'admin_panel:list_news_admin' %}" class="nav-link">Новости</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'admin_panel:list_ads_admin' %}" class="nav-link">Акции</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Страницы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Пользователи</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Рассылка</a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                {% block header %}
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Starter Page</h1>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+                {% endblock %}
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            {% block content %}
+            <img src="{% static 'images/logo.png' %}" alt="AdminLTE Logo" class="brand-image elevation-3"
+                 style="opacity: .8">
+            {% endblock %}
+            <!-- /.row -->
+        </div>
+        <!-- /.content -->
     </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+    <!-- /.content-wrapper -->
 </div>
 <!-- ./wrapper -->
 
@@ -152,8 +158,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <!-- Bootstrap 4 -->
 <script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"-->
+<!--        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"-->
+<!--        crossorigin="anonymous"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
 </body>
