@@ -38,5 +38,5 @@ class SliderBannerGalleryInlineForm(forms.ModelForm):
         fields = ('image', 'url', 'text')
 
 
-SliderBannerGalleryInlineForm = forms.inlineformset_factory(SliderBanner, SliderBannerGallery,
-                                                            form=SliderBannerGalleryInlineForm, extra=4, max_num=8)
+SliderBannerGalleryFormSet = forms.inlineformset_factory(SliderBanner, SliderBannerGallery,
+                                                         form=SliderBannerGalleryInlineForm, extra=4, max_num=8)
