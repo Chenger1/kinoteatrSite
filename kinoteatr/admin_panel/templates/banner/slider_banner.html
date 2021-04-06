@@ -1,0 +1,102 @@
+{% load static %}
+
+<div class="row">
+    <div class="col" style="text-align: center;">
+        <h3>Новости/Акции на главной странице</h3>
+    </div>
+</div>
+<form enctype="multipart/form-data" action="{% url 'admin_panel:save_slider_banner' %}" method="post">
+    {% csrf_token %}
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-2 offset-10">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch2" name="status"
+                               {% if slider_banner.status %} checked {% endif %}>
+                        <label class="custom-control-label" for="customSwitch2">Выкл/Вкл</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {{ slider_banner_form_set.management_form }}
+                {% for form in slider_banner_form_set %}
+                <div class="col-3 forms" id="{{form.prefix}}-row">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <div class="card-tools">
+                                {% if form.instance.pk %}
+                                <a class="btn btn-tool" style="padding: 0;"
+                                   href="{% url 'admin_panel:delete_slider_banner' form.instance.pk %}">&#10006</a>
+                                {% else %}
+                                <a class="btn btn-tool delete-row" style="padding: 0;"
+                                   href="javascript:void(0)">&#10006</a>
+                                {% endif %}
+                            </div>
+                            {% if form.instance.image %}
+                            <img src="{{ form.instance.image.url }}" alt="" width="200" height="100">
+                            {% else %}
+                            <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100">
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            {{form.id}}
+                            <div class="form-group form-inline">
+                                <input type="file" class="form-control-file btn btn-light"
+                                       name="slider-{{forloop.counter0}}-image"
+                                onchange="readURL(this)">
+                            </div>
+                            <div class="form-group form-inline">
+                                <label for="urlId-{{ form.instance.pk }}">URL:</label>
+                                <input type="text" placeholder="URL" id="urlId-{{ form.instance.pk }}"
+                                       name="slider-{{forloop.counter0}}-url"
+                                       value="{{ form.instance.url }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                <div class="col-5">
+                    <div class="form-group form-inline">
+                        <label for="speedId" style="margin-right: 10px;">Скорость вращения: </label>
+                        <select name="speed" id="speedId" class="form-control">
+                            <option value="1" {% if slider_banner.speed == 1 %}selected{% endif %}>5s</option>
+                            <option value="2" {% if slider_banner.speed == 2 %}selected{% endif %}>10s</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/jquery.formset.js' %}"></script>
+<script src="{% static 'admin_panel/js/checkbox_handling.js' %}"></script>
+<script src="{% static 'admin_panel/js/banners/update_img_after_upload.js' %}"></script>
+
+<script>
+        $('.card-body .row .forms').formset({
+        addText: 'Add new subtask',
+        deleteText: '',
+        addCssClass: 'btn btn-outline-secondary',
+        prefix: '{{slider_banner_form_set.prefix}}'
+    });
+</script>
+<script>
+    // {% for form in on_top_banner_form_set %}
+    //     $("#image_upload-{{form.prefix}}").change(function() {
+    //         readURL(this, '{{form.prefix}}');
+    //     });
+    // {% endfor %}
+</script>
+
