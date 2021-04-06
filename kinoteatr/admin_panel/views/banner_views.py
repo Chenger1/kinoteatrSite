@@ -67,9 +67,9 @@ class SaveOnTopBanner(View):
     inline_form = OnTopBannerGalleryFormSet
 
     def post(self, request):
-        on_top_banner = OnTopBanner.load()
-        form = OnTopBannerForm(request.POST, instance=on_top_banner)
-        inline_form = OnTopBannerGalleryFormSet(request.POST, request.FILES, prefix='on_top', instance=on_top_banner)
+        on_top_banner = self.model.load()
+        form = self.form(request.POST, instance=on_top_banner)
+        inline_form = self.inline_form(request.POST, request.FILES, prefix='on_top', instance=on_top_banner)
 
         if form.is_valid():
             form.save()
