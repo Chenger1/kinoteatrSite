@@ -23,4 +23,4 @@ class OnTopBannerGalleryInlineForm(forms.ModelForm):
 
 
 OnTopBannerGalleryFormSet = forms.inlineformset_factory(OnTopBanner, OnTopBannerGallery,
-                                                        form=OnTopBannerGalleryInlineForm, extra=4)
+                                                        form=OnTopBannerGalleryInlineForm, extra=4, max_num=8)
