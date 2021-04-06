@@ -12,29 +12,39 @@ from test_utils.temporary_image import get_temporary_image, get_temporary_bytes_
 
 
 class TestMovie(TestCase):
+    data = {
+        'name': 'Movie',
+        'description': 'Movie desc',
+        'url': 'https://google.com',
+        'is_2d': True,
+        'is_3d': False,
+        'is_imax': False,
+        'status': 1,
+        'release': '2020-02-02',
+    }
+    extended_info = {
+        'language': 1,
+        'director': 'Snider',
+        'running_time': '12:10:03',
+        'country': 'Ukraine',
+        'genre': 1,
+        'age_limit': 1
+    }
+
     @classmethod
     def setUpTestData(cls):
         cls.temp_file = tempfile.NamedTemporaryFile()
         cls.test_image1 = get_temporary_bytes_io_image()
         cls.test_image2 = get_temporary_bytes_io_image()
+        cls.test_image3 = get_temporary_bytes_io_image()
 
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
     def test_movie_form(self):
-        data = {
-            'name': 'Movie',
-            'description': 'Movie desc',
-            'url': 'https://google.com',
-            'is_2d': True,
-            'is_3d': False,
-            'is_imax': False,
-            'status': 1,
-            'release': '2020-02-02',
-        }
         files = {
             'main_image': SimpleUploadedFile(name='main_image.png', content=self.test_image1.read(),
                                              content_type='image/png')
         }
-        form = MovieForm(data=data, files=files)
+        form = MovieForm(data=self.data, files=files)
         self.assertTrue(form.is_valid())
 
     def test_error_movie(self):
@@ -51,3 +61,19 @@ class TestMovie(TestCase):
         }
         form = MovieForm(data=data, files=files)
         self.assertFalse(form.is_valid())
+
+    def test_extended_info(self):
+        files = {
+            'main_image': SimpleUploadedFile(name='main_image.png', content=self.test_image3.read(),
+                                             content_type='image/png')
+        }
+        form = MovieForm(data=self.data, files=files)
+        if form.is_valid():
+            movie = form.save()
+            ext_form = ExtendedInfoForm(data=self.extended_info)
+            self.assertTrue(ext_form.is_valid())
+            info = ext_form.save(commit=False)
+            info.movie = movie
+            info.save()
+
+            self.assertEqual(info, movie.info)
