@@ -24,6 +24,10 @@ urlpatterns = [
          name='save_on_top_banner'),
     path('banners/delete_on_top_banner/<int:pk>/', banner_views.DeleteOnTopBannerGalleryImage.as_view(),
          name='delete_on_top_banner'),
+    path('banners/save_slider_banner/', banner_views.SaveSliderBanner.as_view(),
+         name='save_slider_banner'),
+    path('banners/delete_slider_banner_image/<int:pk>', banner_views.DeleteSliderBannerGalleryImage.as_view(),
+         name='delete_slider_banner'),
 
     # NEWS
     path('news/', news_views.ListNews.as_view(), name='list_news_admin'),
