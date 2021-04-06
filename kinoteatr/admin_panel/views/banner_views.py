@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 
 from cinema.models.banners import BackgroundImage, OnTopBanner, SliderBanner
-from cinema.models.gallery import OnTopBannerGallery
+from cinema.models.gallery import OnTopBannerGallery, SliderBannerGallery
 
-from admin_panel.forms.banner_form import BackgroundImageForm, OnTopBannerForm, OnTopBannerGalleryFormSet
+from admin_panel.forms.banner_form import BackgroundImageForm, OnTopBannerForm, OnTopBannerGalleryFormSet,\
+                                          SliderBannerGalleryFormSet, SliderBannerForm
 
 from admin_panel.utils.messages import beautify_error_messages
 
@@ -20,11 +21,16 @@ class DisplayBanner(View):
         on_top_banner_form = OnTopBannerForm()
         on_top_banner_gallery_form_set = OnTopBannerGalleryFormSet(instance=on_top_banner, prefix='on_top')
 
+        slider_banner_form = SliderBannerForm()
+        slider_banner_form_set = SliderBannerGalleryFormSet(instance=slider_banner, prefix='slider')
+
         return render(request, self.template_name, {'background_image': background_image,
                                                     'on_top_banner': on_top_banner,
                                                     'on_top_banner_form': on_top_banner_form,
                                                     'on_top_banner_form_set': on_top_banner_gallery_form_set,
-                                                    'slider_banner': slider_banner})
+                                                    'slider_banner': slider_banner,
+                                                    'slider_banner_form': slider_banner_form,
+                                                    'slider_banner_form_set': slider_banner_form_set})
 
 
 class SaveBackgroundImage(View):
@@ -79,6 +85,40 @@ class SaveOnTopBanner(View):
 
 class DeleteOnTopBannerGalleryImage(View):
     model = OnTopBannerGallery
+
+    def get(self, request, pk):
+        inst = get_object_or_404(self.model, pk=pk)
+        inst.image.delete()
+        inst.delete()
+
+        return redirect('admin_panel:banners_admin')
+
+
+class SaveSliderBanner(View):
+    model = SliderBanner
+    inline_model = SliderBannerGallery
+    form = SliderBannerForm
+    inline_form = SliderBannerGalleryFormSet
+
+    def post(self, request):
+        slider_banner = self.model.load()
+        form = self.form(request.POST, instance=slider_banner)
+        inline_form = self.inline_form(request.POST, request.FILES, prefix='slider', instance=slider_banner)
+
+        if form.is_valid():
+            form.save()
+            if inline_form.is_valid():
+                inline_form.save()
+            else:
+                beautify_error_messages(inline_form.errors, request)
+        else:
+            beautify_error_messages(form.errors, request)
+
+        return redirect('admin_panel:banners_admin')
+
+
+class DeleteSliderBannerGalleryImage(View):
+    model = SliderBannerGallery
 
     def get(self, request, pk):
         inst = get_object_or_404(self.model, pk=pk)
