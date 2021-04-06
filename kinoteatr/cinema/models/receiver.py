@@ -13,6 +13,8 @@ def delete_old_image_after_model_update(sender, instance, **kwargs):
         old_image = sender.objects.get(pk=instance.pk).image
     except models.ObjectDoesNotExist:
         return False
+    except AttributeError:
+        return False
 
     if old_image:
         new_image = instance.image
