@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Добавить фильм{% endblock %}
+
 {% block header %}
 <div style="text-align: center;">
     <h4>Добавить новый фильм</h4>
@@ -38,9 +40,10 @@
                             </div>
                             <div class="col-3">
                                 {% if background_image.image %}
-                                <img src="{{ movie.main_image.url }}" alt="" width="200" height="100">
+                                <img src="{{ movie.main_image.url }}" alt="" width="200" height="100" id="main_image">
                                 {% else %}
-                                <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100">
+                                <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100"
+                                id="main_image">
                                 {% endif %}
                             </div>
 
@@ -48,7 +51,7 @@
                                 <div class="row" style="align-items: center;">
                                     <div class="col">
                                         <input type="file" class="form-control-file btn btn-light" id="mainImageMovie"
-                                               name="main_image">
+                                               name="main_image" onchange="readURLSTATIC(this, this.name)">
                                     </div>
                                     <div class="col">
                                         <a href="#" class="btn btn-light">Удалить</a>
@@ -233,6 +236,7 @@
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="{% static 'admin_panel/js/banners/update_img_after_upload.js' %}"></script>
+<script src="{% static 'admin_panel/js/update_img_after_upload_static_form.js' %}"></script>
 <script>
     $(document).ready(function () {
         $('#summernote').summernote({
