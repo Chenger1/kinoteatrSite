@@ -1,26 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    Movie
+Movie
 {% endblock %}
 
 {% block header %}
-    <div class="row">
-        <div class="col-10" style="text-align: center;">
-            <h3>Список текущих фильмов</h3>
-        </div>
-        <div class="col-2">
-            <a href="{% url 'admin_panel:add_movie_admin' %}" class="btn btn-outline-primary">Добавить новый фильм</a>
-        </div>
+<div class="row">
+    <div class="col-2 offset-10">
+        <a href="{% url 'admin_panel:add_movie_admin' %}" class="btn btn-outline-primary">Добавить новый фильм</a>
     </div>
+</div>
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-2">
-            <img src="" alt="Movie">
-            <h5>Movie</h5>
+        <div class="col" style="text-align: center;">
+            <h3>Список текущих фильмов</h3>
+        </div>
+    </div>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-3 movie_card" id="{{form.prefix}}-row">
+            <div class="card card-light">
+                <div class="card-header">
+                    <img src="{{ movie.main_image.url }}" alt="" width="250" height="200">
+                </div>
+                <div class="card-body">
+                    <h4>{{movie.name}}</h4>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col" style="text-align: center;">
+            <h3>Список предстоящих премьер</h3>
         </div>
     </div>
 </div>
