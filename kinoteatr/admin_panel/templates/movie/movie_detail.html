@@ -78,8 +78,8 @@
                                             <a class="btn btn-tool" style="padding: 0;"
                                                href="#">&#10006</a>
                                             {% else %}
-                                            <a class="btn btn-tool delete-row" style="padding: 0;"
-                                               href="javascript:void(0)">&#10006</a>
+                                            <a class="btn btn-tool" style="padding: 0;"
+                                               href="">&#10006</a>
                                             {% endif %}
                                         </div>
                                         {% if form.instance.image %}
@@ -137,6 +137,15 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="">Дата выхода</label>
+                                    {{movie_form.release}}
+                                </div>
+                            </div>
+                        </div>
+
                         <hr>
 
                         <div class="row" style="text-align: center;">
@@ -148,7 +157,7 @@
                                 <div class="col">
                                     <label for="language">Язык</label>
                                     <select name="language" id="language" class="form-control">
-                                        {% for choice in extended_info_form.fields.language.choices %}
+                                        {% for choice in movie_form.fields.language.choices %}
                                         <option value="{{choice.0}}">{{choice.1}}</option>
                                         {% endfor %}
                                     </select>
@@ -156,7 +165,7 @@
                                 <div class="col">
                                     <label for="genre">Жанр</label>
                                     <select name="genre" id="genre" class="form-control">
-                                        {% for choice in extended_info_form.fields.genre.choices %}
+                                        {% for choice in movie_form.fields.genre.choices %}
                                         <option value="{{choice.0}}">{{choice.1}}</option>
                                         {% endfor %}
                                     </select>
@@ -165,7 +174,7 @@
                                 <div class="col">
                                     <label for="age_limit">Возрастной лимит</label>
                                     <select name="age_limit" id="age_limit" class="form-control">
-                                        {% for choice in extended_info_form.fields.age_limit.choices %}
+                                        {% for choice in movie_form.fields.age_limit.choices %}
                                         <option value="{{choice.0}}">{{choice.1}}</option>
                                         {% endfor %}
                                     </select>
@@ -187,7 +196,7 @@
                         <div class="row">
                             <div class="col">
                                 <label for="">Длительность фильма</label>
-                                {{extended_info_form.running_time}}
+                                {{movie_form.running_time}}
                             </div>
                         </div>
 
@@ -197,30 +206,7 @@
                                 <h5>SEO блок</h5>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="seo_url">URL</label>
-                                    <input type="url" id="seo_url" name="seo_url" placeholder="URL"
-                                    class="form-control" style="width: 50%;">
-                                </div>
-                                <div class="form-group">
-                                    <label for="seo_text">Title</label>
-                                    <input type="text" id="seo_text" name="seo_text" placeholder="Text"
-                                    class="form-control" style="width: 50%;">
-                                </div>
-                                <div class="form-group">
-                                    <label for="seo_keywords">Keywords</label>
-                                    <input type="text" id="seo_keywords" name="seo_keywords"
-                                    placeholder="seo_keywords" class="form-control" style="width: 50%;">
-                                </div>
-                                <label for="">Description</label>
-                                <div class="form-group">
-                                    <textarea name="seo_description" id="seo_description" cols="30" rows="10"
-                                    style="width: 50%; resize: none;" placeholder="Description"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                        {% include 'seo.html' %}
 
                         <div class="row">
                             <div class="col">
