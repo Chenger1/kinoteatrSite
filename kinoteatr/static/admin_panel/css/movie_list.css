@@ -1,0 +1,10 @@
+.movie_card{
+    text-align: center;
+    align-items: center;
+}
+.movie_card img{
+    width: 100%;
+}
+.movie_card .card-body{
+    background-color: #f8f9fa;
+}
