@@ -23,7 +23,7 @@ class OnTopBannerGalleryInlineForm(forms.ModelForm):
 
 
 OnTopBannerGalleryFormSet = forms.inlineformset_factory(OnTopBanner, OnTopBannerGallery,
-                                                        form=OnTopBannerGalleryInlineForm, extra=4, max_num=8)
+                                                        form=OnTopBannerGalleryInlineForm, extra=1)
 
 
 class SliderBannerForm(forms.ModelForm):
@@ -39,4 +39,4 @@ class SliderBannerGalleryInlineForm(forms.ModelForm):
 
 
 SliderBannerGalleryFormSet = forms.inlineformset_factory(SliderBanner, SliderBannerGallery,
-                                                         form=SliderBannerGalleryInlineForm, extra=4, max_num=8)
+                                                         form=SliderBannerGalleryInlineForm, extra=1)
