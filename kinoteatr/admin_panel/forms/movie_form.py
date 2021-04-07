@@ -16,6 +16,9 @@ class ExtendedInfoForm(forms.ModelForm):
         model = ExtendedInfo
         fields = ('language', 'director', 'running_time', 'country', 'genre', 'age_limit')
 
+    running_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M',
+                                                          attrs={'placeholder': '1:30'}))
+
 
 class MovieGalleryInlineForm(forms.ModelForm):
     class Meta:
@@ -24,4 +27,4 @@ class MovieGalleryInlineForm(forms.ModelForm):
 
 
 movie_gallery_form_set = forms.inlineformset_factory(Movie, MovieGallery,
-                                                     form=MovieGalleryInlineForm, max_num=5, extra=5)
+                                                     form=MovieGalleryInlineForm, max_num=4, extra=4)
