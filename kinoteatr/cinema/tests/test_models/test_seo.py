@@ -10,4 +10,4 @@ class TestSeo(TestCase):
         seo = Seo.objects.create(seo_url=self.url, seo_title='Title1', seo_keywords='Keywords1, keywords2',
                                  seo_description='Desc')
 
-        self.assertEqual(seo.title, 'Title1')
+        self.assertEqual(seo.seo_title, 'Title1')

@@ -3,12 +3,10 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 import tempfile
 
-from cinema.models.movie import Movie, ExtendedInfo
-from cinema.models.gallery import MovieGallery
 
-from admin_panel.forms.movie_form import MovieForm, ExtendedInfoForm, MovieGalleryInlineForm
+from admin_panel.forms.movie_form import MovieForm
 
-from test_utils.temporary_image import get_temporary_image, get_temporary_bytes_io_image
+from test_utils.temporary_image import get_temporary_bytes_io_image
 
 
 class TestMovie(TestCase):
@@ -61,19 +59,3 @@ class TestMovie(TestCase):
         }
         form = MovieForm(data=data, files=files)
         self.assertFalse(form.is_valid())
-
-    def test_extended_info(self):
-        files = {
-            'main_image': SimpleUploadedFile(name='main_image.png', content=self.test_image3.read(),
-                                             content_type='image/png')
-        }
-        form = MovieForm(data=self.data, files=files)
-        if form.is_valid():
-            movie = form.save()
-            ext_form = ExtendedInfoForm(data=self.extended_info)
-            self.assertTrue(ext_form.is_valid())
-            info = ext_form.save(commit=False)
-            info.movie = movie
-            info.save()
-
-            self.assertEqual(info, movie.info)

@@ -29,7 +29,9 @@ class TestMovie(TestCase):
                                             phone_number='123231321', gender=0)
         cls.movie = Movie.objects.create(name='Terminator', description='This is movie',
                                          main_image=cls.test_image1.name, url=cls.url,
-                                         is_2d=True, status=0, release='2021-03-14', seo_id=cls.seo)
+                                         is_2d=True, status=0, release='2021-03-14', seo_id=cls.seo,
+                                         language=1, director='Snyder', country='USA', genre=3, age_limit=2,
+                                         running_time='1:20')
 
         cls.cinema = Cinema.objects.create(name='Cinema', description='Cinema1', conditions='Best cinema',
                                            on_top_banner=cls.test_image1.name, logo=cls.test_image2.name, seo=cls.seo)
