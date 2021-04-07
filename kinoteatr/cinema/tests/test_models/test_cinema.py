@@ -21,7 +21,7 @@ class TestCinema(TestCase):
         cls.test_image2 = get_temporary_image(cls.temp_file2)
         cls.test_image3 = get_temporary_image(cls.temp_file3)
 
-        cls.seo = Seo.objects.create(url=cls.url, title='Cinema', description='Cinema1')
+        cls.seo = Seo.objects.create(seo_url=cls.url, seo_title='Cinema', seo_description='Cinema1')
 
     @override_settings(MEDIA_ROOT=tempfile.gettempdir())
     def test_create_cinema(self):

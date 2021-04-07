@@ -7,6 +7,7 @@ class TestSeo(TestCase):
     url = 'https://www.google.com/'
 
     def test_create_seo(self):
-        seo = Seo.objects.create(url=self.url, title='Title1', keywords='Keywords1, keywords2', description='Desc')
+        seo = Seo.objects.create(seo_url=self.url, seo_title='Title1', seo_keywords='Keywords1, keywords2',
+                                 seo_description='Desc')
 
         self.assertEqual(seo.title, 'Title1')

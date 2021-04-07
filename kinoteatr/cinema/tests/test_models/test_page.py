@@ -23,7 +23,7 @@ class TestMovie(TestCase):
         cls.test_image2 = get_temporary_image(cls.temp_file2)
         cls.test_image3 = get_temporary_image(cls.temp_file3)
 
-        cls.seo = Seo.objects.create(url=cls.url, title='Terminator', description='Movie')
+        cls.seo = Seo.objects.create(seo_url=cls.url, seo_title='Terminator', seo_description='Movie')
         cls.cinema = Cinema.objects.create(name='Cinema', description='Cinema1', conditions='Best cinema',
                                            on_top_banner=cls.test_image1.name, logo=cls.test_image2.name,
                                            seo=cls.seo)
