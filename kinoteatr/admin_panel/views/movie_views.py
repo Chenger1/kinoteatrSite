@@ -5,7 +5,7 @@ from cinema.models.movie import Movie
 
 from admin_panel.forms.movie_form import MovieForm, movie_gallery_form_set
 from admin_panel.forms.seo_form import SeoForm
-from admin_panel.utils.messages import beautify_error_messages, beautify_inline_error_messages
+from admin_panel.utils.messages import beautify_error_messages
 
 
 class ListMovies(View):
@@ -55,4 +55,7 @@ class AddMovie(View):
         else:
             context['errors'] = beautify_error_messages(movie_form.errors)
 
-        return render(request, self.template_name, context)
+        if context['errors']:
+            return render(request, self.template_name, context)
+        else:
+            return redirect('admin_panel:list_movie_admin')
