@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <label for="seo_url">URL</label>
+            <input type="url" id="seo_url" name="seo_url" placeholder="URL"
+                   class="form-control" style="width: 50%;" value="{{form.instance.url}}">
+        </div>
+        <div class="form-group">
+            <label for="seo_title">Title</label>
+            <input type="text" id="seo_title" name="seo_title" placeholder="Text"
+                   class="form-control" style="width: 50%;" value="{{form.instance.title}}">
+        </div>
+        <div class="form-group">
+            <label for="seo_keywords">Keywords</label>
+            <input type="text" id="seo_keywords" name="seo_keywords"
+                   placeholder="seo_keywords" class="form-control" style="width: 50%;"
+            value="{{form.instance.keywords}}">
+        </div>
+        <label for="">Description</label>
+        <div class="form-group">
+            <textarea name="seo_description" id="seo_description" cols="30" rows="10"
+                      style="width: 50%; resize: none;" placeholder="Description">{{form.instance.description}}</textarea>
+        </div>
+    </div>
+</div>
