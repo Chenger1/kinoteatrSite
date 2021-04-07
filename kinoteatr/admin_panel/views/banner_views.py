@@ -7,7 +7,7 @@ from cinema.models.gallery import OnTopBannerGallery, SliderBannerGallery
 from admin_panel.forms.banner_form import BackgroundImageForm, OnTopBannerForm, OnTopBannerGalleryFormSet,\
                                           SliderBannerGalleryFormSet, SliderBannerForm
 
-from admin_panel.utils.messages import beautify_error_messages
+from admin_panel.utils.messages import beautify_inline_error_messages
 
 
 class DisplayBanner(View):
@@ -45,7 +45,7 @@ class SaveBackgroundImage(View):
             instance.status = status
             instance.save()
         else:
-            beautify_error_messages(background_image_form.errors, request)
+            beautify_inline_error_messages(background_image_form.errors, request)
 
         return redirect('admin_panel:banners_admin')
 
@@ -76,9 +76,9 @@ class SaveOnTopBanner(View):
             if inline_form.is_valid():
                 inline_form.save()
             else:
-                beautify_error_messages(inline_form.errors, request)
+                beautify_inline_error_messages(inline_form.errors, request)
         else:
-            beautify_error_messages(form.errors, request)
+            beautify_inline_error_messages(form.errors, request)
 
         return redirect('admin_panel:banners_admin')
 
@@ -110,9 +110,9 @@ class SaveSliderBanner(View):
             if inline_form.is_valid():
                 inline_form.save()
             else:
-                beautify_error_messages(inline_form.errors, request)
+                beautify_inline_error_messages(inline_form.errors, request)
         else:
-            beautify_error_messages(form.errors, request)
+            beautify_inline_error_messages(form.errors, request)
 
         return redirect('admin_panel:banners_admin')
 
