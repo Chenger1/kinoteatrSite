@@ -4,6 +4,18 @@
 {% block title %}Добавить фильм{% endblock %}
 
 {% block header %}
+{% if errors %}
+    <div class="container-fluid">
+        {% for error in errors %}
+            <div class="row">
+                <div class="col alert alert-warning" role="alert">
+                    {{error}}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
 <div style="text-align: center;">
     <h4>Добавить новый фильм</h4>
 </div>
@@ -22,7 +34,7 @@
                                 <div class="form-group">
                                     <label for="movieName">Название</label>
                                     <input type="text" class="form-control" id="movieName" placeholder="Название фильма"
-                                           style="width: 50%;" name="name">
+                                           style="width: 50%;" name="name" required>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +42,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="summernote">Описание</label>
-                                    <textarea id="summernote" name="description"></textarea>
+                                    <textarea id="summernote" name="description" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +63,7 @@
                                 <div class="row" style="align-items: center;">
                                     <div class="col">
                                         <input type="file" class="form-control-file btn btn-light" id="mainImageMovie"
-                                               name="main_image" onchange="readURLSTATIC(this, this.name)">
+                                               name="main_image" onchange="readURLSTATIC(this, this.name)" required>
                                     </div>
                                     <div class="col">
                                         <a href="#" class="btn btn-light">Удалить</a>
