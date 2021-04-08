@@ -1,0 +1,31 @@
+{% load static %}
+
+<div class="row">
+    {% for form in formset %}
+    <div class="col-3">
+        <div class="card card-default">
+            <div class="card-header">
+                <div class="card-tools">
+                    <a class="btn btn-tool" style="padding: 0;"
+                       href="">&#10006</a>
+                </div>
+                {% if form.instance.image %}
+                    <img src="{{form.instance.image.url}}" alt="" width="250" height="200" class="card-img-top">
+                {% else %}
+                    <img src="{% static 'images/default_form_image.png' %}" alt="" width="250" height="200"
+                    class="card-img-top">
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        {{form}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/banners/update_img_after_upload.js' %}"></script>

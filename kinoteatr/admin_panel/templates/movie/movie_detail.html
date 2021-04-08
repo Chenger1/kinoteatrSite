@@ -1,228 +1,131 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Добавить фильм{% endblock %}
-
 {% block header %}
-{% if errors %}
-    <div class="container-fluid">
-        {% for error in errors %}
-            <div class="row">
-                <div class="col alert alert-warning" role="alert">
-                    {{error}}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
 
-<div style="text-align: center;">
-    <h4>Добавить новый фильм</h4>
-</div>
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
+        <div class="col text-center">
+            <h4>Добавить новый фильм</h4>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col">
             <div class="card card-default">
                 <div class="card-body">
-                    <form action="" enctype="multipart/form-data" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
+                        <div class="form-group limit_width">
+                            <label for="movieName">Название фильма</label>
+                            {{form.name}}
+                        </div>
+                        <div class="form-group">
+                            <label for="">Описание фильма</label>
+                            {{form.description}}
+                        </div>
+                        <div class="form-group">
+                            <label for="main_image">Постер</label>
+                            <div class="row align-items-center">
+                                <div class="col-3">
+                                    {% if form.instance.main_image %}
+                                    <img src="{{form.instance.main_image.url}}" alt="Постер" id="show_main_image"
+                                         width="250" height="200">
+                                    {% else %}
+                                    <img src="{% static 'images/default_form_image.png' %}" alt="Постер"
+                                         id="show_main_image"
+                                         width="250" height="200">
+                                    {% endif %}
+                                </div>
+                                <div class="col-9">
+                                    {{form.main_image}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="url">Ссылка на трейлер</label>
+                            {{form.url}}
+                        </div>
                         <div class="row">
                             <div class="col">
-                                <div class="form-group">
-                                    <label for="movieName">Название</label>
-                                    <input type="text" class="form-control" id="movieName" placeholder="Название фильма"
-                                           style="width: 50%;" name="name" required>
-                                </div>
+                                <h4>Тип фильма</h4>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="summernote">Описание</label>
-                                    <textarea id="summernote" name="description" required></textarea>
-                                </div>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                {{form.is_2d}}
+                                <label for="2DType" class="form-check-label">2D</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {{form.is_3d}}
+                                <label for="3DType" class="form-check-label">3D</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {{form.is_imax}}
+                                <label for="imaxType" class="form-check-label">Imax</label>
                             </div>
                         </div>
-                        <div class="row" style="align-items: center;">
-                            <div class="col-2">
-                                <h5>Главная картинка</h5>
-                            </div>
-                            <div class="col-3">
-                                {% if background_image.image %}
-                                <img src="{{ movie.main_image.url }}" alt="" width="200" height="100" id="main_image">
-                                {% else %}
-                                <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100"
-                                id="main_image">
-                                {% endif %}
-                            </div>
-
-                            <div class="col-7">
-                                <div class="row" style="align-items: center;">
-                                    <div class="col">
-                                        <input type="file" class="form-control-file btn btn-light" id="mainImageMovie"
-                                               name="main_image" onchange="readURLSTATIC(this, this.name)" required>
-                                    </div>
-                                    <div class="col">
-                                        <a href="#" class="btn btn-light">Удалить</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="row">
-                            <div class="col">
-                                <h5>Галерея картинок</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            {{movie_gallery_form.management_form}}
-                            {% for form in movie_gallery_form %}
-                            <div class="col-3 forms" id="{{form.prefix}}-row">
-                                <div class="card card-default">
-                                    <div class="card-header">
-                                        <div class="card-tools">
-                                            {% if form.instance.pk %}
-                                            <a class="btn btn-tool" style="padding: 0;"
-                                               href="#">&#10006</a>
-                                            {% else %}
-                                            <a class="btn btn-tool" style="padding: 0;"
-                                               href="">&#10006</a>
-                                            {% endif %}
-                                        </div>
-                                        {% if form.instance.image %}
-                                        <img src="{{ form.instance.image.url }}" alt="" width="200" height="100">
-                                        {% else %}
-                                        <img src="{% static 'images/default_form_image.png' %}" alt="" width="200"
-                                             height="100">
-                                        {% endif %}
-                                    </div>
-                                    <div class="card-body">
-                                        {{form.id}}
-                                        <div class="form-group form-inline">
-                                            <input type="file" class="form-control-file btn btn-light"
-                                                   name="movie-{{forloop.counter0}}-image"
-                                                   onchange="readURL(this)">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-
-                        <hr>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="trailerUrl">Ссылка на трейлер</label>
-                                    <input type="url" placeholder="Ссылка на трейлер" id="trailerUrl"
-                                           class="form-control"
-                                           name="url">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-2">
-                                <h5>Тип кино</h5>
-                            </div>
-                            <div class="col-10">
-                                <div class="form-group">
-                                    <div class="form-check-inline">
-                                        <input type="checkbox" id="is2D" class="form-check-input" name="is_2d">
-                                        <label for="is2D" class="form-check-label">2D</label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <input type="checkbox" id="is3D" class="form-check-input" name="is_3d">
-                                        <label for="is3D" class="form-check-label">3D</label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <input type="checkbox" id="isImax" class="form-check-input" name="is_imax">
-                                        <label for="isImax" class="form-check-label">Imax</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="">Дата выхода</label>
-                                    {{movie_form.release}}
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="row" style="text-align: center;">
-                            <div class="col">
-                                <h5>Информация о фильме</h5>
-                            </div>
-                        </div>
-                        <div class="row">
+                        <div class="form-group">
+                            <div class="row">
                                 <div class="col">
-                                    <label for="language">Язык</label>
-                                    <select name="language" id="language" class="form-control">
-                                        {% for choice in movie_form.fields.language.choices %}
-                                        <option value="{{choice.0}}">{{choice.1}}</option>
-                                        {% endfor %}
-                                    </select>
+                                    <label for="relese">Дата выхода</label>
+                                    {{form.release}}
                                 </div>
                                 <div class="col">
-                                    <label for="genre">Жанр</label>
-                                    <select name="genre" id="genre" class="form-control">
-                                        {% for choice in movie_form.fields.genre.choices %}
-                                        <option value="{{choice.0}}">{{choice.1}}</option>
-                                        {% endfor %}
-                                    </select>
-
+                                    <label for="running_time">Длительность</label>
+                                    {{form.running_time}}
                                 </div>
-                                <div class="col">
-                                    <label for="age_limit">Возрастной лимит</label>
-                                    <select name="age_limit" id="age_limit" class="form-control">
-                                        {% for choice in movie_form.fields.age_limit.choices %}
-                                        <option value="{{choice.0}}">{{choice.1}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="director">Режиссер</label>
-                                <input type="text" id="director" name="director" placeholder="Режиссер"
-                                class="form-control">
-                            </div>
-                            <div class="col">
-                                <label for="country">Страна</label>
-                                <input type="text" id="country" name="country" placeholder="Страна"
-                                class="form-control">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col">
-                                <label for="">Длительность фильма</label>
-                                {{movie_form.running_time}}
                             </div>
                         </div>
 
                         <hr>
+
                         <div class="row">
-                            <div class="col" style="text-align: center;">
-                                <h5>SEO блок</h5>
+                            <div class="col text-center">
+                                <h4>Дополнительная информация о фильме</h4>
                             </div>
                         </div>
-                        {% include 'seo.html' %}
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="movieDirector">Режиссёр</label>
+                                    {{form.director}}
+                                </div>
+                                <div class="col">
+                                    <label for="movieCountry">Страна</label>
+                                    {{form.country}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="movieLanguage">Язык фильма</label>
+                                    {{form.language}}
+                                </div>
+                                <div class="col">
+                                    <label for="movieGenre">Жанр</label>
+                                    {{form.genre}}
+                                </div>
+                                <div class="col">
+                                    <label for="movieAgeLimit">Возрастные ограничения</label>
+                                    {{form.age_limit}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div>
+                            {{formset.management_form}}
+                            {% include 'formset_template.html'%}
+                        </div>
 
                         <div class="row">
                             <div class="col">
-                                <button class="btn btn-outline-primary">Сохранить</button>
+                                <button type="submit" class="btn btn-outline-primary">Сохранить</button>
                             </div>
                         </div>
                     </form>
@@ -231,15 +134,11 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="{% static 'admin_panel/js/banners/update_img_after_upload.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/update_img_after_upload_static_form.js' %}"></script>
 <script>
-    $(document).ready(function () {
-        $('#summernote').summernote({
-            height: 400,
+    $("#main_image").change(function() {
+            readURLSTATIC(this, 'show_main_image');
         });
-    });
 </script>
 {% endblock %}
