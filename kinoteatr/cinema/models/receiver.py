@@ -23,16 +23,18 @@ def delete_old_image_after_model_update(sender, instance, **kwargs):
 
     if old_images:
         new_images = instance.get_images()
-        for new, old in zip(new_images, old_images):
-            if old != new:
-                delete_image_path(old)
+        if new_images:
+            for new, old in zip(new_images, old_images):
+                if old != new:
+                    delete_image_path(old)
 
 
 @receiver(models.signals.pre_delete)
 def delete_image_with_deleting_instance(sender, instance, **kwargs):
     try:
         images = instance.get_images()
-        for image in images:
-            delete_image_path(image)
+        if images:
+            for image in images:
+                delete_image_path(image)
     except AttributeError:
         return False
