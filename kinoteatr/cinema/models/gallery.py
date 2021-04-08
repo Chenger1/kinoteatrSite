@@ -22,60 +22,96 @@ class MovieGallery(models.Model):
     entity = models.ForeignKey(Movie, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=get_movie_gallery_image_path)
 
+    def get_images(self):
+        return [self.image.path]
+
 
 class NewsGallery(models.Model):
     entity = models.ForeignKey(News, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='news/gallery/')
+
+    def get_images(self):
+        return [self.image.path]
 
 
 class AdsGallery(models.Model):
     entity = models.ForeignKey(Ad, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='ads/gallery/')
 
+    def get_images(self):
+        return [self.image.path]
+
 
 class AboutCinemaGallery(models.Model):
     entity = models.ForeignKey(AboutCinema, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='about_cinema/gallery/')
+
+    def get_images(self):
+        return [self.image.path]
 
 
 class CafeBarGallery(models.Model):
     entity = models.ForeignKey(CafeBar, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='cafebar/gallery/')
 
+    def get_images(self):
+        return [self.image.path]
+
 
 class VipHallGallery(models.Model):
     entity = models.ForeignKey(VipHall, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='vip_hall/gallery/')
+
+    def get_images(self):
+        return [self.image.path]
 
 
 class AdvertisementGallery(models.Model):
     entity = models.ForeignKey(Advertisement, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='advertisement/gallery/')
 
+    def get_images(self):
+        return [self.image.path]
+
 
 class ChildRoomGallery(models.Model):
     entity = models.ForeignKey(ChildRoom, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='child_room/gallery/')
+
+    def get_images(self):
+        return [self.image.path]
 
 
 class CinemaGallery(models.Model):
     entity = models.ForeignKey(Cinema, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=get_cinema_gallery_image_path)
 
+    def get_images(self):
+        return [self.image.path]
+
 
 class CinemaHallGallery(models.Model):
     entity = models.ForeignKey(CinemaHall, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=get_cinema_hall_gallery_image_path)
 
+    def get_images(self):
+        return [self.image.path]
 
-class SliderBannerGallery(models.Model):
+
+class SliderBannerGallery(models.Model, GetGalleryImageMixin):
     entity = models.ForeignKey(SliderBanner, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='slider_banner/gallery/')
     url = models.URLField(blank=True, null=True)
 
+    def get_images(self):
+        return [self.image.path]
 
-class OnTopBannerGallery(models.Model):
+
+class OnTopBannerGallery(models.Model, GetGalleryImageMixin):
     entity = models.ForeignKey(OnTopBanner, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='on_top_banner/gallery/')
     url = models.URLField(blank=True, null=True)
     text = models.CharField(max_length=150, blank=True)
+
+    def get_images(self):
+        return [self.image.path]

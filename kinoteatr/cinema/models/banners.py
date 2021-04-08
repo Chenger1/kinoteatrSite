@@ -7,6 +7,9 @@ class BackgroundImage(SingletonModel):
     image = models.ImageField(upload_to='background_image/', null=True)
     status = models.BooleanField(default=False)
 
+    def get_images(self):
+        return [self.image.path]
+
 
 class OnTopBanner(SingletonModel):
     speed_choices = [

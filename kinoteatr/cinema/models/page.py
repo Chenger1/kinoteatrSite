@@ -15,6 +15,9 @@ class News(models.Model):
 
     seo = models.ForeignKey(Seo, related_name='news', on_delete=models.CASCADE)
 
+    def get_images(self):
+        return [self.main_image.path]
+
 
 class Ad(models.Model):
     title = models.CharField(max_length=100)
@@ -25,6 +28,9 @@ class Ad(models.Model):
     status = models.BooleanField()
 
     seo = models.ForeignKey(Seo, related_name='ad', on_delete=models.CASCADE)
+
+    def get_images(self):
+        return [self.main_image.path]
 
 
 class MainPage(SingletonModel):
@@ -51,6 +57,9 @@ class AboutCinema(SingletonModel):
 
     seo = models.ForeignKey(Seo, related_name='about_cinema', on_delete=models.CASCADE)
 
+    def get_images(self):
+        return [self.main_image.path]
+
 
 class CafeBar(SingletonModel):
     title = models.CharField(max_length=100)
@@ -60,6 +69,9 @@ class CafeBar(SingletonModel):
     status = models.BooleanField()
 
     seo = models.ForeignKey(Seo, related_name='cafebar', on_delete=models.CASCADE)
+
+    def get_images(self):
+        return [self.main_image.path]
 
 
 class VipHall(SingletonModel):
@@ -71,6 +83,9 @@ class VipHall(SingletonModel):
 
     seo = models.ForeignKey(Seo, related_name='vip_hall', on_delete=models.CASCADE)
 
+    def get_images(self):
+        return [self.main_image.path]
+
 
 class Advertisement(SingletonModel):
     title = models.CharField(max_length=100)
@@ -81,6 +96,9 @@ class Advertisement(SingletonModel):
 
     seo = models.ForeignKey(Seo, related_name='Advertisement', on_delete=models.CASCADE)
 
+    def get_images(self):
+        return [self.main_image.path]
+
 
 class ChildRoom(SingletonModel):
     title = models.CharField(max_length=100)
@@ -90,3 +108,6 @@ class ChildRoom(SingletonModel):
     status = models.BooleanField()
 
     seo = models.ForeignKey(Seo, related_name='child_room', on_delete=models.CASCADE)
+
+    def get_images(self):
+        return [self.main_image.path]

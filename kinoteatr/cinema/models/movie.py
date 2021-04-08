@@ -48,5 +48,8 @@ class Movie(models.Model):
     age_limit = models.IntegerField(choices=age_limit_choices)
     seo = models.ForeignKey(Seo, related_name='movies', on_delete=models.CASCADE, blank=True, null=True)
 
+    def get_images(self):
+        return [self.main_image.path]
+
     class Meta:
         db_table = 'movie'

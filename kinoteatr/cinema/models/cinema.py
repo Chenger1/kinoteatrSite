@@ -23,6 +23,9 @@ class Cinema(models.Model):
     logo = models.ImageField(upload_to=get_cinema_logo_path)
     seo = models.ForeignKey(Seo, related_name='cinema', on_delete=models.CASCADE)
 
+    def get_images(self):
+        return [self.on_top_banner.path, self.logo.path]
+
 
 class CinemaHall(models.Model):
     cinema = models.ForeignKey(Cinema, related_name='halls', on_delete=models.CASCADE)
@@ -31,3 +34,6 @@ class CinemaHall(models.Model):
     schema = models.ImageField(upload_to='cinema_hall/schema/')
     on_top_banner = models.ImageField(upload_to=get_hall_main_image_path)
     seo = models.ForeignKey(Seo, related_name='cinema_hall', on_delete=models.CASCADE)
+
+    def get_images(self):
+        return [self.schema.path, self.on_top_banner.path]
