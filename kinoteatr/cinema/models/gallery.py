@@ -98,7 +98,7 @@ class CinemaHallGallery(models.Model):
         return [self.image.path]
 
 
-class SliderBannerGallery(models.Model, GetGalleryImageMixin):
+class SliderBannerGallery(models.Model):
     entity = models.ForeignKey(SliderBanner, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='slider_banner/gallery/')
     url = models.URLField(blank=True, null=True)
@@ -107,7 +107,7 @@ class SliderBannerGallery(models.Model, GetGalleryImageMixin):
         return [self.image.path]
 
 
-class OnTopBannerGallery(models.Model, GetGalleryImageMixin):
+class OnTopBannerGallery(models.Model):
     entity = models.ForeignKey(OnTopBanner, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='on_top_banner/gallery/')
     url = models.URLField(blank=True, null=True)
