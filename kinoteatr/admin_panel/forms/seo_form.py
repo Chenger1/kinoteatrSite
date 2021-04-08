@@ -11,5 +11,6 @@ class SeoForm(forms.ModelForm):
             'seo_title':  forms.TextInput(attrs={'id': 'seoTitle', 'class': 'form-control'}),
             'seo_url': forms.URLInput(attrs={'id': 'seoURL', 'class': 'form-control'}),
             'seo_keywords': forms.TextInput(attrs={'id': 'seoKeywords', 'class': 'form-control'}),
-            'seo_description': forms.Textarea(attrs={'id': 'seoDescription', 'class': 'form-control'}),
+            'seo_description': forms.Textarea(attrs={'id': 'seoDescription', 'class': 'form-control',
+                                                     'style': 'resize: none;'}),
         }
