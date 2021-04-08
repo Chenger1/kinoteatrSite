@@ -8,7 +8,7 @@ class BackgroundImage(SingletonModel):
     status = models.BooleanField(default=False)
 
     def get_images(self):
-        return [self.image.path]
+        return [self.image.path] if self.image else None
 
 
 class OnTopBanner(SingletonModel):
