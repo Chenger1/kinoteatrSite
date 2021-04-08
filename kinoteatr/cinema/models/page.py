@@ -58,7 +58,7 @@ class AboutCinema(SingletonModel):
     seo = models.ForeignKey(Seo, related_name='about_cinema', on_delete=models.CASCADE)
 
     def get_images(self):
-        return [self.main_image.path]
+        return [self.image.path] if self.image else None
 
 
 class CafeBar(SingletonModel):
@@ -71,7 +71,7 @@ class CafeBar(SingletonModel):
     seo = models.ForeignKey(Seo, related_name='cafebar', on_delete=models.CASCADE)
 
     def get_images(self):
-        return [self.main_image.path]
+        return [self.image.path] if self.image else None
 
 
 class VipHall(SingletonModel):
@@ -84,7 +84,7 @@ class VipHall(SingletonModel):
     seo = models.ForeignKey(Seo, related_name='vip_hall', on_delete=models.CASCADE)
 
     def get_images(self):
-        return [self.main_image.path]
+        return [self.image.path] if self.image else None
 
 
 class Advertisement(SingletonModel):
@@ -97,7 +97,7 @@ class Advertisement(SingletonModel):
     seo = models.ForeignKey(Seo, related_name='Advertisement', on_delete=models.CASCADE)
 
     def get_images(self):
-        return [self.main_image.path]
+        return [self.image.path] if self.image else None
 
 
 class ChildRoom(SingletonModel):
@@ -110,4 +110,4 @@ class ChildRoom(SingletonModel):
     seo = models.ForeignKey(Seo, related_name='child_room', on_delete=models.CASCADE)
 
     def get_images(self):
-        return [self.main_image.path]
+        return [self.image.path] if self.image else None
