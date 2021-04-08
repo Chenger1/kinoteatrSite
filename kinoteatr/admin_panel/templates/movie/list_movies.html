@@ -27,8 +27,8 @@ Movie
                 <div class="card-header">
                     <img src="{{ movie.main_image.url }}" alt="" width="250" height="200">
                 </div>
-                <div class="card-body">
-                    <h4>{{movie.name}}</h4>
+                <div class="card-body card-body-colored">
+                    <a href="{% url 'admin_panel:edit_movie_admin' movie.pk %}" class="link-dark"><h4>{{movie.name}}</h4></a>
                 </div>
             </div>
         </div>

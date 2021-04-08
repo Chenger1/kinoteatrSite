@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import View
+from django.views.generic.edit import CreateView
 
 from cinema.models.movie import Movie
 
-from admin_panel.forms.movie_form import MovieForm, movie_gallery_form_set
+from admin_panel.forms.movie_form import MovieForm, MovieGalleryFormSet
 from admin_panel.forms.seo_form import SeoForm
-from admin_panel.utils.messages import beautify_error_messages
 
 
 class ListMovies(View):
@@ -16,46 +17,27 @@ class ListMovies(View):
         return render(request, self.template_name, {'movies': movies})
 
 
-class AddMovie(View):
-    movie_form = MovieForm
-    movie_gallery_form = movie_gallery_form_set
-
+class AddMovie(CreateView):
+    model = Movie
+    form_class = MovieForm
     template_name = 'movie/movie_detail.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_movie_admin')
 
-    def get(self, request):
-        movie_form = self.movie_form()
-        movie_gallery_inline_form = self.movie_gallery_form(prefix='movie')
-
-        return render(request, self.template_name, {'movie_form': movie_form,
-                                                    'movie_gallery_form': movie_gallery_inline_form})
-
-    def post(self, request):
-        movie_form = self.movie_form(request.POST, request.FILES)
-        seo_form = SeoForm(request.POST)
-        movie_gallery_inline_form = movie_gallery_form_set(request.POST, request.FILES, prefix='movie')
-        context = {'movie_form': movie_form,
-                   'seo_form': seo_form,
-                   'movie_gallery_form': movie_gallery_inline_form,
-                   'errors': []}
-
-        if movie_form.is_valid():
-            movie = movie_form.save()
-            movie_gallery_inline_form = movie_gallery_form_set(request.POST, request.FILES, instance=movie,
-                                                               prefix='movie')
-            if movie_gallery_inline_form.is_valid():
-                movie_gallery_inline_form.save()
-            else:
-                context['errors'] = 'Error with gallery image'
-            if seo_form.is_valid():
-                seo = seo_form.save()
-                movie.seo_id = seo
-                movie.save()
-            else:
-                context['errors'] = beautify_error_messages(seo_form.errors)
+    def get_context_data(self, **kwargs):
+        data = super(AddMovie, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['formset'] = MovieGalleryFormSet(self.request.POST, self.request.FILES)
         else:
-            context['errors'] = beautify_error_messages(movie_form.errors)
+            data['formset'] = MovieGalleryFormSet()
+        return data
 
-        if context['errors']:
-            return render(request, self.template_name, context)
-        else:
-            return redirect('admin_panel:list_movie_admin')
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        return super(AddMovie, self).form_valid(form)

@@ -46,7 +46,7 @@ class Movie(models.Model):
     country = models.CharField(max_length=100)
     genre = models.IntegerField(choices=genre_choices)
     age_limit = models.IntegerField(choices=age_limit_choices)
-    seo_id = models.ForeignKey(Seo, related_name='movies', on_delete=models.CASCADE, blank=True, null=True)
+    seo = models.ForeignKey(Seo, related_name='movies', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         db_table = 'movie'

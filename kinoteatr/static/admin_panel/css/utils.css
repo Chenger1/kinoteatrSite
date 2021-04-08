@@ -1,3 +1,7 @@
+.limit_width{
+    width: 50%;
+}
+
 .movie_card{
     text-align: center;
     align-items: center;
@@ -5,6 +9,6 @@
 .movie_card img{
     width: 100%;
 }
-.movie_card .card-body{
+.movie_card .card-body-colored{
     background-color: #f8f9fa;
 }
