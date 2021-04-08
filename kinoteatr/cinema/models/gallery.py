@@ -71,11 +71,11 @@ class CinemaHallGallery(models.Model):
 class SliderBannerGallery(models.Model):
     entity = models.ForeignKey(SliderBanner, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='slider_banner/gallery/')
-    url = models.URLField()
+    url = models.URLField(blank=True, null=True)
 
 
 class OnTopBannerGallery(models.Model):
     entity = models.ForeignKey(OnTopBanner, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='on_top_banner/gallery/')
-    url = models.URLField()
+    url = models.URLField(blank=True, null=True)
     text = models.CharField(max_length=150, blank=True)
