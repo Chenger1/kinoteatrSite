@@ -37,8 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'crispy_forms',
     'django_summernote',
     'admin_panel',
     'cinema',
@@ -134,3 +132,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(__file__).parent.parent.joinpath('media/')
 
 AUTH_USER_MODEL = 'cinema.User'
+
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']
