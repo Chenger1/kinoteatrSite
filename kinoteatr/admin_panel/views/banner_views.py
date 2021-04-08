@@ -88,7 +88,6 @@ class DeleteOnTopBannerGalleryImage(View):
 
     def get(self, request, pk):
         inst = get_object_or_404(self.model, pk=pk)
-        inst.image.delete()
         inst.delete()
 
         return redirect('admin_panel:banners_admin')
@@ -122,7 +121,6 @@ class DeleteSliderBannerGalleryImage(View):
 
     def get(self, request, pk):
         inst = get_object_or_404(self.model, pk=pk)
-        inst.image.delete()
         inst.delete()
 
         return redirect('admin_panel:banners_admin')

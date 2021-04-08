@@ -52,7 +52,7 @@
                                 <label for="urlId-{{ form.instance.pk }}">URL:</label>
                                 <input type="text" placeholder="URL" id="urlId-{{ form.instance.pk }}"
                                        name="slider-{{forloop.counter0}}-url"
-                                       value="{{ form.instance.url }}">
+                                       value="{% if form.instance.url %}{{ form.instance.url }}{% endif %}">
                             </div>
                         </div>
                     </div>

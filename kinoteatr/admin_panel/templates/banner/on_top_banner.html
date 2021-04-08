@@ -52,7 +52,7 @@
                                 <label for="urlId-{{ form.instance.pk }}">URL:</label>
                                 <input type="text" placeholder="URL" id="urlId-{{ form.instance.pk }}"
                                        name="on_top-{{forloop.counter0}}-url"
-                                       value="{{ form.instance.url }}">
+                                       value="{% if form.instance.url %}{{ form.instance.url }}{% endif %}">
                             </div>
                             <div class="form-group form-inline">
                                 <label for="textId-{{ form.instance.pk }}">Текст:</label>
