@@ -146,9 +146,12 @@
                         <div class="row">
                             <div class="col">
                                 <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                                {% if object %}
                                 <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
                                   Удалить
                                 </button>
+                                {% include 'delete_modal.html' %}
+                                {% endif %}
                             </div>
                         </div>
                     </form>
@@ -157,7 +160,6 @@
         </div>
     </div>
 </div>
-{% include 'delete_modal.html' %}
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/update_img_after_upload_static_form.js' %}"></script>
 <script>
