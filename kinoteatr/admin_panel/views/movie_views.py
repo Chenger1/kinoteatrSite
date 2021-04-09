@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.db import transaction
 
 from cinema.models.movie import Movie
+from cinema.models.gallery import MovieGallery
 
 from admin_panel.forms.movie_form import MovieForm, MovieGalleryFormSet
 from admin_panel.forms.seo_form import SeoForm
@@ -99,3 +100,13 @@ class DeleteMovie(View):
         seo.delete()
         movie.delete()
         return redirect('admin_panel:list_movie_admin')
+
+
+class DeleteMovieGalleryImage(View):
+    model = MovieGallery
+
+    def get(self, request, pk):
+        inst = get_object_or_404(self.model, pk=pk)
+        movie_pk = inst.entity.pk
+        inst.delete()
+        return redirect('admin_panel:edit_movie_admin', pk=movie_pk)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from cinema.models.movie import Movie
 from cinema.models.page import News, Ad, AboutCinema, CafeBar, VipHall, Advertisement, ChildRoom
@@ -24,6 +25,9 @@ class MovieGallery(models.Model):
 
     def get_images(self):
         return [self.image.path]
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_movie_gallery_image_admin', args=[self.pk])
 
 
 class NewsGallery(models.Model):

@@ -6,8 +6,13 @@
         <div class="card card-default">
             <div class="card-header">
                 <div class="card-tools">
+                    {% if form.instance.pk %}
+                    <a class="btn btn-tool" style="padding: 0;"
+                       href="{{ form.instance.get_delete_url }}">&#10006</a>
+                    {% else %}
                     <a class="btn btn-tool" style="padding: 0;"
                        href="">&#10006</a>
+                    {% endif %}
                 </div>
                 {% if form.instance.image %}
                     <img src="{{form.instance.image.url}}" alt="" width="250" height="200" class="card-img-top">
