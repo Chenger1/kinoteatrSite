@@ -17,7 +17,10 @@ class ListMovies(View):
 
     def get(self, request):
         movies = Movie.objects.all()
-        return render(request, self.template_name, {'movies': movies})
+        released = movies.filter(released=True)
+        soon = movies.filter(released=False)
+        return render(request, self.template_name, {'released_movies': released,
+                                                    'movies_soon': soon})
 
 
 class AddMovie(CreateView):

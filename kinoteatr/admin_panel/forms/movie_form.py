@@ -11,7 +11,7 @@ class MovieForm(forms.ModelForm):
         fields = ('name', 'description', 'main_image', 'url',
                   'is_2d', 'is_3d', 'is_imax', 'release',
                   'language', 'director', 'running_time', 'country',
-                  'genre', 'age_limit')
+                  'genre', 'age_limit', 'released')
         widgets = {
             'name': forms.TextInput(attrs={'id': 'movieName', 'class': 'form-control'}),
             'description': SummernoteWidget(attrs={'summernote': {'width': '100%'}}),
@@ -33,7 +33,9 @@ class MovieForm(forms.ModelForm):
             'country': forms.TextInput(attrs={'id': 'movieCountry', 'class': 'form-control'}),
             'language': forms.Select(attrs={'id': 'movieLanguage', 'class': 'form-control form-select'}),
             'genre': forms.Select(attrs={'id': 'movieGenre', 'class': 'form-control form-select'}),
-            'age_limit': forms.Select(attrs={'id': 'movieAgeLimit', 'class': 'form-control form-select'})
+            'age_limit': forms.Select(attrs={'id': 'movieAgeLimit', 'class': 'form-control form-select'}),
+            'released': forms.CheckboxInput(attrs={'id': 'released', 'class': 'form-check-input type_checkbox',
+                                                   'type': 'checkbox'})
 
         }
 

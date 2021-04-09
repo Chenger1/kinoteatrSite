@@ -21,14 +21,15 @@ Movie
         </div>
     </div>
     <div class="row">
-        {% for movie in movies %}
-        <div class="col-3 movie_card" id="{{form.prefix}}-row">
+        {% for movie in released_movies %}
+        <div class="col-3 movie_card">
             <div class="card card-light">
                 <div class="card-header">
                     <img src="{{ movie.main_image.url }}" alt="" width="250" height="200">
                 </div>
                 <div class="card-body card-body-colored">
-                    <a href="{% url 'admin_panel:movie_detail_admin' movie.pk %}" class="link-dark"><h4>{{movie.name}}</h4></a>
+                    <a href="{% url 'admin_panel:movie_detail_admin' movie.pk %}" class="link-dark"><h4>
+                        {{movie.name}}</h4></a>
                 </div>
             </div>
         </div>
@@ -38,6 +39,21 @@ Movie
         <div class="col" style="text-align: center;">
             <h3>Список предстоящих премьер</h3>
         </div>
+    </div>
+    <div class="row">
+        {% for movie in movies_soon %}
+        <div class="col-3 movie_card">
+            <div class="card card-light">
+                <div class="card-header">
+                    <img src="{{ movie.main_image.url }}" alt="" width="250" height="200">
+                </div>
+                <div class="card-body card-body-colored">
+                    <a href="{% url 'admin_panel:movie_detail_admin' movie.pk %}" class="link-dark"><h4>
+                        {{movie.name}}</h4></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
