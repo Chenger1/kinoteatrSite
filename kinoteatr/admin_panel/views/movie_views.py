@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import View
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.db import transaction
 
 from cinema.models.movie import Movie
@@ -51,3 +51,42 @@ class AddMovie(CreateView):
             else:
                 return super(AddMovie, self).form_invalid(form)
         return super(AddMovie, self).form_valid(form)
+
+
+class UpdateMovie(UpdateView):
+    model = Movie
+    form_class = MovieForm
+    success_url = reverse_lazy('admin_panel:list_movie_admin')
+    context_object_name = 'form'
+    template_name = 'movie/movie_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateMovie, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = MovieGalleryFormSet(self.request.POST,
+                                                     self.request.FILES,
+                                                     instance=self.object)
+            context['formset'].full_clean()
+            context['seo_form'] = SeoForm(self.request.POST,
+                                          instance=self.object.seo)
+        else:
+            context['formset'] = MovieGalleryFormSet(instance=self.object)
+            context['seo_form'] = SeoForm(instance=self.object.seo)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['formset']
+        seo_form = context['seo_form']
+        response = super().form_valid(form)
+        with transaction.atomic():
+            if formset.is_valid():
+                formset.instance = self.object
+                formset.save()
+            else:
+                return super(UpdateMovie, self).form_invalid(form)
+            if seo_form.is_valid():
+                self.object.seo = seo_form.save()
+            else:
+                return super(UpdateMovie, self).form_invalid(form)
+        return response
