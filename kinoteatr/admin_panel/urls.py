@@ -39,5 +39,6 @@ urlpatterns = [
     path('movies/', movie_views.ListMovies.as_view(), name='list_movie_admin'),
     path('movies/add_movie/', movie_views.AddMovie.as_view(), name='add_movie_admin'),
     path('movies/edit_movie/<int:pk>/', movie_views.UpdateMovie.as_view(), name='edit_movie_admin'),
+    path('movies/delete_movie/<int:pk>/', movie_views.DeleteMovie.as_view(), name='delete_movie_admin'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

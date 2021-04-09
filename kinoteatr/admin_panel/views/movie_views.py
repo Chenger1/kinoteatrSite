@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView
@@ -90,3 +90,12 @@ class UpdateMovie(UpdateView):
             else:
                 return super(UpdateMovie, self).form_invalid(form)
         return response
+
+
+class DeleteMovie(View):
+    def get(self, request, pk):
+        movie = get_object_or_404(Movie, pk=pk)
+        seo = movie.seo
+        seo.delete()
+        movie.delete()
+        return redirect('admin_panel:list_movie_admin')
