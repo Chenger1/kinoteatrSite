@@ -1,5 +1,7 @@
 from django.db import models
 
+from embed_video.fields import EmbedVideoField
+
 from cinema.models.seo import Seo
 
 
@@ -8,11 +10,6 @@ def get_main_image_path(instance, filename):
 
 
 class Movie(models.Model):
-    status_choices = [
-        (1, 'Released'),
-        (0, 'Soon')
-    ]
-
     language_choices = [
         (1, 'Русский'),
         (2, 'Украинский'),
@@ -34,11 +31,11 @@ class Movie(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     main_image = models.ImageField(upload_to=get_main_image_path)
-    url = models.URLField()
+    url = EmbedVideoField()
     is_2d = models.BooleanField(default=False)
     is_3d = models.BooleanField(default=False)
     is_imax = models.BooleanField(default=False)
-    status = models.IntegerField(choices=status_choices, default=0, blank=True)
+    released = models.BooleanField(default=False)
     release = models.DateField()
     language = models.IntegerField(choices=language_choices)
     director = models.CharField(max_length=100)
