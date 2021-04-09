@@ -32,7 +32,7 @@ class Movie(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    description = models.TextField(max_length=5000)
+    description = models.TextField()
     main_image = models.ImageField(upload_to=get_main_image_path)
     url = models.URLField()
     is_2d = models.BooleanField(default=False)
@@ -50,6 +50,9 @@ class Movie(models.Model):
 
     def get_images(self):
         return [self.main_image.path]
+
+    def get_running_time(self):
+        return self.running_time.strftime('%H:%M')
 
     def __str__(self):
         return self.name

@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.detail import DetailView
 from django.db import transaction
 
 from cinema.models.movie import Movie
@@ -110,3 +111,9 @@ class DeleteMovieGalleryImage(View):
         movie_pk = inst.entity.pk
         inst.delete()
         return redirect('admin_panel:edit_movie_admin', pk=movie_pk)
+
+
+class DetailMovie(DetailView):
+    model = Movie
+    template_name = 'movie/movie_detail.html'
+    context_object_name = 'movie'

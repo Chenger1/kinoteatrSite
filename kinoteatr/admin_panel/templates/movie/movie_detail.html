@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ movie }} {% endblock %}
+
+{% block header %}
+<!--<h3>{{ movie }}</h3>-->
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img"
+                                 src="{{ movie.main_image.url }}"
+                                 alt="User profile picture">
+                        </div>
+
+                        <h3 class="profile-username text-center">{{ movie }}</h3>
+
+                        <p class="text-muted text-center">{{ movie.get_genre_display }}</p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Age limit</b> <a class="float-right">{{ movie.get_age_limit_display }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Язык</b> <a class="float-right">{{ movie.get_language_display }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Дата выхода</b> <a class="float-right">{{ movie.release }}</a>
+                            </li>
+                        </ul>
+
+                        <a href="{% url 'admin_panel:edit_movie_admin' movie.pk %}"
+                           class="btn btn-primary btn-block"><b>Редактировать</b></a>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <!-- About Me Box -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Информация</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <strong>Режиссёр</strong>
+
+                        <p class="text-muted">
+                            {{ movie.director }}
+                        </p>
+
+                        <hr>
+
+                        <strong>Страна</strong>
+
+                        <p class="text-muted">{{ movie.country }}</p>
+
+                        <hr>
+
+                        <strong>Формат</strong>
+
+                        <p class="text-muted">
+                            {% if movie.is_2d %}
+                            <span class="tag">2D</span>
+                            {% endif %}
+                            {% if movie.is_3d %}
+                            <span class="tag">3D</span>
+                            {% endif %}
+                            {% if movie.is_imax %}
+                            <span class="tag">Imax</span>
+                            {% endif %}
+                        </p>
+
+                        <hr>
+
+                        <strong>Дата выхода/Длительность</strong>
+                        <p class="text-muted">{{ movie.release }}/{{ movie.get_running_time }}</p>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#activity"
+                                                    data-toggle="tab">О фильме</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="activity">
+                                <!-- Post -->
+                                <div class="info">
+                                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            {% for gallery_ints in movie.images.all %}
+                                            <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                                                <img src="{{ gallery_ints.image.url }}" class="d-block w-100" width="500" height="450">
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                           data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                           data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="movie_description">
+                                       <div class="row">
+                                           <div class="col text-center">
+                                               <h3>Описание фильма</h3>
+                                           </div>
+                                       </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                {{ movie.description|safe }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.post -->
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock %}
