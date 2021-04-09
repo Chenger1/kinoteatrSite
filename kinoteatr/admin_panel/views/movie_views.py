@@ -22,7 +22,7 @@ class ListMovies(View):
 class AddMovie(CreateView):
     model = Movie
     form_class = MovieForm
-    template_name = 'movie/movie_detail.html'
+    template_name = 'movie/edit_movie.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_movie_admin')
 
@@ -59,7 +59,7 @@ class UpdateMovie(UpdateView):
     form_class = MovieForm
     success_url = reverse_lazy('admin_panel:list_movie_admin')
     context_object_name = 'form'
-    template_name = 'movie/movie_detail.html'
+    template_name = 'movie/edit_movie.html'
 
     def get_context_data(self, **kwargs):
         context = super(UpdateMovie, self).get_context_data(**kwargs)
