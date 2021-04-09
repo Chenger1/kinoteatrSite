@@ -51,5 +51,8 @@ class Movie(models.Model):
     def get_images(self):
         return [self.main_image.path]
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = 'movie'
