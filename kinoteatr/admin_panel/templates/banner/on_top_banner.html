@@ -23,7 +23,7 @@
             <div class="row">
                 {{ on_top_banner_form_set.management_form }}
                 {% for form in on_top_banner_form_set %}
-                <div class="col-3 forms" id="{{form.prefix}}-row">
+                <div class="col-3 on-top-forms" id="{{form.prefix}}-row">
                     <div class="card card-default">
                         <div class="card-header">
                             <div class="card-tools">
@@ -32,13 +32,15 @@
                                    href="{% url 'admin_panel:delete_on_top_banner' form.instance.pk %}">&#10006</a>
                                 {% else %}
                                 <a class="btn btn-tool delete-row" style="padding: 0;"
-                                   href="javascript:void(0)">&#10006</a>
+                                   href="">&#10006</a>
                                 {% endif %}
                             </div>
                             {% if form.instance.image %}
-                            <img src="{{ form.instance.image.url }}" alt="" width="200" height="100">
+                            <img src="{{ form.instance.image.url }}" alt="" width="200" height="100"
+                            name="banner_image_preview_{{ forloop.counter0 }}">
                             {% else %}
-                            <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100">
+                            <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100"
+                            name="banner_image_preview_{{ forloop.counter0 }}">
                             {% endif %}
                         </div>
                         <div class="card-body">
@@ -46,7 +48,7 @@
                             <div class="form-group form-inline">
                                 <input type="file" class="form-control-file btn btn-light"
                                        name="on_top-{{forloop.counter0}}-image"
-                                onchange="readURLOld(this)">
+                                onchange="setPreview(this, {{ forloop.counter0 }}, 'banner')">
                             </div>
                             <div class="form-group form-inline">
                                 <label for="urlId-{{ form.instance.pk }}">URL:</label>
@@ -64,7 +66,15 @@
                     </div>
                 </div>
                 {% endfor %}
+                <div class="col-3 add-button">
+                    <div class="card card-default">
+                        <div class="card-body" style="align-items:center; text-align:center;">
+                            <button class="btn btn-outline-secondary add-row">Добавить</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <div class="row">
                 <div class="col-5">
@@ -86,23 +96,20 @@
 
 
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/jquery.formset.js' %}"></script>
 <script src="{% static 'admin_panel/js/checkbox_handling.js' %}"></script>
-<script src="{% static 'admin_panel/js/banners/update_img_after_upload.js' %}"></script>
+<script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
+<script src="{% static 'admin_panel/js/dynamic_formset.js' %}"></script>
 
 <script>
-        $('.card-body .row .forms').formset({
-        addText: 'Add new subtask',
-        deleteText: '',
-        addCssClass: 'btn btn-outline-secondary',
-        prefix: '{{on_top_banner_form_set.prefix}}'
-    });
-</script>
-<script>
-    // {% for form in on_top_banner_form_set %}
-    //     $("#image_upload-{{form.prefix}}").change(function() {
-    //         readURL(this, '{{form.prefix}}');
-    //     });
-    // {% endfor %}
-</script>
+$(document).on('click', '.add-row', function(e){
+    e.preventDefault();
+    cloneRow('.on-top-forms:last', '{{ on_top_banner_form_set.prefix }}', 'on-top-forms', 'banner');
+    return false;
+});
 
+$(document).on('click', '.delete-row', function(e){
+    e.preventDefault();
+    deleteForm('{{ on_top_banner_form_set.prefix }}', $(this), 'on-top-forms');
+    return false;
+});
+</script>

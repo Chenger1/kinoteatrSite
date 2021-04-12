@@ -23,7 +23,7 @@
             <div class="row">
                 {{ slider_banner_form_set.management_form }}
                 {% for form in slider_banner_form_set %}
-                <div class="col-3 forms" id="{{form.prefix}}-row">
+                <div class="col-3 slider-forms" id="{{form.prefix}}-row">
                     <div class="card card-default">
                         <div class="card-header">
                             <div class="card-tools">
@@ -31,14 +31,15 @@
                                 <a class="btn btn-tool" style="padding: 0;"
                                    href="{% url 'admin_panel:delete_slider_banner' form.instance.pk %}">&#10006</a>
                                 {% else %}
-                                <a class="btn btn-tool delete-row" style="padding: 0;"
-                                   href="javascript:void(0)">&#10006</a>
+                                <a class="btn btn-tool delete-slider-row" style="padding: 0;">&#10006</a>
                                 {% endif %}
                             </div>
                             {% if form.instance.image %}
-                            <img src="{{ form.instance.image.url }}" alt="" width="200" height="100">
+                            <img src="{{ form.instance.image.url }}" alt="" width="200" height="100"
+                            name="slider_image_preview_{{ forloop.counter0 }}">
                             {% else %}
-                            <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100">
+                            <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100"
+                            name="slider_image_preview_{{ forloop.counter0 }}">
                             {% endif %}
                         </div>
                         <div class="card-body">
@@ -46,7 +47,7 @@
                             <div class="form-group form-inline">
                                 <input type="file" class="form-control-file btn btn-light"
                                        name="slider-{{forloop.counter0}}-image"
-                                onchange="readURLOld(this)">
+                                onchange="setPreview(this, {{ forloop.counter0 }}, 'slider')">
                             </div>
                             <div class="form-group form-inline">
                                 <label for="urlId-{{ form.instance.pk }}">URL:</label>
@@ -58,6 +59,13 @@
                     </div>
                 </div>
                 {% endfor %}
+                <div class="col-3 add-button">
+                    <div class="card card-default">
+                        <div class="card-body" style="align-items:center; text-align:center;">
+                            <button class="btn btn-outline-secondary add-slider-row">Добавить</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
@@ -80,23 +88,22 @@
 
 
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/jquery.formset.js' %}"></script>
 <script src="{% static 'admin_panel/js/checkbox_handling.js' %}"></script>
-<script src="{% static 'admin_panel/js/banners/update_img_after_upload.js' %}"></script>
+<script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
+<script src="{% static 'admin_panel/js/dynamic_formset.js' %}"></script>
 
 <script>
-        $('.card-body .row .forms').formset({
-        addText: 'Add new subtask',
-        deleteText: '',
-        addCssClass: 'btn btn-outline-secondary',
-        prefix: '{{slider_banner_form_set.prefix}}'
-    });
+$(document).on('click', '.add-slider-row', function(e){
+    e.preventDefault();
+    cloneRow('.slider-forms:last', '{{ slider_banner_form_set.prefix }}', 'slider-forms', 'slider');
+    return false;
+});
+
+$(document).on('click', '.delete-slider-row', function(e){
+    e.preventDefault();
+    deleteForm('{{ slider_banner_form_set.prefix }}', $(this), 'slider-forms');
+    return false;
+});
 </script>
-<script>
-    // {% for form in on_top_banner_form_set %}
-    //     $("#image_upload-{{form.prefix}}").change(function() {
-    //         readURL(this, '{{form.prefix}}');
-    //     });
-    // {% endfor %}
-</script>
+
 
