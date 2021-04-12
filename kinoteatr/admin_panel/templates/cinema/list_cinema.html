@@ -28,7 +28,7 @@ Cinema
                     <img src="{{ cinema.logo.url }}" alt="" width="250" height="200">
                 </div>
                 <div class="card-body card-body-colored">
-                    <a href="" class="link-dark"><h4>
+                    <a href="{% url 'admin_panel:edit_cinema_admin' cinema.pk %}" class="link-dark"><h4>
                         {{cinema.name}}</h4></a>
                 </div>
             </div>

@@ -48,5 +48,7 @@ urlpatterns = [
     # CINEMA
     path('cinemas/', cinema_views.ListCinema.as_view(), name='list_cinema_admin'),
     path('cinemas/add_cinema/', cinema_views.AddCinema.as_view(), name='add_cinema_admin'),
+    path('cinemas/edit_cinema/<int:pk>/', cinema_views.UpdateCinema.as_view(),
+         name='edit_cinema_admin')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

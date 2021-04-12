@@ -5,7 +5,7 @@ from django.views.generic import View
 from admin_panel.forms.cinema_forms import CinemaForm, CinemaGalleryFormSet
 from cinema.models.cinema import Cinema
 
-from admin_panel.views.page_views_mixin import AddPageMixin
+from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin
 
 
 class ListCinema(View):
@@ -17,6 +17,15 @@ class ListCinema(View):
 
 
 class AddCinema(AddPageMixin):
+    model = Cinema
+    form_class = CinemaForm
+    inline_form_set = CinemaGalleryFormSet
+    template_name = 'cinema/edit_cinema.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_cinema_admin')
+
+
+class UpdateCinema(UpdatePageMixin):
     model = Cinema
     form_class = CinemaForm
     inline_form_set = CinemaGalleryFormSet
