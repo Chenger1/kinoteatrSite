@@ -12,7 +12,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-        <a href="{% url 'admin_panel:delete_movie_admin' object.pk %}" class="btn btn-danger">Да, уверен</a>
+        <a href="{{ object.get_delete_url }}" class="btn btn-danger">Да, уверен</a>
       </div>
     </div>
   </div>

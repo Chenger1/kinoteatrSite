@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from cinema.models.seo import Seo
 
@@ -26,6 +27,12 @@ class Cinema(models.Model):
 
     def get_images(self):
         return [self.on_top_banner.path, self.logo.path]
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_cinema_admin', args=[self.pk])
+
+    def __str__(self):
+        return self.name
 
 
 class CinemaHall(models.Model):

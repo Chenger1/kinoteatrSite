@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from embed_video.fields import EmbedVideoField
 
@@ -50,6 +51,9 @@ class Movie(models.Model):
 
     def get_running_time(self):
         return self.running_time.strftime('%H:%M')
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_movie_admin', args=[self.pk])
 
     def __str__(self):
         return self.name

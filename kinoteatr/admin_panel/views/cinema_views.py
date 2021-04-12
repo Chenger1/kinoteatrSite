@@ -4,8 +4,9 @@ from django.views.generic import View
 
 from admin_panel.forms.cinema_forms import CinemaForm, CinemaGalleryFormSet
 from cinema.models.cinema import Cinema
+from cinema.models.gallery import CinemaGallery
 
-from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin
+from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
 
 
 class ListCinema(View):
@@ -32,3 +33,13 @@ class UpdateCinema(UpdatePageMixin):
     template_name = 'cinema/edit_cinema.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_cinema_admin')
+
+
+class DeleteCinema(DeleteMixin):
+    model = Cinema
+    redirect_url = 'admin_panel:list_cinema_admin'
+
+
+class DeleteCinemaGalleryImage(DeleteGalleryImageMixin):
+    model = CinemaGallery
+    redirect_url = 'admin_panel:edit_cinema_admin'
