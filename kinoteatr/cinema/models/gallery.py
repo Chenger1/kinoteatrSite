@@ -93,6 +93,9 @@ class CinemaGallery(models.Model):
     def get_images(self):
         return [self.image.path]
 
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_cinema_gallery_image', args=[self.pk])
+
 
 class CinemaHallGallery(models.Model):
     entity = models.ForeignKey(CinemaHall, related_name='images', on_delete=models.CASCADE)
@@ -100,6 +103,9 @@ class CinemaHallGallery(models.Model):
 
     def get_images(self):
         return [self.image.path]
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_cinema_hall_gallery_image', args=[self.pk])
 
 
 class SliderBannerGallery(models.Model):
