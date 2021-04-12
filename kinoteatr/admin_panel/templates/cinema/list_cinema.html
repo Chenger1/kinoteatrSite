@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Cinema
+{% endblock %}
+
+{% block header %}
+<div class="row">
+    <div class="col-2 offset-10">
+        <a href="" class="btn btn-outline-primary">Добавить новый кинотеатор</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col" style="text-align: center;">
+            <h3>Список кинотеатров</h3>
+        </div>
+    </div>
+    <div class="row">
+        {% for cinema in cinemas %}
+        <div class="col-3 movie_card">
+            <div class="card card-light">
+                <div class="card-header">
+                    <img src="{{ cinema.logo.url }}" alt="" width="250" height="200">
+                </div>
+                <div class="card-body card-body-colored">
+                    <a href="" class="link-dark"><h4>
+                        {{cinema.name}}</h4></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

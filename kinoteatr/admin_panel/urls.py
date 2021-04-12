@@ -7,6 +7,7 @@ from admin_panel.views import news_views
 from admin_panel.views import ad_views
 from admin_panel.views import movie_views
 from admin_panel.views import banner_views
+from admin_panel.views import cinema_views
 
 
 app_name = 'admin'
@@ -43,5 +44,8 @@ urlpatterns = [
     path('movies/delete_movie_gallery_image/<int:pk>/', movie_views.DeleteMovieGalleryImage.as_view(),
          name='delete_movie_gallery_image_admin'),
     path('movies/movie_detail/<int:pk>/', movie_views.DetailMovie.as_view(), name='movie_detail_admin'),
+
+    # CINEMA
+    path('cinemas/', cinema_views.ListCinema.as_view(), name='list_cinema_admin'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
