@@ -51,10 +51,10 @@
                                 <div class="col-3">
                                     {% if object.on_top_banner.url %}
                                     <img src="{{form.instance.on_top_banner.url}}" alt="Постер" id="show_on_top_banner"
-                                         width="250" height="200" name="image_preview_1">
+                                         width="250" height="200" name="on_top_image_preview_1">
                                     {% else %}
                                     <img src="{% static 'images/default_form_image.png' %}" alt="Постер"
-                                         id="show_on_top_banner" name="image_preview_1"
+                                         id="show_on_top_banner" name="on_top_image_preview_1"
                                          width="250" height="200">
                                     {% endif %}
                                 </div>
@@ -69,10 +69,10 @@
                                 <div class="col-3">
                                     {% if object.on_top_banner.url %}
                                     <img src="{{form.instance.logo.url}}" alt="Постер" id="show_logo"
-                                         width="250" height="200" name="image_preview_1">
+                                         width="250" height="200" name="logo_image_preview_1">
                                     {% else %}
                                     <img src="{% static 'images/default_form_image.png' %}" alt="Постер"
-                                         id="show_logo" name="image_preview_1"
+                                         id="show_logo" name="logo_image_preview_1"
                                          width="250" height="200">
                                     {% endif %}
                                 </div>
@@ -159,11 +159,13 @@
     </div>
 </div>
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/update_img_after_upload_static_form.js' %}"></script>
+<script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
 <script>
-    $("#main_image").change(function () {
-        setPreview(this, '1');
+    $("#on_top_banner").change(function () {
+        setPreview(this, '1', 'on_top');
     });
-
+    $("#logo").change(function(){
+        setPreview(this, '1', 'logo');
+    });
 </script>
 {% endblock %}
