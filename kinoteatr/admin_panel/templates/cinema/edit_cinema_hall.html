@@ -20,9 +20,9 @@
     <div class="row">
         <div class="col text-center">
             {% if object %}
-            <h4>Редактирование информации о кинотеатре</h4>
+            <h4>Редактирование информации о зале</h4>
             {% else %}
-            <h4>Добавить новый кинотеатр</h4>
+            <h4>Добавить новый зал для кинотеатра "{{ cinema }}"</h4>
             {% endif %}
         </div>
     </div>
@@ -33,17 +33,14 @@
                 <div class="card-body">
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
+                        <input type="hidden" name="cinema_id" value="{{ cinema.pk }}">
                         <div class="form-group limit_width">
-                            <label for="cinemaName">Название кинотеатра</label>
-                            {{form.name}}
+                            <label for="hallNumber">Номер зала</label>
+                            {{form.number}}
                         </div>
                         <div class="form-group">
-                            <label for="">Описание кинотетра</label>
+                            <label for="">Описание зала</label>
                             {{form.description}}
-                        </div>
-                        <div class="form-group">
-                            <label for="">Условия в кинотеатре</label>
-                            {{form.conditions}}
                         </div>
                         <div class="form-group">
                             <label for="on_top_banner">Верхний баннер</label>
@@ -64,20 +61,20 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="logo">Логотип</label>
+                            <label for="schema">Схема зала</label>
                             <div class="row align-items-center">
                                 <div class="col-3">
-                                    {% if object.on_top_banner.url %}
-                                    <img src="{{form.instance.logo.url}}" alt="Постер" id="show_logo"
-                                         width="250" height="200" name="image_preview_1">
+                                    {% if object.schema.url %}
+                                    <img src="{{form.instance.schema.url}}" alt="Схема" id="show_scheme"
+                                         width="250" height="200" name="image_preview_2">
                                     {% else %}
-                                    <img src="{% static 'images/default_form_image.png' %}" alt="Постер"
-                                         id="show_logo" name="image_preview_1"
+                                    <img src="{% static 'images/default_form_image.png' %}" alt="Схема"
+                                         id="show_scheme" name="image_preview_2"
                                          width="250" height="200">
                                     {% endif %}
                                 </div>
                                 <div class="col-9">
-                                    {{form.logo}}
+                                    {{form.schema}}
                                 </div>
                             </div>
                         </div>
@@ -87,53 +84,7 @@
                             {{formset.management_form}}
                             {% include 'formset_template.html' %}
                         </div>
-                    {% if object.pk %}
-                        <hr>
 
-                        <div class="row">
-                            <div class="col text-center">
-                                <h4>Список залов</h4>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col text-center">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="1">Номер зала</th>
-                                                <th colspan="3">Дата создания</th>
-                                                <th colspan="1">Редактировать</th>
-                                                <th colspan="1">Удалить</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for hall in form.instance.halls.all %}
-                                                <tr>
-                                                    <th colspan="1">{{ hall.number }}</th>
-                                                    <th colspan="3">{{ hall.creation_date }}</th>
-                                                    <th colspan="1"><a href="{% url 'admin_panel:edit_cinema_hall' hall.pk %}">Изменить</a></th>
-                                                    {% if not forloop.first %}
-                                                    <th colspan="1"><a href="{{ hall.get_delete_url }}">Удалить</a></th>
-                                                    {% endif %}
-                                                </tr>
-                                            {% empty %}
-                                                <tr>
-                                                    <th scope="row">Не залов сейчас</th>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-                            <div class="row text-center">
-                                <div class="col">
-                                    <a href="{% url 'admin_panel:add_cinema_hall' object.pk %}" class="btn btn-outline-primary">Добавить новый зал</a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
                         <hr>
                         <div class="form-group">
                             <label for="">Seo</label>

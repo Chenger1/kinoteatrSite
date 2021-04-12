@@ -55,4 +55,14 @@ urlpatterns = [
     path('cinemas/delete_cinema_gallery_image/<int:pk>/', cinema_views.DeleteCinemaGalleryImage.as_view(),
          name='delete_cinema_gallery_image'),
 
+    # # Cinema Hall
+    path('cinemas/add_cinema_hall/<int:pk>/', cinema_views.AddCinemaHall.as_view(),
+         name='add_cinema_hall'),
+    path('cinemas/edit_cinema_hall/<int:pk>/', cinema_views.UpdateCinemaHall.as_view(),
+         name='edit_cinema_hall'),
+    path('cinemas/delete_cinema_hall/<int:pk>/', cinema_views.DeleteCinemaHall.as_view(),
+         name='delete_cinema_hall'),
+    path('cinemas/delete_cinema_hall_gallery_image/<int:pk>/', cinema_views.DeleteCinemaHallGalleryImage.as_view(),
+         name='delete_cinema_hall_gallery_image'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
