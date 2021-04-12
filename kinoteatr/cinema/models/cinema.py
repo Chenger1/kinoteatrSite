@@ -17,7 +17,7 @@ def get_hall_main_image_path(instance, filename):
 
 
 class Cinema(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.TextField(max_length=5000)
     conditions = models.TextField(max_length=5000)
     on_top_banner = models.ImageField(upload_to=get_cinema_main_image_path)
@@ -37,12 +37,17 @@ class Cinema(models.Model):
 
 class CinemaHall(models.Model):
     cinema = models.ForeignKey(Cinema, related_name='halls', on_delete=models.CASCADE)
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True)
     description = models.TextField(max_length=5000)
     schema = models.ImageField(upload_to='cinema_hall/schema/')
     on_top_banner = models.ImageField(upload_to=get_hall_main_image_path)
     seo = models.ForeignKey(Seo, related_name='cinema_hall', on_delete=models.CASCADE,
                             blank=True, null=True)
 
+    creation_date = models.DateField(auto_now_add=True)
+
     def get_images(self):
         return [self.schema.path, self.on_top_banner.path]
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_cinema_hall', args=[self.pk])
