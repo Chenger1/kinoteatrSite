@@ -1,5 +1,7 @@
+from django.shortcuts import get_object_or_404, redirect
 from django.db import transaction
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import View
 
 from admin_panel.forms.seo_form import SeoForm
 
@@ -78,3 +80,26 @@ class UpdatePageMixin(UpdateView):
             else:
                 return super().form_invalid(form)
         return response
+
+
+class DeleteMixin(View):
+    model = None
+    redirect_url = None
+
+    def get(self, request, pk):
+        movie = get_object_or_404(self.model, pk=pk)
+        seo = movie.seo
+        seo.delete()
+        movie.delete()
+        return redirect(self.redirect_url)
+
+
+class DeleteGalleryImageMixin(View):
+    model = None
+    redirect_url = None
+
+    def get(self, request, pk):
+        inst = get_object_or_404(self.model, pk=pk)
+        inst_pk = inst.entity.pk
+        inst.delete()
+        return redirect(self.redirect_url, pk=inst_pk)

@@ -1,17 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View
-from django.views.generic.edit import UpdateView
 from django.views.generic.detail import DetailView
-from django.db import transaction
 
 from cinema.models.movie import Movie
 from cinema.models.gallery import MovieGallery
 
 from admin_panel.forms.movie_form import MovieForm, MovieGalleryFormSet
-from admin_panel.forms.seo_form import SeoForm
 
-from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin
+from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
 
 
 class ListMovies(View):
@@ -42,23 +39,14 @@ class UpdateMovie(UpdatePageMixin):
     success_url = reverse_lazy('admin_panel:list_movie_admin')
 
 
-class DeleteMovie(View):
-    def get(self, request, pk):
-        movie = get_object_or_404(Movie, pk=pk)
-        seo = movie.seo
-        seo.delete()
-        movie.delete()
-        return redirect('admin_panel:list_movie_admin')
+class DeleteMovie(DeleteMixin):
+    model = Movie
+    redirect_url = 'admin_panel:list_movie_admin'
 
 
-class DeleteMovieGalleryImage(View):
+class DeleteMovieGalleryImage(DeleteGalleryImageMixin):
     model = MovieGallery
-
-    def get(self, request, pk):
-        inst = get_object_or_404(self.model, pk=pk)
-        movie_pk = inst.entity.pk
-        inst.delete()
-        return redirect('admin_panel:edit_movie_admin', pk=movie_pk)
+    redirect_url = 'admin_panel:edit_movie_admin'
 
 
 class DetailMovie(DetailView):
