@@ -11,7 +11,7 @@ from cinema.models.gallery import MovieGallery
 from admin_panel.forms.movie_form import MovieForm, MovieGalleryFormSet
 from admin_panel.forms.seo_form import SeoForm
 
-from admin_panel.views.page_views_mixin import AddPageMixin
+from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin
 
 
 class ListMovies(View):
@@ -33,43 +33,13 @@ class AddMovie(AddPageMixin):
     success_url = reverse_lazy('admin_panel:list_movie_admin')
 
 
-class UpdateMovie(UpdateView):
+class UpdateMovie(UpdatePageMixin):
     model = Movie
     form_class = MovieForm
-    success_url = reverse_lazy('admin_panel:list_movie_admin')
-    context_object_name = 'form'
+    inline_form_set = MovieGalleryFormSet
     template_name = 'movie/edit_movie.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(UpdateMovie, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['formset'] = MovieGalleryFormSet(self.request.POST,
-                                                     self.request.FILES,
-                                                     instance=self.object)
-            context['formset'].full_clean()
-            context['seo_form'] = SeoForm(self.request.POST,
-                                          instance=self.object.seo)
-        else:
-            context['formset'] = MovieGalleryFormSet(instance=self.object)
-            context['seo_form'] = SeoForm(instance=self.object.seo)
-        return context
-
-    def form_valid(self, form):
-        context = self.get_context_data(form=form)
-        formset = context['formset']
-        seo_form = context['seo_form']
-        response = super().form_valid(form)
-        with transaction.atomic():
-            if formset.is_valid():
-                formset.instance = self.object
-                formset.save()
-            else:
-                return super(UpdateMovie, self).form_invalid(form)
-            if seo_form.is_valid():
-                self.object.seo = seo_form.save()
-            else:
-                return super(UpdateMovie, self).form_invalid(form)
-        return response
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_movie_admin')
 
 
 class DeleteMovie(View):
