@@ -87,10 +87,10 @@ class DeleteMixin(View):
     redirect_url = None
 
     def get(self, request, pk):
-        movie = get_object_or_404(self.model, pk=pk)
-        seo = movie.seo
+        inst = get_object_or_404(self.model, pk=pk)
+        seo = inst.seo
         seo.delete()
-        movie.delete()
+        inst.delete()
         return redirect(self.redirect_url)
 
 
