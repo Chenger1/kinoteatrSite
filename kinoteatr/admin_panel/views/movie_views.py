@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import UpdateView
 from django.views.generic.detail import DetailView
 from django.db import transaction
 
@@ -10,6 +10,8 @@ from cinema.models.gallery import MovieGallery
 
 from admin_panel.forms.movie_form import MovieForm, MovieGalleryFormSet
 from admin_panel.forms.seo_form import SeoForm
+
+from admin_panel.views.page_views_mixin import AddPageMixin
 
 
 class ListMovies(View):
@@ -23,39 +25,12 @@ class ListMovies(View):
                                                     'movies_soon': soon})
 
 
-class AddMovie(CreateView):
+class AddMovie(AddPageMixin):
     model = Movie
     form_class = MovieForm
+    inline_form_set = MovieGalleryFormSet
     template_name = 'movie/edit_movie.html'
-    context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_movie_admin')
-
-    def get_context_data(self, **kwargs):
-        data = super(AddMovie, self).get_context_data(**kwargs)
-        if self.request.POST:
-            data['formset'] = MovieGalleryFormSet(self.request.POST, self.request.FILES)
-            data['seo_form'] = SeoForm(self.request.POST)
-        else:
-            data['formset'] = MovieGalleryFormSet()
-            data['seo_form'] = SeoForm()
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['formset']
-        seo_form = context['seo_form']
-        self.object = form.save()
-        with transaction.atomic():
-            if formset.is_valid():
-                formset.instance = self.object
-                formset.save()
-            else:
-                return super(AddMovie, self).form_invalid(form)
-            if seo_form.is_valid():
-                self.object.seo = seo_form.save()
-            else:
-                return super(AddMovie, self).form_invalid(form)
-        return super(AddMovie, self).form_valid(form)
 
 
 class UpdateMovie(UpdateView):
