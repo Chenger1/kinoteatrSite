@@ -8,7 +8,7 @@ Cinema
 {% block header %}
 <div class="row">
     <div class="col-2 offset-10">
-        <a href="" class="btn btn-outline-primary">Добавить новый кинотеатор</a>
+        <a href="{% url 'admin_panel:add_cinema_admin' %}" class="btn btn-outline-primary">Добавить новый кинотеат</a>
     </div>
 </div>
 {% endblock %}

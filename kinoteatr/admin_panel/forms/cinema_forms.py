@@ -50,8 +50,8 @@ class CinemaHallGalleryForm(forms.ModelForm):
         }
 
 
-cinemaGalleryFormSet = forms.inlineformset_factory(Cinema, CinemaGallery,
+CinemaGalleryFormSet = forms.inlineformset_factory(Cinema, CinemaGallery,
                                                    form=CinemaGalleryForm, max_num=4, extra=4, can_delete=False)
 
-cinemaHallGalleryFormSet = forms.inlineformset_factory(CinemaHall, CinemaHallGallery,
+CinemaHallGalleryFormSet = forms.inlineformset_factory(CinemaHall, CinemaHallGallery,
                                                        form=CinemaHallGalleryForm, max_num=4, extra=4, can_delete=False)
