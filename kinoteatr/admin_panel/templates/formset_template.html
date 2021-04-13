@@ -2,7 +2,7 @@
 
 <div class="row" id="formset">
     {% for form in formset %}
-    <div class="col-3">
+    <div class="col-3 formset">
         <div class="card card-default">
             <div class="card-header">
                 <div class="card-tools">
@@ -15,10 +15,11 @@
                     {% endif %}
                 </div>
                 {% if form.instance.image %}
-                    <img src="{{form.instance.image.url}}" alt="" width="250" height="200" class="card-img-top">
+                    <img src="{{form.instance.image.url}}" alt="" width="250" height="200" class="card-img-top"
+                    name='{{ formset.prefix }}_image_preview_{{ forloop.counter0 }}'>
                 {% else %}
                     <img src="{% static 'images/default_form_image.png' %}" alt="" width="250" height="200"
-                    class="card-img-top">
+                    class="card-img-top" name='{{ formset.prefix }}_image_preview_{{ forloop.counter0 }}'>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -34,3 +35,15 @@
 </div>
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
+<script>
+    let prefix = '{{ formset.prefix }}' 
+    let total = parseInt($('#id_'+prefix+'-TOTAL_FORMS').val());
+    let forms = $('.formset');
+
+    for(form of forms){ // iterate over all forms
+        let index = forms.index(form); // get elements index in forms list
+        $(form).find(':input[class="upload"]').on('change', function(){
+            setPreview(this, index, '{{ formset.prefix }}'); // set onChange function for all input in formset with class = "upload"
+        })
+    }
+</script>

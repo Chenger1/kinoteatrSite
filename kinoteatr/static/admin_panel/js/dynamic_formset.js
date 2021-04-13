@@ -53,7 +53,7 @@ function cloneRow(selector, prefix, form_class, image_prefix){
 
 
 function updateElementIndex(element, prefix, index){
-	let id_regex = new RegExp('(' + prefix + '-\\d+)'); // set Regular Expression
+	let id_regex = new RegExp('(' + prefix + '-\\d+)'); // set Regular Expression to find formset inputs
 	let replacement = prefix + '-' + index;
 	if($(element).attr('for')){ // check 'for' attr and replace it`s value to new one`
 		$(element).attr('for', $(element).attr('for').replace(id_regex, replacement));
