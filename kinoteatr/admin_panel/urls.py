@@ -34,6 +34,9 @@ urlpatterns = [
     path('news/', news_views.ListNews.as_view(), name='list_news_admin'),
     path('news/add_news/', news_views.AddNews.as_view(), name='add_news_admin'),
     path('news/edit_news/<int:pk>/', news_views.UpdateNews.as_view(), name='edit_news_admin'),
+    path('news/delete_news/<int:pk>/', news_views.DeleteNews.as_view(), name='delete_news_admin'),
+    path('news/delete_news_gallery_image/<int:pk>/', news_views.DeleteNewsGalleryImage.as_view(),
+         name='delete_news_gallery_image_admin'),
 
     # ADS
     path('advertisement/', ad_views.ListAds.as_view(), name='list_ads_admin'),

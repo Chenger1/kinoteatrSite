@@ -2,8 +2,9 @@ from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 
 from cinema.models.page import News
+from cinema.models.gallery import NewsGallery
 
-from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin
+from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
 from admin_panel.forms.news_form import NewsForm, NewsGalleryFormSet
 
 
@@ -28,3 +29,13 @@ class UpdateNews(UpdatePageMixin):
     inline_form_set = NewsGalleryFormSet
     template_name = 'news/edit_news.html'
     success_url = reverse_lazy('admin_panel:list_news_admin')
+
+
+class DeleteNews(DeleteMixin):
+    model = News
+    redirect_url = 'admin_panel:list_news_admin'
+
+
+class DeleteNewsGalleryImage(DeleteGalleryImageMixin):
+    model = NewsGallery
+    redirect_url = 'admin_panel:edit_news_admin'

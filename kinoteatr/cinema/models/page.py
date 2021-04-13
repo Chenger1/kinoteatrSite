@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from cinema.models.seo import Seo
 from cinema.models.mixin import SingletonModel
@@ -17,6 +18,12 @@ class News(models.Model):
 
     def get_images(self):
         return [self.main_image.path]
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_news_admin', args=[self.pk])
+
+    def __str__(self):
+        return self.title
 
 
 class Ad(models.Model):
