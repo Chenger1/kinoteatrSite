@@ -31,13 +31,19 @@ class Ad(models.Model):
     description = models.TextField(max_length=5000)
     main_image = models.ImageField(upload_to='ad/main_images/')
     url = models.URLField()
-    publication_date = models.DateTimeField(auto_now_add=True)
+    publication_date = models.DateField()
     status = models.BooleanField()
 
     seo = models.ForeignKey(Seo, related_name='ad', on_delete=models.CASCADE, blank=True, null=True)
 
     def get_images(self):
         return [self.main_image.path]
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_ad_admin', args=[self.pk])
+
+    def __str__(self):
+        return self.title
 
 
 class MainPage(SingletonModel):

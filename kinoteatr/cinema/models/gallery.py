@@ -43,10 +43,13 @@ class NewsGallery(models.Model):
 
 class AdsGallery(models.Model):
     entity = models.ForeignKey(Ad, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='ads/gallery/')
+    image = models.ImageField(upload_to='ad/gallery/')
 
     def get_images(self):
         return [self.image.path]
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_ad_gallery_image_admin', args=[self.pk])
 
 
 class AboutCinemaGallery(models.Model):

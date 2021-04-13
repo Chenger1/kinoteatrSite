@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load beautify_status %}
 
 {% block title %}
 Акции
@@ -9,7 +10,7 @@
         <h2>Список акций</h2>
     </div>
     <div class="col-2">
-        <a href="" class="btn btn-primary">Создать акцию</a>
+        <a href="{% url 'admin_panel:add_ad_admin' %}" class="btn btn-outline-primary">Добавить акцию</a>
     </div>
 </div>
 {% endblock %}
@@ -23,7 +24,7 @@
                     <table class="table table-striped table-valign-middle">
                         <thead>
                         <tr>
-                            <th>Название</th>
+                            <th>Заголовок</th>
                             <th>Дата создания</th>
                             <th>Статус</th>
                             <th>Изменить</th>
@@ -31,17 +32,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Акция</td>
-                            <td>
-                                27.1999
-                            </td>
-                            <td>
-                                ВКЛ
-                            </td>
-                            <td>Edit</td>
-                            <td>Delete</td>
-                        </tr>
+                            {% for ad in ads %}
+                                <tr>
+                                    <th>{{ ad.title }}</th>
+                                    <th>{{ ad.publication_date }}</th>
+                                    <th>{{ ad.status|beauty_filter }}</th>
+                                    <th><a href="{% url 'admin_panel:edit_ad_admin' ad.pk %}">Изменить</a></th>
+                                    <th><a href="{{ ad.get_delete_url }}">Удалить</a></th>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

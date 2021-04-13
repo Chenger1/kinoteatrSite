@@ -39,7 +39,12 @@ urlpatterns = [
          name='delete_news_gallery_image_admin'),
 
     # ADS
-    path('advertisement/', ad_views.ListAds.as_view(), name='list_ads_admin'),
+    path('ads/', ad_views.ListAds.as_view(), name='list_ads_admin'),
+    path('ads/add_new_ad/', ad_views.AddAd.as_view(), name='add_ad_admin'),
+    path('ads/edit_ad/<int:pk>/', ad_views.UpdateAd.as_view(), name='edit_ad_admin'),
+    path('ads/delete_ad/<int:pk>/', ad_views.DeleteAd.as_view(), name='delete_ad_admin'),
+    path('ads/delete_ad_gallery_image/<int:pk>/', ad_views.DeleteAdGalleryImage.as_view(),
+         name='delete_ad_gallery_image_admin'),
 
     # MOVIES
     path('movies/', movie_views.ListMovies.as_view(), name='list_movie_admin'),
