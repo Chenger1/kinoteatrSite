@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load beautify_status %}
 
 {% block title %}
 Новости
@@ -31,17 +32,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Новость</td>
-                            <td>
-                                27.1999
-                            </td>
-                            <td>
-                                ВКЛ
-                            </td>
-                            <td>Edit</td>
-                            <td>Delete</td>
-                        </tr>
+                            {% for elem in news %}
+                                <tr>
+                                    <th>{{ elem.title }}</th>
+                                    <th>{{ elem.publication_date }}</th>
+                                    <th>{{ elem.status|beauty_filter }}</th>
+                                    <th><a href="">Изменить</a></th>
+                                    <th><a href="">Удалить</a></th>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

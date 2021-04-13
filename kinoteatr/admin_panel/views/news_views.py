@@ -1,6 +1,5 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import View
+from django.views.generic.list import ListView
 
 from cinema.models.page import News
 
@@ -8,11 +7,11 @@ from admin_panel.views.page_views_mixin import AddPageMixin
 from admin_panel.forms.news_form import NewsForm, NewsGalleryFormSet
 
 
-class ListNews(View):
+class ListNews(ListView):
     template_name = 'news/list_news.html'
-
-    def get(self, request):
-        return render(request, self.template_name)
+    model = News
+    paginate_by = 10
+    context_object_name = 'news'
 
 
 class AddNews(AddPageMixin):
