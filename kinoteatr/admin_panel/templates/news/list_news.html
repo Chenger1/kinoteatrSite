@@ -37,7 +37,7 @@
                                     <th>{{ elem.title }}</th>
                                     <th>{{ elem.publication_date }}</th>
                                     <th>{{ elem.status|beauty_filter }}</th>
-                                    <th><a href="">Изменить</a></th>
+                                    <th><a href="{% url 'admin_panel:edit_news_admin' elem.pk %}">Изменить</a></th>
                                     <th><a href="">Удалить</a></th>
                                 </tr>
                             {% endfor %}
