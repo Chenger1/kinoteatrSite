@@ -32,6 +32,7 @@ urlpatterns = [
 
     # NEWS
     path('news/', news_views.ListNews.as_view(), name='list_news_admin'),
+    path('news/add_news/', news_views.AddNews.as_view(), name='add_news_admin'),
 
     # ADS
     path('advertisement/', ad_views.ListAds.as_view(), name='list_ads_admin'),
