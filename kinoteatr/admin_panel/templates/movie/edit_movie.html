@@ -47,10 +47,10 @@
                                 <div class="col-3">
                                     {% if object.main_image.url %}
                                     <img src="{{form.instance.main_image.url}}" alt="Постер" id="show_main_image"
-                                         width="250" height="200">
+                                         width="250" height="200" name="movie_image_preview_1">
                                     {% else %}
                                     <img src="{% static 'images/default_form_image.png' %}" alt="Постер"
-                                         id="show_main_image"
+                                         id="show_main_image" name="movie_image_preview_1"
                                          width="250" height="200">
                                     {% endif %}
                                 </div>
@@ -174,10 +174,10 @@
     </div>
 </div>
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/update_img_after_upload_static_form.js' %}"></script>
+<script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
 <script>
     $("#main_image").change(function () {
-        readURLSTATIC(this, 'show_main_image');
+        setPreview(this, '1', 'movie');
     });
 </script>
 {% endblock %}
