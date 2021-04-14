@@ -101,14 +101,14 @@ function updateElementIndex(element, prefix, index){
 function deleteForm(prefix, btn, className){
 	form_class = '.'+className;
 
-	let total = parseInt($('#id_'+prefix+'-TOTAL_FORMS').val()); // get integer(value) from given formset input - TOTAL FORMS
+	var total = parseInt($('#id_'+prefix+'-TOTAL_FORMS').val()); // get integer(value) from given formset input - TOTAL FORMS
 
 	if(total == 1){
 		btn.closest(form_class).css('display', 'none');
 		$('#id_'+prefix+'-TOTAL_FORMS').val(0);
 	}else{
 		btn.closest(form_class).remove(); // finds nearest form to delete
-		let forms = $(form_class);
+		var forms = $(form_class);
 	    $('#id_'+prefix+'-TOTAL_FORMS').val(forms.length);
 	}
 	 // update TOTAL_FORMS count according to new value
