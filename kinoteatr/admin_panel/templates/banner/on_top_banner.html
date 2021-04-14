@@ -101,15 +101,17 @@
 <script src="{% static 'admin_panel/js/dynamic_formset.js' %}"></script>
 
 <script>
-$(document).on('click', '.add-row', function(e){
-    e.preventDefault();
+$(document).on('click', '.add-row', function(e){ // set onclick event for AddButton
+    e.preventDefault(); // remove default befavior for this button
     cloneRow('.on-top-forms:last', '{{ on_top_banner_form_set.prefix }}', 'on-top-forms', 'banner');
+    // set onclick function
     return false;
 });
 
-$(document).on('click', '.delete-row', function(e){
-    e.preventDefault();
+$(document).on('click', '.delete-row', function(e){ // set onclick event for DeleteButton
+    e.preventDefault(); // remove default befavior for this button
     deleteForm('{{ on_top_banner_form_set.prefix }}', $(this), 'on-top-forms');
+    // set onclick function
     return false;
 });
 </script>

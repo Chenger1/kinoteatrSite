@@ -36,8 +36,8 @@
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
 <script>
-    let prefix = '{{ formset.prefix }}' 
-    let total = parseInt($('#id_'+prefix+'-TOTAL_FORMS').val());
+    let prefix = '{{ formset.prefix }}' // prefix is a unique identifier for formset
+    let total = parseInt($('#id_'+prefix+'-TOTAL_FORMS').val()); // parseInt returns integer of TOTAL_FORMS
     let forms = $('.formset');
 
     for(form of forms){ // iterate over all forms

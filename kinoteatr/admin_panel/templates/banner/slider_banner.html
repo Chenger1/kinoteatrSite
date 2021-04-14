@@ -93,15 +93,17 @@
 <script src="{% static 'admin_panel/js/dynamic_formset.js' %}"></script>
 
 <script>
-$(document).on('click', '.add-slider-row', function(e){
-    e.preventDefault();
+$(document).on('click', '.add-slider-row', function(e){ // set onclick event for AddButton
+    e.preventDefault(); // remove default befavior for this button
     cloneRow('.slider-forms:last', '{{ slider_banner_form_set.prefix }}', 'slider-forms', 'slider');
+    // set onclick function
     return false;
 });
 
-$(document).on('click', '.delete-slider-row', function(e){
-    e.preventDefault();
+$(document).on('click', '.delete-slider-row', function(e){ // set onclick event for DeleteButton
+    e.preventDefault(); // remove default befavior for this button
     deleteForm('{{ slider_banner_form_set.prefix }}', $(this), 'slider-forms');
+    // set onclick function
     return false;
 });
 </script>

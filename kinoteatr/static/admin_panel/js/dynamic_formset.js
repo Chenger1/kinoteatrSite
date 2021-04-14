@@ -1,8 +1,9 @@
 function updateElementAttrForHidden(old_name){
 	reg = new RegExp('-[0-9]-'); // create new regular expression
 
-	matching_index = old_name.search(reg) + 1; // serach for matching
-	new_name = old_name.replace(old_name[matching_index], '0');
+	matching_index = old_name.search(reg) + 1; // search for matching
+	new_name = old_name.replace(old_name[matching_index], '0'); 
+	// replace old element index with new one
 	return new_name;
 }
 
@@ -11,7 +12,7 @@ function cloneRow(selector, prefix, form_class, image_prefix){
 	let newElement;
 
 	if(total == 0){
-		newElement = $('.'+form_class+':first').css('display', 'block');
+		newElement = $('.'+form_class+':first').css('display', 'block'); // show element if it is hide and it is alone
 	}else{
 		newElement = $(selector).clone(true); // copy element with his event handlers	
 	}
@@ -26,6 +27,7 @@ function cloneRow(selector, prefix, form_class, image_prefix){
 		}
 		let id = 'id_' + name;
 		$(this).attr({'name': name, 'id': id}).val('').removeAttr('checked'); 
+		// set new attributtes and remove 'checked' attr to create fresh form
 	});
 
 	//find input with type 'file'. This input gets uploaded image in have 'onchange' attr to dynamic update image
@@ -33,11 +35,13 @@ function cloneRow(selector, prefix, form_class, image_prefix){
 	newElement.find("input[type='file']").each(function(){
 		if(total == 0){
 			var onchange_attr = 'setPreview(this, 0, '+ "'"+image_prefix+"'"+')';
+			// if this form is alone, set onchange function with 0 index and given image prefix
 		}else{
 			var onchange_attr = $(this).attr('onchange').replace((total-1), total);	
+			// set current index in onchange function 
 		}
 		
-		$(this).attr({'onchange': onchange_attr});
+		$(this).attr({'onchange': onchange_attr}); // set new onchange function
 	})
 
 	newElement.find('label').each(function(){
@@ -47,10 +51,12 @@ function cloneRow(selector, prefix, form_class, image_prefix){
 		if (forValue){
 			if(total == 0){
 				forValue = forValue.replace('-' + (total-1)+'-', '-'+ '0' + '-');
+				// if element is alone, set the label index to 0
 			}else{
-				forValue = forValue.replace('-' + (total-1)+'-', '-'+ total + '-');	
+				forValue = forValue.replace('-' + (total-1)+'-', '-'+ total + '-');
+				// update label index for current	
 			}
-			$(this).attr({'for': forValue});
+			$(this).attr({'for': forValue}); // set new 'for' attr in label
 		};
 	});
 
@@ -60,9 +66,11 @@ function cloneRow(selector, prefix, form_class, image_prefix){
 		var nameValue = $(this).attr('name');
 		if (nameValue){
 			if(total == 0){
-				nameValue = image_prefix + '_image_preview_0'
+				nameValue = image_prefix + '_image_preview_0';
+				// if the form is alone, set '0' for its image
 			}else{
-				nameValue = nameValue.replace('_' + (total-1), '_'+ total);	
+				nameValue = nameValue.replace('_' + (total-1), '_'+ total);
+				// update image name according to new element index	
 			}
 			
 			$(this).attr({'name': nameValue});
@@ -74,7 +82,7 @@ function cloneRow(selector, prefix, form_class, image_prefix){
 	// if new form has just created, this link has to dynamicly delete new row
 	let tool_link = newElement.find('.btn-tool')
 	tool_link.attr('href', '')
-	tool_link.addClass('delete-' + image_prefix +'-row');
+	tool_link.addClass('delete-' + image_prefix +'-row'); 
 
 	total++;
 	$('#id_'+prefix+'-TOTAL_FORMS').val(total); // increment and update TOTAL_FORMS input
