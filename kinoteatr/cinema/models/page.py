@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.core.validators import RegexValidator
 
 from cinema.models.seo import Seo
 from cinema.models.mixin import SingletonModel
@@ -47,10 +48,15 @@ class Ad(models.Model):
 
 
 class MainPage(SingletonModel):
-    phone_number1 = models.CharField(max_length=30)
-    phone_number2 = models.CharField(max_length=30)
-    status = models.BooleanField()
+    phone_validation = RegexValidator(regex=r'^\+\d{8,15}$', message='Неправильный формат номера.')
+
+    phone_number1 = models.CharField(max_length=16, validators=[phone_validation])
+    phone_number2 = models.CharField(max_length=16, validators=[phone_validation])
+    status = models.BooleanField(default=True)
     seo = models.ForeignKey(Seo, related_name='main_page', on_delete=models.CASCADE, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('admin_panel:edit_main_page_admin')
 
 
 class Contact(SingletonModel):
