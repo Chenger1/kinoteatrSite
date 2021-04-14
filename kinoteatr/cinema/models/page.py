@@ -109,7 +109,7 @@ class VipHall(SingletonModel):
     seo = models.ForeignKey(Seo, related_name='vip_hall', on_delete=models.CASCADE, blank=True, null=True)
 
     def get_images(self):
-        return [self.image.path] if self.image else None
+        return [self.main_image.path] if self.main_image else None
 
     def get_absolute_url(self):
         return reverse('admin_panel:edit_vip_hall_admin')
@@ -124,7 +124,7 @@ class Advertisement(SingletonModel):
     seo = models.ForeignKey(Seo, related_name='Advertisement', on_delete=models.CASCADE, blank=True, null=True)
 
     def get_images(self):
-        return [self.image.path] if self.image else None
+        return [self.main_image.path] if self.main_image else None
 
     def get_absolute_url(self):
         return reverse('admin_panel:edit_advertisement_admin')
@@ -134,8 +134,7 @@ class ChildRoom(SingletonModel):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
     main_image = models.ImageField(upload_to='child_room/main_images/')
-    url = models.URLField()
-    status = models.BooleanField()
+    status = models.BooleanField(default=True)
 
     seo = models.ForeignKey(Seo, related_name='child_room', on_delete=models.CASCADE, blank=True, null=True)
 
