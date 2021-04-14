@@ -81,6 +81,9 @@ class VipHallGallery(models.Model):
     def get_images(self):
         return [self.image.path]
 
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_vip_hall_gallery_image', args=[self.pk])
+
 
 class AdvertisementGallery(models.Model):
     entity = models.ForeignKey(Advertisement, related_name='images', on_delete=models.CASCADE)

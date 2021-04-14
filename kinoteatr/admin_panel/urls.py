@@ -11,6 +11,7 @@ from admin_panel.views import cinema_views
 from admin_panel.views import main_page_views
 from admin_panel.views import about_cinema_views
 from admin_panel.views import cafe_bar_views
+from admin_panel.views import vip_hall_views
 
 
 app_name = 'admin'
@@ -90,5 +91,10 @@ urlpatterns = [
     path('cafe_bar/edit/', cafe_bar_views.EditCafeBar.as_view(), name='edit_cafe_bar_admin'),
     path('cafe_bar/delete_cafe_bar_gallery_image/<int:pk>/', cafe_bar_views.DeleteCafeBarGalleryImage.as_view(),
          name='delete_cafe_bar_gallery_image'),
+
+    # VIP HALL
+    path('vip_hall/edit/', vip_hall_views.EditVipHall.as_view(), name='edit_vip_hall_admin'),
+    path('vip_hall/delete_vip_hall_gallery_image/<int:pk>/', vip_hall_views.DeleteVipHallGalleryImage.as_view(),
+         name='delete_vip_hall_gallery_image'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
