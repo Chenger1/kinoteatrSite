@@ -17,7 +17,10 @@ class SingletonModel(models.Model):
     @classmethod
     def load(cls):
         obj, created = cls.objects.get_or_create(pk=1)
-        if not obj.seo:
-            obj.seo = Seo.objects.create()
-            obj.save()
+        try:
+            if not obj.seo:
+                obj.seo = Seo.objects.create()
+                obj.save()
+        except AttributeError:
+            pass
         return obj
