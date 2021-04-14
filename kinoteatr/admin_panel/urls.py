@@ -12,7 +12,7 @@ from admin_panel.views import main_page_views
 from admin_panel.views import about_cinema_views
 from admin_panel.views import cafe_bar_views
 from admin_panel.views import vip_hall_views
-
+from admin_panel.views import advertisement_views
 
 app_name = 'admin'
 
@@ -96,5 +96,11 @@ urlpatterns = [
     path('vip_hall/edit/', vip_hall_views.EditVipHall.as_view(), name='edit_vip_hall_admin'),
     path('vip_hall/delete_vip_hall_gallery_image/<int:pk>/', vip_hall_views.DeleteVipHallGalleryImage.as_view(),
          name='delete_vip_hall_gallery_image'),
+
+    # ADVERTISEMENT
+    path('advertisement/edit/', advertisement_views.EditAdvertisement.as_view(), name='edit_advertisement_admin'),
+    path('advertisement/delete_advertisement_gallery_image/<int:pk>/',
+         advertisement_views.DeleteAdvertisementGalleryImage.as_view(),
+         name='delete_advertisement_gallery_image'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

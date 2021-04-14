@@ -92,6 +92,9 @@ class AdvertisementGallery(models.Model):
     def get_images(self):
         return [self.image.path]
 
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_advertisement_gallery_image', args=[self.pk])
+
 
 class ChildRoomGallery(models.Model):
     entity = models.ForeignKey(ChildRoom, related_name='images', on_delete=models.CASCADE)
