@@ -7,4 +7,4 @@ jQuery(document).ready(function($) { // waiting for document to be loaded
 	radio2.click(function(){
 		radio1.checked = false;
 	})
-}); // comments
+});
