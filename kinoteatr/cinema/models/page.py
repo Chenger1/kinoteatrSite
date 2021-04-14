@@ -139,4 +139,7 @@ class ChildRoom(SingletonModel):
     seo = models.ForeignKey(Seo, related_name='child_room', on_delete=models.CASCADE, blank=True, null=True)
 
     def get_images(self):
-        return [self.image.path] if self.image else None
+        return [self.main_image.path] if self.main_image else None
+
+    def get_absolute_url(self):
+        return reverse('admin_panel:edit_child_room_admin')

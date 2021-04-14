@@ -103,6 +103,9 @@ class ChildRoomGallery(models.Model):
     def get_images(self):
         return [self.image.path]
 
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_child_room_gallery_image', args=[self.pk])
+
 
 class CinemaGallery(models.Model):
     entity = models.ForeignKey(Cinema, related_name='images', on_delete=models.CASCADE)

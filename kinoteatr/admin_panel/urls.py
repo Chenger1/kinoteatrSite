@@ -13,6 +13,7 @@ from admin_panel.views import about_cinema_views
 from admin_panel.views import cafe_bar_views
 from admin_panel.views import vip_hall_views
 from admin_panel.views import advertisement_views
+from admin_panel.views import child_room_views
 
 app_name = 'admin'
 
@@ -102,5 +103,10 @@ urlpatterns = [
     path('advertisement/delete_advertisement_gallery_image/<int:pk>/',
          advertisement_views.DeleteAdvertisementGalleryImage.as_view(),
          name='delete_advertisement_gallery_image'),
+
+    # CHILD ROOM
+    path('child_room/edit/', child_room_views.EditChildRoom.as_view(), name='edit_child_room_admin'),
+    path('child_room/delete_child_room_gallery_image/<int:pk>/', child_room_views.DeleteChildRoomGalleryImage.as_view(),
+         name='delete_child_room_gallery_image'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
