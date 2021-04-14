@@ -9,7 +9,7 @@ from admin_panel.forms.seo_form import SeoForm
 class EditMainPage(UpdateView):
     model = MainPage
     template_name = 'main_page/edit_main_page.html'
-    context_object_name = 'main_page'
+    context_object_name = 'form'
     form_class = MainPageForm
 
     def get_object(self, queryset=None):
