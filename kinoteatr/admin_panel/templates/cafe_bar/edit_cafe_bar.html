@@ -53,10 +53,10 @@
                                 <div class="col-3">
                                     {% if object.main_image %}
                                     <img src="{{form.instance.main_image.url}}" alt="Постер" id="show_main_image"
-                                         width="250" height="200" name="ad_image_preview_1">
+                                         width="250" height="200" name="cafe_image_preview_1">
                                     {% else %}
                                     <img src="{% static 'images/default_form_image.png' %}" alt="Постер"
-                                         id="show_main_image" name="ad_image_preview_1"
+                                         id="show_main_image" name="cafe_image_preview_1"
                                          width="250" height="200">
                                     {% endif %}
                                 </div>
@@ -92,7 +92,7 @@
 <script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
 <script>
     $("#main_image").change(function () {
-        setPreview(this, '1', 'ad');
+        setPreview(this, '1', 'cafe');
     });
 
 
