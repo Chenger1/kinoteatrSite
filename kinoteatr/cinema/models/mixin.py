@@ -1,5 +1,7 @@
 from django.db import models
 
+from cinema.models.seo import Seo
+
 
 class SingletonModel(models.Model):
     class Meta:
@@ -15,4 +17,7 @@ class SingletonModel(models.Model):
     @classmethod
     def load(cls):
         obj, created = cls.objects.get_or_create(pk=1)
+        if not obj.seo:
+            obj.seo = Seo.objects.create()
+            obj.save()
         return obj
