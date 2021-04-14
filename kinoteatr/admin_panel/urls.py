@@ -10,6 +10,7 @@ from admin_panel.views import banner_views
 from admin_panel.views import cinema_views
 from admin_panel.views import main_page_views
 from admin_panel.views import about_cinema_views
+from admin_panel.views import cafe_bar_views
 
 
 app_name = 'admin'
@@ -83,6 +84,11 @@ urlpatterns = [
     # ABOUT CINEMA
     path('about_cinema/edit/', about_cinema_views.EditAboutCinema.as_view(), name='edit_about_cinema_admin'),
     path('about_cinema/delete_about_cinema_gallery_image/<int:pk>/', about_cinema_views.DeleteAboutCinemaGalleryImage.as_view(),
-         name='delete_about_cinema_gallery_image')
+         name='delete_about_cinema_gallery_image'),
+
+    # CAFE BAR
+    path('cafe_bar/edit/', cafe_bar_views.EditCafeBar.as_view(), name='edit_cafe_bar_admin'),
+    path('cafe_bar/delete_cafe_bar_gallery_image/<int:pk>/', cafe_bar_views.DeleteCafeBarGalleryImage.as_view(),
+         name='delete_cafe_bar_gallery_image'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

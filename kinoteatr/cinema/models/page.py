@@ -89,13 +89,15 @@ class CafeBar(SingletonModel):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
     main_image = models.ImageField(upload_to='cafebar/main_images/')
-    url = models.URLField()
-    status = models.BooleanField()
+    status = models.BooleanField(default=True)
 
     seo = models.ForeignKey(Seo, related_name='cafebar', on_delete=models.CASCADE, blank=True, null=True)
 
     def get_images(self):
-        return [self.image.path] if self.image else None
+        return [self.main_image.path] if self.main_image else None
+
+    def get_absolute_url(self):
+        return reverse('admin_panel:edit_cafe_bar_admin')
 
 
 class VipHall(SingletonModel):
