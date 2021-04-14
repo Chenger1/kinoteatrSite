@@ -9,6 +9,7 @@ from admin_panel.views import movie_views
 from admin_panel.views import banner_views
 from admin_panel.views import cinema_views
 from admin_panel.views import main_page_views
+from admin_panel.views import about_cinema_views
 
 
 app_name = 'admin'
@@ -77,6 +78,11 @@ urlpatterns = [
          name='delete_cinema_hall_gallery_image'),
 
     # MAIN PAGE
-    path('main_page/edit/1', main_page_views.EditMainPage.as_view(), name='edit_main_page_admin'),
+    path('main_page/edit/', main_page_views.EditMainPage.as_view(), name='edit_main_page_admin'),
+
+    # ABOUT CINEMA
+    path('about_cinema/edit/', about_cinema_views.EditAboutCinema.as_view(), name='edit_about_cinema_admin'),
+    path('about_cinema/delete_about_cinema_gallery_image/<int:pk>/', about_cinema_views.DeleteAboutCinemaGalleryImage.as_view(),
+         name='delete_about_cinema_gallery_image')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
