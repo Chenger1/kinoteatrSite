@@ -3,6 +3,7 @@ from django_summernote.fields import SummernoteWidget
 
 from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.gallery import CinemaGallery, CinemaHallGallery
+from cinema.models.page import Contact
 
 
 class CinemaForm(forms.ModelForm):
@@ -17,6 +18,12 @@ class CinemaForm(forms.ModelForm):
             'on_top_banner': forms.FileInput(attrs={'id': 'on_top_banner', 'class': 'upload'}),
             'logo': forms.FileInput(attrs={'id': 'logo', 'class': 'upload'})
         }
+
+    def save(self, commit=True):
+        cinema_inst = super().save(commit=commit)
+        if not hasattr(cinema_inst, 'contacts') and commit:
+            Contact.objects.create(cinema=cinema_inst)
+        return cinema_inst
 
 
 class CinemaHallForm(forms.ModelForm):
