@@ -60,10 +60,11 @@ class MainPage(SingletonModel):
 
 
 class Contact(SingletonModel):
-    cinema = models.ForeignKey(Cinema, related_name='contacts', on_delete=models.CASCADE)
-    address = models.CharField(max_length=200)
-    coord_x = models.FloatField()
-    coord_y = models.FloatField()
+    cinema = models.OneToOneField(Cinema, related_name='contacts', on_delete=models.CASCADE)
+    address = models.TextField(blank=True)
+    coord_x = models.FloatField(blank=True, null=True)
+    coord_y = models.FloatField(blank=True, null=True)
+    status = models.BooleanField(default=True)
     seo = models.ForeignKey(Seo, related_name='contacts', on_delete=models.CASCADE, blank=True, null=True)
 
 
