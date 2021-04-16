@@ -65,6 +65,7 @@ class Contact(models.Model):
     coord_x = models.FloatField(blank=True, null=True)
     coord_y = models.FloatField(blank=True, null=True)
     status = models.BooleanField(default=True)
+    top_seo = models.BooleanField(default=False)
     seo = models.ForeignKey(Seo, related_name='contacts', on_delete=models.CASCADE, blank=True, null=True)
 
 

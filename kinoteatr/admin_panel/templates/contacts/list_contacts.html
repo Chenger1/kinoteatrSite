@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h2>Контактная информация</h2>
+{% endblock %}
+
+{% block content %}
+<script>var functions = []</script>
+<div class="accordion" id="accordionContact">
+    {% for contact in contacts %}
+    <div class="card">
+        <div class="card-header" id="heading-{{contact.pk}}">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#collapse-{{contact.pk}}" aria-expanded="true" aria-controls="collapseOne">
+                    {{ contact.cinema.name }}
+                </button>
+            </h2>
+        </div>
+        <div id="collapse-{{contact.pk}}" class="collapse" aria-labelledby="heading-{{contact.pk}}"
+             data-parent="#accordionContact">
+            <div class="card-body">
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                <!-- Profile Image -->
+                                <div class="card card-primary card-outline">
+                                    <div class="card-body box-profile">
+                                        <div class="text-center">
+                                            <img class="profile-user-img"
+                                                 src="{{ contact.cinema.logo.url }}"
+                                                 alt="User profile picture">
+                                        </div>
+
+                                        <h3 class="profile-username text-center">{{ contact.cinema.name }}</h3>
+
+                                        <a href="{% url 'admin_panel:edit_contact_admin' contact.pk %}"
+                                           class="btn btn-primary btn-block"><b>Редактировать</b></a>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+
+                                <!-- About Me Box -->
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Координаты</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        {% if contact.coord_x and contact.coord_y %}
+                                        <strong>{{ contact.coord_x }} - {{ contact.coord_y }}</strong>
+                                        {% else %}
+                                        <strong>Нет координат</strong>
+                                        {% endif %}
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-9">
+                                <div class="card">
+                                    <div class="card-header p-2">
+                                        <ul class="nav nav-pills">
+                                            <li class="nav-item"><a class="nav-link active" href="#activity"
+                                                                    data-toggle="tab">Информация</a></li>
+                                        </ul>
+                                    </div><!-- /.card-header -->
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div class="active tab-pane" id="activity">
+                                                <!-- Post -->
+                                                <div class="info">
+                                                    {{ contact.address|safe }}
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col" style="min-height: 500px;">
+                                                        {% if contact.coord_x and contact.coord_y %}
+                                                        {% include 'map.html' with object=contact %}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <!-- /.post -->
+                                            </div>
+                                            <!-- /.tab-pane -->
+                                        </div>
+                                        <!-- /.tab-content -->
+                                    </div><!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </section>
+            </div>
+        </div>
+    </div>
+    {% if contact.coord_x and contact.coord_y %}
+    <script>
+        var init_{{ contact.pk }} = function(){ // create func with unique name
+        	// convert into google address
+            var coord = new google.maps.LatLng({{ contact.coord_x }}, {{ contact.coord_y }});
+            var mapElem = document.getElementById("map-{{ contact.pk }}"); // get div for concrete map
+            var opt = { // set parameters
+                center: coord,
+                zoom: 15,
+            };
+            var map = new google.maps.Map(mapElem, opt); // set new map object
+            let marker = new google.maps.Marker({
+                position: opt['center'], // define marker and parameters
+                map: map,
+            });
+        };
+        functions.push(init_{{ contact.pk }}) // add new function to array 
+    </script>
+    {% endif %}
+    {% endfor %}
+</div>
+<div class="row" style="text-align:center;">
+    <div class="col">
+        <a href="{% url 'admin_panel:add_cinema_admin' %}" class="btn btn-outline-primary">Добавить новый кинотеатр</a>
+    </div>
+</div>
+<div class="row">
+        <div class="col">
+            <h4>SEO</h4>
+        <div class="form-group limit_width">
+            <label for="seoURL">URL</label>
+            <input type="text" value="{{seo.seo_url}}" disabled class="form-control" id="seoURL">
+        </div>
+        <div class="form-group limit_width">
+            <label for="seoTITLE">Title</label>
+            <input type="text" value="{{seo.seo_title}}" disabled class="form-control" id="seoTITLE">
+        </div>
+        <div class="form-group limit_width">
+            <label for="seoKeywords">Keywords</label>
+            <input type="text" value="{{ seo.seo_keywords }}" disabled class="form-control" id="seoKeywords">
+        </div>
+        <div class="form-group limit_width">
+            <label for="seoDescription">Description</label>
+            <textarea disabled style="resize:none;" class="form-control" id="seoDescription">{{seo.seo_description}}</textarea>
+        </div>
+    </div>
+</div>
+    <script>
+       var init_map = function(){
+            for(func of functions){
+                func(); // iterate over all function to render multiple maps
+            };
+       };
+    </script>
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4l1XhYRMia3qVGBFpK_HQvUZ8_i9Nhw4&callback=init_map">
+    </script>
+{% endblock %}

@@ -14,6 +14,7 @@ from admin_panel.views import cafe_bar_views
 from admin_panel.views import vip_hall_views
 from admin_panel.views import advertisement_views
 from admin_panel.views import child_room_views
+from admin_panel.views import contacts_views
 
 app_name = 'admin'
 
@@ -108,5 +109,9 @@ urlpatterns = [
     path('child_room/edit/', child_room_views.EditChildRoom.as_view(), name='edit_child_room_admin'),
     path('child_room/delete_child_room_gallery_image/<int:pk>/', child_room_views.DeleteChildRoomGalleryImage.as_view(),
          name='delete_child_room_gallery_image'),
+
+    path('contacts/list_contacts/', contacts_views.ListContacts.as_view(), name='list_contacts_admin'),
+    path('contacts/edit_contact/<int:pk>/', contacts_views.UpdateContactInfo.as_view(),
+         name='edit_contact_admin'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
