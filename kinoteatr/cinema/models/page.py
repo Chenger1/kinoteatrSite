@@ -59,7 +59,7 @@ class MainPage(SingletonModel):
         return reverse('admin_panel:edit_main_page_admin')
 
 
-class Contact(SingletonModel):
+class Contact(models.Model):
     cinema = models.OneToOneField(Cinema, related_name='contacts', on_delete=models.CASCADE)
     address = models.TextField(blank=True)
     coord_x = models.FloatField(blank=True, null=True)
