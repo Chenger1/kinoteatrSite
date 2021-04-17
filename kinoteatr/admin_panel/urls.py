@@ -20,7 +20,7 @@ from admin_panel.views import user_views
 app_name = 'admin'
 
 urlpatterns = [
-    path('index/', views.IndexAdmin.as_view(), name='admin_panel'),
+    path('', views.IndexAdmin.as_view(), name='admin_panel'),
 
     # Banners
     path('banners/', banner_views.DisplayBanner.as_view(), name='banners_admin'),
