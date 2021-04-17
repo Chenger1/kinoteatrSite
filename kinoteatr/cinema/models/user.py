@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
+from django.core.validators import RegexValidator
 
 from cinema.models.managers import UserManager
 
@@ -15,10 +16,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         (0, 'Мужской'),
         (1, 'Женский')
     ]
+    phone_validation = RegexValidator(regex=r'^\+\d{8,15}$', message='Неправильный формат номера.')
 
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
-    phone_number = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=50, validators=[phone_validation])
 
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
