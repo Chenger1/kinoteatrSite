@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Пользователи
+{% endblock %}
+{% block header %}
+<div class="row">
+    <div class="col-10" style="text-align: center;">
+        <h2>Список пользователей</h2>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-striped table-valign-middle">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Дата регистрации</th>
+                            <th>День рождения</th>
+                            <th>Email</th>
+                            <th>Телефон</th>
+                            <th>ФИО</th>
+                            <th>Псевдоним</th>
+                            <th>Город</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <th>{{ user.pk }}</th>
+                                    <th>{{ user.date_joined }}</th>
+                                    <th>
+                                        {% if user.birthday_date %}
+                                            {{ user.birthday_date}}
+                                        {% else %}
+                                        {% endif %}
+                                    </th>
+                                    <th>{{ user.email }}</th>
+                                    <th>{{ user.phone_number }}</th>
+                                    <th>{{ user.first_name }} {{ user.last_name }}</th>
+                                    <th>{{ user.username }}</th>
+                                    <th>{{ user.city }}</th>
+                                    <th><a href=""><i class="fas fa-edit"></i></a></th>
+                                    <th><a href=""><i class="fas fa-trash"></i></a></th>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
