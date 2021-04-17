@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+{% if form.errors %}
+<div class="container-fluid">
+    {% for tag, error in form.errors.items %}
+    <div class="row">
+        <div class="col alert alert-warning" role="alert">
+            {{tag}} - {{error.as_text}}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+          <h4>Редактирование информации о пользователе</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card card-default">
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="firstName">Имя</label>
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Фамилия</label>
+                                    {{ form.last_name }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Псевдоним</label>
+                                    {{ form.username }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    {{ form.email }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Адрес</label>
+                                    {{ form.address }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Пароль</label>
+                                    {{ form.password }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardNumber">Номер карты</label>
+                                    {{ form.card_number }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="phoneNumber">Номер телефона</label>
+                                    {{ form.phone_number }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="language">Язык</label>
+                                    {{ form.language }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Гендер</label>
+                                    {{ form.gender }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="birthdayDate">День рождения</label>
+                                    {{ form.birthday_date }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">Город</label>
+                                    {{ form.city }}
+                                </div>
+                                <div class="row" style="margin-top:40px;">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                {{form.is_staff}}
+                                                <label for="isStaff" class="form-check-label">Статус администратор</label>
+                                            </div>
+                                            <div class="form-check">
+                                                {{form.is_superuser}}
+                                                <label for="isSuperuser" class="form-check-label">Статус суперпользователя</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                        {{form.is_active}}
+                                        <label for="isActive" class="form-check-label">
+                                            {% if form.is_active %}
+                                                Пользователь активен
+                                            {% else %}
+                                                Пользователь неактивен
+                                            {% endif %}
+                                        </label>
+                                     </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateJoined">Дата регистрации</label>
+                                    {{ form.date_joined }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                                {% if object %}
+                                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                    Удалить
+                                </button>
+                                {% include 'delete_modal.html' %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
+<script>
+    $("#main_image").change(function () {
+        setPreview(this, '1', 'ad');
+    });
+
+
+</script>
+{% endblock %}

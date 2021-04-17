@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col">
             <div class="card">
@@ -46,8 +46,15 @@
                                     <th>{{ user.first_name }} {{ user.last_name }}</th>
                                     <th>{{ user.username }}</th>
                                     <th>{{ user.city }}</th>
-                                    <th><a href=""><i class="fas fa-edit"></i></a></th>
-                                    <th><a href=""><i class="fas fa-trash"></i></a></th>
+                                    <th><a href="{% url 'admin_panel:edit_user_admin' user.pk %}"><i class="fas fa-edit"></i></a></th>
+                                    <th>
+                                        {% if not user == request.user and not user.is_superuser %}
+                                        <a href="{% url 'admin_panel:delete_user_admin' user.pk%}">
+                                            <i class="fas fa-trash"></i></a>
+                                        {% else %}
+                                            <i class="fas fa-trash"></i>
+                                        {% endif %}
+                                    </th>
                                 </tr>
                             {% endfor %}
                         </tbody>

@@ -117,6 +117,8 @@ urlpatterns = [
          name='edit_contact_admin'),
 
     # USERS
-    path('user/list_users.html/', user_views.ListUser.as_view(), name='list_users_admin'),
+    path('user/list_users/', user_views.ListUser.as_view(), name='list_users_admin'),
+    path('user/edit_user/<int:pk>/', user_views.EditUser.as_view(), name='edit_user_admin'),
+    path('user/delete_user/<int:pk>/', user_views.DeleteUser.as_view(), name='delete_user_admin'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
