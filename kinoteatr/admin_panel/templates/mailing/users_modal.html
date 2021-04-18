@@ -1,0 +1,72 @@
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet"
+      href="{% static 'admin_panel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
+
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Пользователи</h5>
+            </div>
+            <div class="modal-body">
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td></td>
+                            <td>ID</td>
+                            <td>Дата регистрации</td>
+                            <td>День рождения</td>
+                            <td>Email</td>
+                            <td>Телефон</td>
+                            <td>ФИО</td>
+                            <td>Псевдоним</td>
+                            <td>Город</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" value="{{ user.pk }}" name="target_users" class="target_users">
+                            </td>
+                            <td>{{ user.pk }}</td>
+                            <td>{{ user.date_joined }}</td>
+                            <td>{{ user.birthday_date }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone_number }}</td>
+                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.city }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeButton">Закрыть</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<script>
+  $(document).ready(function(){
+       $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+
+  $('#closeButton').click(function(){
+    let target_users = $('.target_users');
+     target_users.each(function(){
+                this.checked = false;
+            });
+  })
+</script>

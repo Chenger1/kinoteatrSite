@@ -23,6 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="{% static 'admin_panel/summernote/summernote-bs4.min.css' %}" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'admin_panel/css/utils.css' %}">
+    {% block style %}{% endblock %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -163,7 +164,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="{% url 'admin_panel:list_users_admin' %}" class="nav-link">Пользователи</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Рассылка</a>
+                        <a href="{% url 'admin_panel:mailing_admin' %}" class="nav-link">Рассылка</a>
                     </li>
                 </ul>
             </nav>
@@ -208,6 +209,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <!-- Bootstrap 4 -->
 <script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
 <!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"-->
 <!--        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"-->
 <!--        crossorigin="anonymous"></script>-->

@@ -16,6 +16,7 @@ from admin_panel.views import advertisement_views
 from admin_panel.views import child_room_views
 from admin_panel.views import contacts_views
 from admin_panel.views import user_views
+from admin_panel.views import mailing_views
 
 app_name = 'admin'
 
@@ -120,5 +121,8 @@ urlpatterns = [
     path('user/list_users/', user_views.ListUser.as_view(), name='list_users_admin'),
     path('user/edit_user/<int:pk>/', user_views.EditUser.as_view(), name='edit_user_admin'),
     path('user/delete_user/<int:pk>/', user_views.DeleteUser.as_view(), name='delete_user_admin'),
+
+    # MAILING
+    path('mailing/mail_page/', mailing_views.DisplayMailing.as_view(), name='mailing_admin'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

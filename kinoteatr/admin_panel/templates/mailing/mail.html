@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Рассылка{% endblock %}
+{% block header %}
+<div style="text-align:center;">
+    <h3><strong>E-mail</strong></h3>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card card-default">
+                <div class="card-body">
+                    <form action="{% url 'admin_panel:mailing_admin' %}" enctype="multipart/form-data" method="post"
+                    id="target">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="targetGroup">Целевая группа</label>
+                                    {{ form.target_group }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="htmlFile">Загрузить HTML-письмо</label>
+                                    {{ form.html_file }}
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5>Текущий выбранный шаблон:</h5>
+                                        <h5 id="current"></h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5>Количество писем: {{ user_amount }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#userModal"
+                                    id="userModalButton" disabled="">
+                                          Выбрать пользователей
+                                    </button>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <h5>Список последних загруженных шаблонов</h5>
+                                                {% for mail in mail_templates %}
+                                                <input type="radio" name="html_template" value="{{ mail.pk }}"
+                                                       class="form-check-input template_input" id="template-{{ mail.pk }}"
+                                                       required>
+                                                <label for="template-{{ mail.pk }}"
+                                                       class="form-check-label">{{ mail.content.name }}</label>
+                                                <a href="">Удалить</a>
+                                                {% empty %}
+                                                Нет доступных шаблонов
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% include 'mailing/users_modal.html' %}
+                        <div class="row">
+                            <div class="col text-center">
+                                <button type="submit" class="btn btn-outline-primary">Начать рассылку</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script>
+let userModalButton = $('#userModalButton');
+let target_group_selector = $('#targetGroup');
+let downloaded = $('#htmlFile');
+let available_templates = $('.template_input');
+let current_template = $('#current');
+
+function setCurrentTemplate(name){
+    current_template.text(name);
+}
+
+function checkAllUsers(){
+    let target_users = $('.target_users');
+     target_users.each(function(){
+                this.checked = true;
+            });
+}
+
+    target_group_selector.on('change', function(){
+        let selected = this.value;
+        if(selected == 0){
+            userModalButton.attr('disabled', 'true');
+        }else{
+            userModalButton.removeAttr('disabled');
+        }
+    });
+
+    downloaded.on('change', function(event){
+        if(this.files && this.files[0]){
+            available_templates.removeAttr('required');
+            setCurrentTemplate(this.files[0].name);
+        }
+    })
+
+    available_templates.on('change', function(event){
+        downloaded.removeAttr('required');
+        id = this.id;
+        console.log(id);
+        text = $('label[for='+id+']').text();
+        setCurrentTemplate(text);
+    })
+
+
+
+    $('#target').submit(function(event) {
+        let selected = target_group_selector.children('option:selected').val();
+        
+        if(selected == 0){
+           checkAllUsers();
+        }else{
+            let checked = [];
+            $.each($('input[class="target_users"]:checked'), function(){
+                checked.push($(this).val());
+            })
+            if(checked.length <1){
+                checkAllUsers();
+            }
+        }
+        return;
+    });
+</script>
+{% endblock %}
