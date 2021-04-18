@@ -124,5 +124,7 @@ urlpatterns = [
 
     # MAILING
     path('mailing/mail_page/', mailing_views.DisplayMailing.as_view(), name='mailing_admin'),
+    path('mailing/delete_html_template/<int:pk>/', mailing_views.DeleteHtmlEmail.as_view(),
+         name='delete_html_template_admin')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

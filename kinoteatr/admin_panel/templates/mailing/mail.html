@@ -48,19 +48,22 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <div class="form-check">
+
                                                 <h5>Список последних загруженных шаблонов</h5>
                                                 {% for mail in mail_templates %}
+                                             <div class="form-check">
                                                 <input type="radio" name="html_template" value="{{ mail.pk }}"
                                                        class="form-check-input template_input" id="template-{{ mail.pk }}"
                                                        required>
                                                 <label for="template-{{ mail.pk }}"
                                                        class="form-check-label">{{ mail.content.name }}</label>
-                                                <a href="">Удалить</a>
+                                                <a href="{% url 'admin_panel:delete_html_template_admin' mail.pk %}">Удалить</a>
+                                             </div>
                                                 {% empty %}
                                                 Нет доступных шаблонов
+
                                                 {% endfor %}
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>

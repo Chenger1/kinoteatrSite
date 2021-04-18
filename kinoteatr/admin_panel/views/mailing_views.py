@@ -6,6 +6,7 @@ from cinema.models.mailing import HtmlEmail
 
 from admin_panel.forms.mailing_form import MailingForm
 from admin_panel.services.send_mail import Mail
+from admin_panel.views.singleton_pages_mixin import DeleteSingletonGalleryImageMixin
 
 
 User = get_user_model()
@@ -38,3 +39,8 @@ class DisplayMailing(View):
                 'user_amount': user_amount,
                 'mail_templates': mail_templates,
                 'form': form}
+
+
+class DeleteHtmlEmail(DeleteSingletonGalleryImageMixin):
+    model = HtmlEmail
+    redirect_url = 'admin_panel:mailing_admin'
