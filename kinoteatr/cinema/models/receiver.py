@@ -3,6 +3,8 @@ from django.dispatch import receiver
 
 import os
 
+from cinema.models.mailing import HtmlEmail
+
 
 def delete_image_path(path):
     if os.path.isfile(path):
@@ -38,3 +40,10 @@ def delete_image_with_deleting_instance(sender, instance, **kwargs):
                 delete_image_path(image)
     except AttributeError:
         return False
+
+
+@receiver(models.signals.pre_delete, sender=HtmlEmail)
+def delete_html_template_file(sender, instance, **kwargs):
+    file = instance.content.path
+    if os.path.isfile(file):
+        os.remove(file)
