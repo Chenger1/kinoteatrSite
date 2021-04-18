@@ -22,6 +22,8 @@ app_name = 'admin'
 
 urlpatterns = [
     path('', views.IndexAdmin.as_view(), name='admin_panel'),
+    path('login_admin/', views.LoginUserAdmin.as_view(), name='login_admin'),
+    path('logout_admin/', views.LogoutAdmin.as_view(), name='logout_admin'),
 
     # Banners
     path('banners/', banner_views.DisplayBanner.as_view(), name='banners_admin'),
