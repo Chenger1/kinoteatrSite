@@ -102,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTHENTICATION_BACKENDS = ['admin_panel.auth_backend.EmailBackend']
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
