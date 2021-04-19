@@ -126,6 +126,7 @@ STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
 STATICFILES_DIRS = (
     ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
     ('images', Path(__file__).parent.parent.joinpath('static/images')),
+    ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
 )
 
 

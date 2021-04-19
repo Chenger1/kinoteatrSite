@@ -13,12 +13,24 @@
   <link rel="stylesheet" href="{% static 'admin_panel/plugins/fontawesome-free/css/all.min.css'%}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'admin_panel/dist/css/adminlte.min.css' %}">
+  <link rel="stylesheet" href="{% static 'utils/utils.css' %}">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
     <a href=""><b>Admin</b>Kinoteatr</a>
   </div>
+  {% if form.errors %}
+  <div class="row">
+    <div class="col text-center">
+      <ul style="margin-left: 0; padding-left: 0; list-style-type: none; ">
+        {% for error, value in form.errors.items %}
+         <li><h4 class="h4 mb-3">{{value}}</h4></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
