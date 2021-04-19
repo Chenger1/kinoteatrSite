@@ -1,5 +1,8 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django_summernote.fields import SummernoteWidget
+
+import json
 
 from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.gallery import CinemaGallery, CinemaHallGallery
@@ -30,13 +33,34 @@ class CinemaHallForm(forms.ModelForm):
     class Meta:
         model = CinemaHall
         fields = ('number', 'description',
-                  'schema', 'on_top_banner')
+                  'schema', 'schema_json', 'on_top_banner')
         widgets = {
             'number': forms.NumberInput(attrs={'id': 'hallNumber', 'class': 'form-control'}),
             'description': SummernoteWidget(attrs={'summernote': {'width': '100%'}}),
             'on_top_banner': forms.FileInput(attrs={'id': 'on_top_banner', 'class': 'upload'}),
-            'schema': forms.FileInput(attrs={'id': 'schema', 'class': 'upload'})
+            'schema': forms.FileInput(attrs={'id': 'schema', 'class': 'upload'}),
+            'schema_json': forms.TextInput(attrs={'id': 'schema_json', 'type': 'hidden'})
         }
+
+    def save(self, commit=True):
+        hall = super().save(commit=False)
+        try:
+            schema_json_raw = self.cleaned_data.get('schema_json')
+            schema_json = json.loads(schema_json_raw)
+            amount = self.count_seats(schema_json)
+            hall.seats_amount = amount
+            hall.schema_json = json.dumps(schema_json)
+            if commit:
+                hall.save()
+            return hall
+        except json.JSONDecodeError:
+            raise ValidationError('В поле схемы передан неверный формат данных. Используйте конструктор.')
+
+    def count_seats(self, schema):
+        amount = 0
+        for seats in schema.values():
+            amount += seats.count(1)
+        return amount
 
 
 class CinemaGalleryForm(forms.ModelForm):

@@ -43,7 +43,9 @@ class CinemaHall(models.Model):
     number = models.IntegerField(unique=True)
     description = models.TextField(max_length=5000)
     schema = models.ImageField(upload_to='cinema_hall/schema/')
+    schema_json = models.TextField(default='{}')
     on_top_banner = models.ImageField(upload_to=get_hall_main_image_path)
+    seats_amount = models.IntegerField(default=0)
     seo = models.ForeignKey(Seo, related_name='cinema_hall', on_delete=models.CASCADE,
                             blank=True, null=True)
 

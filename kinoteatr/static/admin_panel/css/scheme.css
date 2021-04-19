@@ -1,0 +1,11 @@
+.scheme_button {
+	background-color: #80e1ff;
+	border: 1px solid #80e1ff;
+	margin-left: 5px;
+}
+.scheme_button:hover{
+	background-color: #00c3ff;
+}
+.scheme_button_selected{
+	background-color:#00a4d6;
+}

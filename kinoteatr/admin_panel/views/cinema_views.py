@@ -12,6 +12,8 @@ from cinema.models.gallery import CinemaGallery, CinemaHallGallery
 from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
 from admin_panel.views.permission_mixin import AdminPermissionMixin
 
+import json
+
 
 class ListCinema(AdminPermissionMixin, View):
     template_name = 'cinema/list_cinema.html'
@@ -66,6 +68,7 @@ class AddCinemaHall(AdminPermissionMixin, CreateView):
             data['formset'] = self.inline_form_set(self.request.POST, self.request.FILES)
             data['seo_form'] = SeoForm(self.request.POST)
             data['cinema'] = self.get_cinema(self.request.POST.get('cinema_id'))
+            data['schema_json'] = json.dumps(self.request.POST.get('schema_json'))
         else:
             data['formset'] = self.inline_form_set()
             data['seo_form'] = SeoForm()
@@ -105,7 +108,12 @@ class UpdateCinemaHall(UpdatePageMixin):
 
     def get_context_data(self, **kwargs):
         self.success_url = reverse_lazy('admin_panel:edit_cinema_admin', args=[self.object.cinema.pk])
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['schema_json'] = json.dumps(self.request.POST.get('schema_json'))
+        else:
+            context['schema_json'] = json.dumps(self.object.schema_json)
+        return context
 
 
 class DeleteCinemaHall(AdminPermissionMixin, View):
