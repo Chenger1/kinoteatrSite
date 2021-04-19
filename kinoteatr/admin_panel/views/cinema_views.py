@@ -10,9 +10,10 @@ from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.gallery import CinemaGallery, CinemaHallGallery
 
 from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
-class ListCinema(View):
+class ListCinema(AdminPermissionMixin, View):
     template_name = 'cinema/list_cinema.html'
 
     def get(self, request):
@@ -48,7 +49,7 @@ class DeleteCinemaGalleryImage(DeleteGalleryImageMixin):
     redirect_url = 'admin_panel:edit_cinema_admin'
 
 
-class AddCinemaHall(CreateView):
+class AddCinemaHall(AdminPermissionMixin, CreateView):
     model = CinemaHall
     form_class = CinemaHallForm
     inline_form_set = CinemaHallGalleryFormSet
@@ -107,7 +108,7 @@ class UpdateCinemaHall(UpdatePageMixin):
         return super().get_context_data(**kwargs)
 
 
-class DeleteCinemaHall(View):
+class DeleteCinemaHall(AdminPermissionMixin, View):
     model = CinemaHall
 
     def get(self, request, pk):

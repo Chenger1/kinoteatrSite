@@ -7,12 +7,13 @@ from cinema.models.mailing import HtmlEmail
 from admin_panel.forms.mailing_form import MailingForm
 from admin_panel.services.send_mail import Mail
 from admin_panel.views.singleton_pages_mixin import DeleteSingletonGalleryImageMixin
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
 User = get_user_model()
 
 
-class DisplayMailing(View):
+class DisplayMailing(AdminPermissionMixin,View):
     template_name = 'mailing/mail.html'
     form = MailingForm
 

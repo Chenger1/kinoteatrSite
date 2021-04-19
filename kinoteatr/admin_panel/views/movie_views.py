@@ -9,9 +9,10 @@ from cinema.models.gallery import MovieGallery
 from admin_panel.forms.movie_form import MovieForm, MovieGalleryFormSet
 
 from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
-class ListMovies(View):
+class ListMovies(AdminPermissionMixin, View):
     template_name = 'movie/list_movies.html'
 
     def get(self, request):

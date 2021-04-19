@@ -4,9 +4,10 @@ from cinema.models.page import MainPage
 
 from admin_panel.forms.main_page_form import MainPageForm
 from admin_panel.forms.seo_form import SeoForm
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
-class EditMainPage(UpdateView):
+class EditMainPage(AdminPermissionMixin, UpdateView):
     model = MainPage
     template_name = 'main_page/edit_main_page.html'
     context_object_name = 'form'

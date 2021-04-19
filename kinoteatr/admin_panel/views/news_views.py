@@ -6,9 +6,10 @@ from cinema.models.gallery import NewsGallery
 
 from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
 from admin_panel.forms.news_form import NewsForm, NewsGalleryFormSet
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
-class ListNews(ListView):
+class ListNews(AdminPermissionMixin, ListView):
     template_name = 'news/list_news.html'
     model = News
     paginate_by = 10

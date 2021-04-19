@@ -8,9 +8,10 @@ from admin_panel.forms.banner_form import BackgroundImageForm, OnTopBannerForm, 
                                           SliderBannerGalleryFormSet, SliderBannerForm
 
 from admin_panel.utils.messages import beautify_inline_error_messages
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
-class DisplayBanner(View):
+class DisplayBanner(AdminPermissionMixin, View):
     template_name = 'banner/banner_index.html'
 
     def get(self, request):
@@ -33,7 +34,7 @@ class DisplayBanner(View):
                                                     'slider_banner_form_set': slider_banner_form_set})
 
 
-class SaveBackgroundImage(View):
+class SaveBackgroundImage(AdminPermissionMixin, View):
     model = BackgroundImage
     form = BackgroundImageForm
 
@@ -50,7 +51,7 @@ class SaveBackgroundImage(View):
         return redirect('admin_panel:banners_admin')
 
 
-class DeleteBackgroundImage(View):
+class DeleteBackgroundImage(AdminPermissionMixin, View):
     model = BackgroundImage
 
     def get(self, request):
@@ -60,7 +61,7 @@ class DeleteBackgroundImage(View):
         return redirect('admin_panel:banners_admin')
 
 
-class SaveOnTopBanner(View):
+class SaveOnTopBanner(AdminPermissionMixin, View):
     model = OnTopBanner
     inline_model = OnTopBannerGallery
     form = OnTopBannerForm
@@ -83,7 +84,7 @@ class SaveOnTopBanner(View):
         return redirect('admin_panel:banners_admin')
 
 
-class DeleteOnTopBannerGalleryImage(View):
+class DeleteOnTopBannerGalleryImage(AdminPermissionMixin, View):
     model = OnTopBannerGallery
 
     def get(self, request, pk):
@@ -93,7 +94,7 @@ class DeleteOnTopBannerGalleryImage(View):
         return redirect('admin_panel:banners_admin')
 
 
-class SaveSliderBanner(View):
+class SaveSliderBanner(AdminPermissionMixin, View):
     model = SliderBanner
     inline_model = SliderBannerGallery
     form = SliderBannerForm
@@ -116,7 +117,7 @@ class SaveSliderBanner(View):
         return redirect('admin_panel:banners_admin')
 
 
-class DeleteSliderBannerGalleryImage(View):
+class DeleteSliderBannerGalleryImage(AdminPermissionMixin, View):
     model = SliderBannerGallery
 
     def get(self, request, pk):

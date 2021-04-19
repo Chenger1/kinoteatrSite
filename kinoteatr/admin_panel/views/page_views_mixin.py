@@ -4,9 +4,10 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import View
 
 from admin_panel.forms.seo_form import SeoForm
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
-class AddPageMixin(CreateView):
+class AddPageMixin(AdminPermissionMixin, CreateView):
     model = None
     form_class = None
     inline_form_set = None
@@ -42,7 +43,7 @@ class AddPageMixin(CreateView):
         return super().form_valid(form)
 
 
-class UpdatePageMixin(UpdateView):
+class UpdatePageMixin(AdminPermissionMixin, UpdateView):
     model = None
     form_class = None
     inline_form_set = None
@@ -82,7 +83,7 @@ class UpdatePageMixin(UpdateView):
         return response
 
 
-class DeleteMixin(View):
+class DeleteMixin(AdminPermissionMixin, View):
     model = None
     redirect_url = None
 
@@ -94,7 +95,7 @@ class DeleteMixin(View):
         return redirect(self.redirect_url)
 
 
-class DeleteGalleryImageMixin(View):
+class DeleteGalleryImageMixin(AdminPermissionMixin, View):
     model = None
     redirect_url = None
 

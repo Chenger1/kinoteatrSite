@@ -6,9 +6,10 @@ from cinema.models.page import Contact
 
 from admin_panel.forms.contacts_form import ContactsForm
 from admin_panel.forms.seo_form import SeoForm
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
-class ListContacts(ListView):
+class ListContacts(AdminPermissionMixin, ListView):
     template_name = 'contacts/list_contacts.html'
     model = Contact
     context_object_name = 'contacts'
@@ -20,7 +21,7 @@ class ListContacts(ListView):
         return context
 
 
-class UpdateContactInfo(UpdateView):
+class UpdateContactInfo(AdminPermissionMixin, UpdateView):
     model = Contact
     form_class = ContactsForm
     context_object_name = 'form'

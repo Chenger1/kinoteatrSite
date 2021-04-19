@@ -6,9 +6,10 @@ from cinema.models.gallery import AdsGallery
 
 from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
 from admin_panel.forms.ad_form import AdForm, AdGalleryFormSet
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 
-class ListAds(ListView):
+class ListAds(AdminPermissionMixin, ListView):
     template_name = 'ads/list_ads.html'
     model = Ad
     paginate_by = 10

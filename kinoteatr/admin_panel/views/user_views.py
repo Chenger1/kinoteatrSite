@@ -6,18 +6,19 @@ from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 
 from admin_panel.forms.user_form import UserForm
+from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 User = get_user_model()
 
 
-class ListUser(ListView):
+class ListUser(AdminPermissionMixin, ListView):
     model = User
     template_name = 'user/list_user.html'
     paginate_by = 10
     context_object_name = 'users'
 
 
-class EditUser(UpdateView):
+class EditUser(AdminPermissionMixin, UpdateView):
     model = User
     form_class = UserForm
     template_name = 'user/edit_user.html'
@@ -25,7 +26,7 @@ class EditUser(UpdateView):
     context_object_name = 'form'
 
 
-class DeleteUser(View):
+class DeleteUser(AdminPermissionMixin, View):
     model = User
     redirect_url = 'admin_panel:list_users_admin'
 
