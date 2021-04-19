@@ -4,10 +4,12 @@ from django.urls import reverse
 from embed_video.fields import EmbedVideoField
 
 from cinema.models.seo import Seo
+from cinema.utils.get_valid_dir_name import get_valid_dir_name
 
 
 def get_main_image_path(instance, filename):
-    return f'movie/{instance.name}/main_image/{filename}'
+    name = get_valid_dir_name(instance.name)
+    return f'movie/{name}/main_image/{filename}'
 
 
 class Movie(models.Model):

@@ -5,14 +5,17 @@ from cinema.models.movie import Movie
 from cinema.models.page import News, Ad, AboutCinema, CafeBar, VipHall, Advertisement, ChildRoom
 from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.banners import OnTopBanner, SliderBanner
+from cinema.utils.get_valid_dir_name import get_valid_dir_name
 
 
 def get_movie_gallery_image_path(instance, filename):
-    return f'movie/{instance.entity.name}/gallery/{filename}'
+    name = get_valid_dir_name(instance.entity.name)
+    return f'movie/{name}/gallery/{filename}'
 
 
 def get_cinema_gallery_image_path(instance, filename):
-    return f'cinema/{instance.entity.name}/gallery/{filename}'
+    name = get_valid_dir_name(instance.entity.name)
+    return f'cinema/{name}/gallery/{filename}'
 
 
 def get_cinema_hall_gallery_image_path(instance, filename):

@@ -2,14 +2,17 @@ from django.db import models
 from django.urls import reverse
 
 from cinema.models.seo import Seo
+from cinema.utils.get_valid_dir_name import get_valid_dir_name
 
 
 def get_cinema_main_image_path(instance, filename):
-    return f'cinema/{instance.name}/main_image/{filename}'
+    name = get_valid_dir_name(instance.name)
+    return f'cinema/{name}/main_image/{filename}'
 
 
 def get_cinema_logo_path(instance, filename):
-    return f'cinema/{instance.name}/logo/{filename}'
+    name = get_valid_dir_name(instance.name)
+    return f'cinema/{name}/logo/{filename}'
 
 
 def get_hall_main_image_path(instance, filename):
