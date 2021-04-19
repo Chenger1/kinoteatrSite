@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model, authenticate
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, PermissionDenied
 from django import forms
 
 
@@ -12,7 +12,8 @@ class LoginForm(forms.Form):
 
     errors_messages = {
         'inactive': 'Этот аккаунт уже не активен',
-        'invalid_login': 'Введите правильный email и пароль'
+        'invalid_login': 'Введите правильный email и пароль',
+        'permission_denied': 'У данного пользователя нет прав доступа к этой странице'
     }
 
     def __init__(self, request=None, *args, **kwargs):
@@ -30,6 +31,7 @@ class LoginForm(forms.Form):
                 raise self.get_invalid_login_error()
             else:
                 self.confirm_login_allowed(self.user_cache)
+                self.confirm_permission_allowed(self.user_cache)
 
         return self.cleaned_data
 
@@ -38,6 +40,10 @@ class LoginForm(forms.Form):
             raise ValidationError(
                 self.errors_messages['inactive']
             )
+
+    def confirm_permission_allowed(self, user):
+        if not user.is_staff and not user.is_superuser:
+            raise PermissionDenied(self.errors_messages['permission_denied'])
 
     def get_user(self):
         return self.user_cache
