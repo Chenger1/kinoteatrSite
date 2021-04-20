@@ -12,6 +12,11 @@ class Session(models.Model):
     session_datetime_end = models.DateTimeField()
     session_hall_schema = models.TextField()
 
+    @property
+    def ticket_price(self):
+        ticket = self.tickets.first()
+        return ticket.ticket_price
+
 
 class Ticket(models.Model):
     session = models.ForeignKey(Session, related_name='tickets', on_delete=models.CASCADE)
