@@ -131,7 +131,7 @@ urlpatterns = [
          name='delete_html_template_admin'),
 
     # SESSIONS
-    path('session/display_session/', session_views.DisplaySessions.as_view(),
+    path('session/', session_views.DisplaySessions.as_view(),
          name='display_sessions_admin'),
     path('session/add_session/', session_views.AddSession.as_view(), name='add_session_admin'),
 

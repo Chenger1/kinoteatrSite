@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block header %}
 <div class="row">
-  <div class="col-10 text-center">
-    <h3>Расписание</h3>
+  <div class="col-2">
+    <form action="{% url 'admin_panel:display_sessions_admin' %}" method="get" id="date_form">
+      <input type="date" class="form-control" id="date" value="{{date.year}}-{% if date.month < 10 %}0{{date.month}}{% else %}{{date.month}}{% endif %}-{{date.day}}"
+      name="date">
+    </form>
+  </div>
+  <div class="col-8 text-center">
+    <h3>Расписание на {% if date %}{{ date }}{% else %}сегодня{% endif %}</h3>
   </div>
   <div class="col-2">
     <a href="{% url 'admin_panel:add_session_admin' %}" class="btn btn-outline-primary">Добавить сеанс</a>
@@ -15,8 +22,38 @@
 <div class="container">
   <div class="row">
     <div class="col">
-
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Время</th>
+            <th>Фильм</th>
+            <th>Зал</th>
+            <th>Цена</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for session in sessions %}
+            <tr>
+              <th><img src="{{ session.movie.main_image.url }}" alt="постер" width="50px" height="75px"></th>
+              <td>{{ session.session_datetime_start }}</td>
+              <td><a href="{% url 'admin_panel:movie_detail_admin' session.movie.pk %}">{{ session.movie.name }}</a></td>
+              <td><a href="{% url 'admin_panel:edit_cinema_hall' session.cinema_hall.pk%}">{{ session.cinema_hall.number }}</a></td>
+              <td>25</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
+
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+  $('#date').on('change', function(){
+      $('#date_form').submit();
+  });
+</script>
 {% endblock %}

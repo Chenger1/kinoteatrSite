@@ -1,5 +1,6 @@
-from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+from django.views.generic import View
+from django.shortcuts import render
 from django.urls import reverse_lazy
 
 from cinema.models.session import Session
@@ -10,11 +11,21 @@ from admin_panel.views.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.session_form import AddSessionForm
 from admin_panel.services.adding_session import Saver
 
+import datetime
 
-class DisplaySessions(AdminPermissionMixin, ListView):
+
+class DisplaySessions(AdminPermissionMixin, View):
     model = Session
-    paginate_by = 15
     template_name = 'sessions/list_session.html'
+
+    def get(self, request):
+        date_string = request.GET.get('date')
+        if date_string:
+            self.date = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+        else:
+            self.date = datetime.datetime.now().date()
+        object_list = self.model.objects.filter(session_datetime_start__date=self.date)
+        return render(request, self.template_name, {'date': self.date, 'sessions': object_list})
 
 
 class AddSession(AdminPermissionMixin, CreateView):
