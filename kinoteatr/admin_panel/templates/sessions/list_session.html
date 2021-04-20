@@ -30,6 +30,7 @@
             <th>Фильм</th>
             <th>Зал</th>
             <th>Цена</th>
+            <th>Детали</th>
           </tr>
         </thead>
         <tbody>
@@ -39,7 +40,8 @@
               <td>{{ session.session_datetime_start }}</td>
               <td><a href="{% url 'admin_panel:movie_detail_admin' session.movie.pk %}">{{ session.movie.name }}</a></td>
               <td><a href="{% url 'admin_panel:edit_cinema_hall' session.cinema_hall.pk%}">{{ session.cinema_hall.number }}</a></td>
-              <td>25</td>
+              <td>{{ session.ticket_price }}</td>
+              <td><a href="">Детали</a></td>
             </tr>
           {% endfor %}
         </tbody>
