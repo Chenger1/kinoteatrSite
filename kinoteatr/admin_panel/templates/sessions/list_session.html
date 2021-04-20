@@ -15,7 +15,13 @@
           name="date">
       </div>
       <div class="2">
-
+        <select name="cinema" id="cinema" class="form-control">
+          <option value="">Все кинотеатры</option>
+          {% for cinema in cinemas %}
+            <option value="{{ cinema.pk }}"
+            {% if cinema.pk == current_cinema %}selected{% endif %}>{{ cinema.name}}</option>
+          {% endfor %}
+        </select>
       </div>
     <div class="col-6 text-center">
       <h3>Расписание на {% if date %}{{ date }}{% else %}сегодня{% endif %}</h3>
@@ -68,6 +74,9 @@
 <script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script>
   $('#date').on('change', function(){
+      $('#date_form').submit();
+  });
+   $('#cinema').on('change', function(){
       $('#date_form').submit();
   });
 </script>

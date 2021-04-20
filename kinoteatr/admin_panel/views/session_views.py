@@ -24,8 +24,16 @@ class DisplaySessions(AdminPermissionMixin, View):
             self.date = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
         else:
             self.date = datetime.datetime.now().date()
+
         object_list = self.model.objects.filter(session_datetime_start__date=self.date)
-        return render(request, self.template_name, {'date': self.date, 'sessions': object_list})
+        cinema = request.GET.get('cinema')
+        if cinema:
+            object_list = object_list.filter(cinema_hall__cinema=cinema)
+            cinema = int(cinema)
+
+        return render(request, self.template_name, {'date': self.date, 'sessions': object_list,
+                                                    'cinemas': Cinema.objects.all(),
+                                                    'current_cinema': cinema})
 
 
 class AddSession(AdminPermissionMixin, CreateView):
@@ -52,8 +60,8 @@ class AddSession(AdminPermissionMixin, CreateView):
                 saver = Saver(self.form_class, obj, context, self.request.POST)
                 result = saver.save_multiple()
                 if result:
-                    for objects in result:
-                        objects.save()
+                    for obj_form in result:
+                        obj_form.save()
                     return super().form_valid(form)
                 return super().form_invalid(form)
         return super().form_invalid(form)
