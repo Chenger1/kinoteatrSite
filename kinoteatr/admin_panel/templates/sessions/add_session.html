@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Создать сеанс{% endblock %}
+
+{% block header %}
+{% if form.errors %}
+<div class="container-fluid">
+    {% for tag, error in form.errors.items %}
+    <div class="row">
+        <div class="col alert alert-warning" role="alert">
+            {{tag}} - {{error.as_text}}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h4>Добавить новый сеанс</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card card-default">
+                <div class="card-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="cinemaHall">Выбрать зал кинотеатра</label>
+                                            <select name="cinema_hall" id="cinemaHall" class="form-control">
+                                                <option disabled selected>---------</option>
+                                                {% for cinema in cinemas %}
+                                                <option value="" disabled>{{ cinema.name }}</option>
+                                                {% for hall in cinema.halls.all %}
+                                                <option value="{{ hall.pk }}">Зал номер: {{ hall.number }} - {{ hall.seats_amount }} мест</option>
+                                                {% endfor %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <h5>Выбранный фильм: <span id="chose_movie">Фильм не выбран</span></h5>
+                                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                                    data-target="#movieModal"
+                                                    id="movieModalButton" {% if chosen_movie %}disabled{% endif %}>
+                                                Выбрать фильм
+                                            </button>
+                                            <input type="hidden" name="movie" value="" id="selected_movie">
+                                            {% include 'sessions/movie_modal.html' %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5">
+                                        <label for="sessionDate">Дата сеанса</label>
+                                        {{ form.session_date }}
+                                    </div>
+                                    <div class="col-5">
+                                        <label for="endSession">Дата последнего сеанса (Опционально)</label>
+                                        {{ form.end_session }}
+                                        <small class="text-muted">Если указана, формируется сеанс на каждый день
+                                        в промежутке</small>
+                                    </div>
+                                    <div class="col-2">
+                                        <label for="sessionTime">Время сеанса</label>
+                                        {{ form.session_time }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                    {% if chosen_movie.main_image.url %}
+                                    <img src="{{chosen_movie.main_image.url}}" alt="Постер" id="show_main_image"
+                                         width="250" height="200" name="movie_image_preview_1">
+                                    {% else %}
+                                    <img src="{% static 'images/default_form_image.png' %}" alt="Постер"
+                                         id="show_main_image" name="movie_image_preview_1"
+                                         width="250" height="200">
+                                    {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
+{% endblock %}

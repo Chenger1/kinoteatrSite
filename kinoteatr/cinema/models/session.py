@@ -8,8 +8,8 @@ from cinema.models.user import User
 class Session(models.Model):
     cinema_hall = models.ForeignKey(CinemaHall, related_name='sessions', on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, related_name='sessions', on_delete=models.CASCADE)
-    session_date = models.DateField()
-    session_time = models.TimeField()
+    session_datetime_start = models.DateTimeField()
+    session_datetime_end = models.DateTimeField()
     session_hall_schema = models.TextField()
 
 

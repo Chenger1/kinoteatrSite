@@ -4,6 +4,8 @@ from django.urls import reverse
 from cinema.models.seo import Seo
 from cinema.utils.get_valid_dir_name import get_valid_dir_name
 
+import copy
+
 
 def get_cinema_main_image_path(instance, filename):
     name = get_valid_dir_name(instance.name)
@@ -53,6 +55,9 @@ class CinemaHall(models.Model):
 
     def get_images(self):
         return [self.schema.path, self.on_top_banner.path]
+
+    def clone_schema_json(self):
+        return copy.deepcopy(self.schema_json)
 
     def get_delete_url(self):
         return reverse('admin_panel:delete_cinema_hall', args=[self.pk])

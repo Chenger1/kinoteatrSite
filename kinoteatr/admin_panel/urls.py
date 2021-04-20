@@ -17,6 +17,7 @@ from admin_panel.views import child_room_views
 from admin_panel.views import contacts_views
 from admin_panel.views import user_views
 from admin_panel.views import mailing_views
+from admin_panel.views import session_views
 
 app_name = 'admin'
 
@@ -127,6 +128,11 @@ urlpatterns = [
     # MAILING
     path('mailing/mail_page/', mailing_views.DisplayMailing.as_view(), name='mailing_admin'),
     path('mailing/delete_html_template/<int:pk>/', mailing_views.DeleteHtmlEmail.as_view(),
-         name='delete_html_template_admin')
+         name='delete_html_template_admin'),
+
+    # SESSIONS
+    path('session/display_session/', session_views.DisplaySessions.as_view(),
+         name='display_sessions_admin'),
+    path('session/add_session/', session_views.AddSession.as_view(), name='add_session_admin'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

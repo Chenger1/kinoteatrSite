@@ -1,0 +1,65 @@
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet"
+      href="{% static 'admin_panel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
+
+<div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Фильмы</h5>
+            </div>
+            <div class="modal-body">
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>Название</td>
+                            <td>Тип фильма</td>
+                            <td>Дата выхода</td>
+                            <td>Язык</td>
+                            <td>Длительность</td>
+                            <td>Жанр</td>
+                            <td>Возр. огр.</td>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for movie in movies %}
+                        <tr>
+                            <td>{{ movie.pk }}</td>
+                            <td>{{ movie.name }}</td>
+                            <td>{{ movie.is_2d_type }} {{ movie.is_3d_type }} {{ movie.is_imax_type }}</td>
+                            <td>{{ movie.release }}</td>
+                            <td>{{ movie.language }}</td>
+                            <td>{{ movie.running_time }}</td>
+                            <td>{{ movie.genre }}</td>
+                            <td>{{ movie.age_limit }}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-secondary"
+                                onclick="handleMovie({{ movie.pk }}, '{{ movie.name }}', '{{ movie.main_image.url }}')" data-dismiss="modal">Выбрать</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeButton">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/session/session.js' %}"></script>
+<script>
+  $(document).ready(function(){
+       $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
