@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 import datetime
 
-from cinema.models.session import Session
+from cinema.models.session import Session, Ticket
 
 
 class AddSessionForm(forms.ModelForm):
@@ -17,6 +17,9 @@ class AddSessionForm(forms.ModelForm):
     session_time = forms.TimeField(widget=forms.TimeInput(attrs={'id': 'sessionTime',
                                                                  'type': 'time',
                                                                  'class': 'form-control'}))
+    ticket_price = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'tickerPrice', 'type': 'number',
+                                                                      'class': 'form-control', 'min': '10',
+                                                                      'max': '300'}))
 
     class Meta:
         model = Session
@@ -47,4 +50,9 @@ class AddSessionForm(forms.ModelForm):
         session.session_datetime_end = self.cleaned_data['datetime_field_end']
         if commit:
             session.save()
+            base_ticket = Ticket.objects.create(
+                session=session,
+                ticket_price=self.cleaned_data['ticket_price'],
+            )
+            base_ticket.save()
         return session

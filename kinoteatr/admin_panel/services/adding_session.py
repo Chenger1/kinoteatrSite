@@ -26,12 +26,13 @@ class Saver:
             'movie': self.object.movie,
             'session_date': self.object.session_datetime_start,
             'session_time': self.object.session_datetime_start.time(),
+            'ticket_price': self.request.get('ticket_price')
         }
         for date in self.date_range:
             form_context['session_date'] = date
             form = self.form(form_context)
             if form.is_valid():
-                self.objects.append(form.save(commit=False))
+                self.objects.append(form)
             else:
                 raise ValueError('Ошибка в данных')
         return self.objects
