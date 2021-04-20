@@ -57,6 +57,24 @@ class Movie(models.Model):
     def get_delete_url(self):
         return reverse('admin_panel:delete_movie_admin', args=[self.pk])
 
+    @property
+    def is_2d_type(self):
+        if self.is_2d:
+            return '2D'
+        return ''
+
+    @property
+    def is_3d_type(self):
+        if self.is_3d:
+            return '3D'
+        return ''
+
+    @property
+    def is_imax_type(self):
+        if self.is_imax:
+            return 'IMAX'
+        return ''
+
     def __str__(self):
         return self.name
 

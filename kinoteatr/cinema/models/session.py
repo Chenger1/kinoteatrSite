@@ -8,7 +8,9 @@ from cinema.models.user import User
 class Session(models.Model):
     cinema_hall = models.ForeignKey(CinemaHall, related_name='sessions', on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, related_name='sessions', on_delete=models.CASCADE)
-    session_date = models.DateTimeField()
+    session_date = models.DateField()
+    session_time = models.TimeField()
+    session_hall_schema = models.TextField()
 
 
 class Ticket(models.Model):
