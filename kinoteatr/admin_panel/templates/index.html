@@ -60,22 +60,27 @@
                         <!-- /.card-header -->
                         <div class="card-body p-0">
                             <ul class="products-list product-list-in-card pl-2 pr-2">
+                                {% for movie in last_movies %}
                                 <li class="item">
+                                    <div class="product-img">
+                                        <img src="{{ movie.main_image.url }}" alt="Постер" class="img-size-50">
+                                    </div>
                                     <div class="product-info">
-                                        <a href="javascript:void(0)" class="product-title">Терминатор
-                                            <span class="badge badge-warning float-right">Жанр</span></a>
+                                        <a href="javascript:void(0)" class="product-title">{{ movie.name }}
+                                            <span class="badge badge-warning float-right">{{ movie.get_genre_display }}</span></a>
                                         <span class="product-description">
-                                        2д 3д
+                                        {{ movie.release }}
                                             </span>
                                     </div>
                                 </li>
+                                {% endfor %}
                                 <!-- /.item -->
 
                             </ul>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer text-center">
-                            <a href="javascript:void(0)" class="uppercase">Посмотреть все фильмы</a>
+                            <a href="{% url 'admin_panel:list_movie_admin' %}" class="uppercase">Посмотреть все фильмы</a>
                         </div>
                         <!-- /.card-footer -->
                     </div>
@@ -88,7 +93,7 @@
                 <div class="col">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>{{ user_count }}</h3>
 
                             <p>Зарегестрированных пользователей</p>
                         </div>
@@ -102,7 +107,7 @@
                 <div class="col">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px"></sup></h3>
+                            <h3>{{ movie_count }}<sup style="font-size: 20px"></sup></h3>
 
                             <p>Фильмов в прокате</p>
                         </div>
@@ -116,7 +121,7 @@
                 <div class="col">
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <h3>{{ load }}<sup style="font-size: 20px">%</sup></h3>
                             <p>Нагруженность сети</p>
                         </div>
                         <div class="icon">
@@ -144,7 +149,7 @@
             ],
             datasets: [
                 {
-                    data: [32, 11,],
+                    data: [{{ man }}, {{ woman }}],
                     backgroundColor: ['#00c0ef', '#f56954',],
                 }
             ]
@@ -175,14 +180,21 @@
     $(function () {
         var donutData = {
             labels: [
-                'Комедия',
-                'Ужасы',
-                'Триллер',
-                'Боевик'
+<!--                'Комедия',-->
+<!--                'Ужасы',-->
+<!--                'Триллер',-->
+<!--                'Боевик'-->
+                {% for key in genre.keys %}
+                    '{{ key }}',
+                {% endfor %}
             ],
             datasets: [
                 {
-                    data: [32, 11, 10, 42],
+                    data: [
+                        {% for value in genre.values %}
+                            {{ value }},
+                        {% endfor %}
+                    ],
                     backgroundColor: ['#00c0ef', '#f56954','#f39c12', '#3c8dbc'],
                 }
             ]
@@ -212,10 +224,10 @@
 
 <script>
     var areaChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Ноябть', 'Декабрь'],
         datasets: [
             {
-                label: 'Digital Goods',
+                label: 'Сеансы',
                 backgroundColor: 'rgba(60,141,188,0.9)',
                 borderColor: 'rgba(60,141,188,0.8)',
                 pointRadius: false,
@@ -223,7 +235,11 @@
                 pointStrokeColor: 'rgba(60,141,188,1)',
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [28, 48, 40, 19, 86, 27, 90]
+                data: [
+                    {% for value in session.values %}
+                        {{ value }},
+                    {% endfor %}
+                ]
             },
         ]
     }
