@@ -1,33 +1,44 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet"
+      href="{% static 'admin_panel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
+
 {% block header %}
-<div class="row">
-  <div class="col-2">
-    <form action="{% url 'admin_panel:display_sessions_admin' %}" method="get" id="date_form">
-      <input type="date" class="form-control" id="date" value="{{date.year}}-{% if date.month < 10 %}0{{date.month}}{% else %}{{date.month}}{% endif %}-{{date.day}}"
-      name="date">
-    </form>
+  <form action="{% url 'admin_panel:display_sessions_admin' %}" method="get" id="date_form">
+  <div class="row">
+      <div class="col-2">
+          <input type="date" class="form-control" id="date" value="{{date.year}}-{% if date.month < 10 %}0{{date.month}}{% else %}{{date.month}}{% endif %}-{{date.day}}"
+          name="date">
+      </div>
+      <div class="2">
+
+      </div>
+    <div class="col-6 text-center">
+      <h3>Расписание на {% if date %}{{ date }}{% else %}сегодня{% endif %}</h3>
+    </div>
+    <div class="col-2">
+      <a href="{% url 'admin_panel:add_session_admin' %}" class="btn btn-outline-primary">Добавить сеанс</a>
+    </div>
   </div>
-  <div class="col-8 text-center">
-    <h3>Расписание на {% if date %}{{ date }}{% else %}сегодня{% endif %}</h3>
-  </div>
-  <div class="col-2">
-    <a href="{% url 'admin_panel:add_session_admin' %}" class="btn btn-outline-primary">Добавить сеанс</a>
-  </div>
-</div>
+  </form>
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col">
-      <table class="table">
+      <table id="sessions" class="table table-bordered table-hover">
         <thead>
           <tr>
             <th></th>
             <th>Время</th>
             <th>Фильм</th>
+            <th>Формат</th>
+            <th>Кинотреатр</th>
             <th>Зал</th>
             <th>Цена</th>
             <th>Детали</th>
@@ -39,6 +50,8 @@
               <th><img src="{{ session.movie.main_image.url }}" alt="постер" width="50px" height="75px"></th>
               <td>{{ session.session_datetime_start }}</td>
               <td><a href="{% url 'admin_panel:movie_detail_admin' session.movie.pk %}">{{ session.movie.name }}</a></td>
+              <td>{{ session.movie.is_2d_type }} {{ session.movie.is_3d_type }} {{ session.movie.is_2d_imax }}</td>
+              <td><a href="{% url 'admin_panel:edit_cinema_admin' session.cinema_hall.cinema.pk %}">{{ session.cinema_hall.cinema.name }}</a></td>
               <td><a href="{% url 'admin_panel:edit_cinema_hall' session.cinema_hall.pk%}">{{ session.cinema_hall.number }}</a></td>
               <td>{{ session.ticket_price }}</td>
               <td><a href="">Детали</a></td>
@@ -56,6 +69,13 @@
 <script>
   $('#date').on('change', function(){
       $('#date_form').submit();
+  });
+</script>
+<script>
+  $(document).ready(function(){
+       $("#sessions").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
 {% endblock %}
