@@ -16,7 +16,8 @@ class Session(models.Model):
 class Ticket(models.Model):
     session = models.ForeignKey(Session, related_name='tickets', on_delete=models.CASCADE)
     ticket_price = models.IntegerField()
-    status = models.BooleanField()
+    reserved = models.BooleanField(default=False)
+    bought = models.BooleanField(default=False)
 
 
 class UserTicket(models.Model):
