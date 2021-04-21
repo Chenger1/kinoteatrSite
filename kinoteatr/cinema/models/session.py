@@ -17,6 +17,14 @@ class Session(models.Model):
         ticket = self.tickets.first()
         return ticket.ticket_price
 
+    @property
+    def tickets_count(self):
+        return self.tickets.count()-1
+
+    @property
+    def income(self):
+        return self.tickets_count*self.ticket_price
+
 
 class Ticket(models.Model):
     session = models.ForeignKey(Session, related_name='tickets', on_delete=models.CASCADE)
