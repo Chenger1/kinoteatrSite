@@ -15,17 +15,36 @@ class Session(models.Model):
 
     @property
     def tickets_count(self):
-        return self.tickets.count()
+        return self.tickets.filter(bought=True).count()
 
     @property
     def income(self):
         return self.tickets_count*self.ticket_price
 
+    @property
+    def available_seats(self):
+        return self.cinema_hall.seats_amount - self.tickets_count
+
+    @property
+    def reserved_tickets(self):
+        return self.tickets.filter(reserved=True).count()
+
 
 class Ticket(models.Model):
     session = models.ForeignKey(Session, related_name='tickets', on_delete=models.CASCADE)
+    row_number = models.IntegerField()
+    seat_number = models.IntegerField()
     reserved = models.BooleanField(default=False)
     bought = models.BooleanField(default=False)
+
+    @property
+    def ticket_state(self):
+        if self.bought:
+            return 1
+        elif self.reserved:
+            return 0
+        else:
+            return None
 
 
 class UserTicket(models.Model):

@@ -60,7 +60,7 @@
               <td><a href="{% url 'admin_panel:edit_cinema_admin' session.cinema_hall.cinema.pk %}">{{ session.cinema_hall.cinema.name }}</a></td>
               <td><a href="{% url 'admin_panel:edit_cinema_hall' session.cinema_hall.pk%}">{{ session.cinema_hall.number }}</a></td>
               <td>{{ session.ticket_price }}</td>
-              <td><a href="">Детали</a></td>
+              <td><a href="{% url 'admin_panel:detail_session_admin' session.pk %}">Детали</a></td>
             </tr>
           {% endfor %}
         </tbody>

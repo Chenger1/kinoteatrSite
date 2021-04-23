@@ -1,11 +1,35 @@
 .scheme_button {
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.scheme_button_free{
 	background-color: #80e1ff;
 	border: 1px solid #80e1ff;
-	margin-left: 5px;
 }
-.scheme_button:hover{
+
+.scheme_button_free:hover{
 	background-color: #00c3ff;
 }
+
 .scheme_button_selected{
 	background-color:#00a4d6;
+}
+
+.scheme_row_counter{
+	margin-top: 3px;
+}
+
+.reserved_button{
+	background-color: red;
+	border: 1px solid red;
+}
+
+.bought_button{
+	background-color: gray;
+	border: 1px solid gray;
+}
+
+.to_revert{
+	background-color: green;
 }

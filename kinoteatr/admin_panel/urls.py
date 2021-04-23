@@ -134,5 +134,8 @@ urlpatterns = [
     path('session/', session_views.DisplaySessions.as_view(),
          name='display_sessions_admin'),
     path('session/add_session/', session_views.AddSession.as_view(), name='add_session_admin'),
+    path('session/detail/<int:pk>/', session_views.DetailSession.as_view(), name='detail_session_admin'),
+    path('session/revert_ticket_reserving/<int:pk>/', session_views.RevertTicketReserving.as_view(),
+         name='revert_ticket_reserving_admin'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

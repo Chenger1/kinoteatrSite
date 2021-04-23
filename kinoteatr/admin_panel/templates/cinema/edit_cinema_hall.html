@@ -140,14 +140,14 @@
     {% if schema_json %}
         let schema = JSON.parse({{ schema_json|safe }});
         if(!jQuery.isEmptyObject(schema))
-            buildScheme(schema);
-        else{
-            seats_amount.text('441');
-            buildScheme();
+            buildScheme(schema, true);
+        else{ // if schema is empty - render default
+            seats_amount.text('441'); // default number of seats
+            buildScheme(trg=false);
         }
     {% else %}
         seats_amount.text('441');
-        buildScheme();
+        buildScheme(trg=false);
     {% endif %}
     $('#save_scheme').on('click', saveScheme);
 </script>
