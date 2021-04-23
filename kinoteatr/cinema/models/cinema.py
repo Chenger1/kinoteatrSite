@@ -23,8 +23,8 @@ def get_hall_main_image_path(instance, filename):
 
 class Cinema(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(max_length=5000)
-    conditions = models.TextField(max_length=5000)
+    description = models.TextField()
+    conditions = models.TextField()
     on_top_banner = models.ImageField(upload_to=get_cinema_main_image_path)
     logo = models.ImageField(upload_to=get_cinema_logo_path)
     seo = models.ForeignKey(Seo, related_name='cinema', on_delete=models.CASCADE,
@@ -43,8 +43,8 @@ class Cinema(models.Model):
 class CinemaHall(models.Model):
     cinema = models.ForeignKey(Cinema, related_name='halls', on_delete=models.CASCADE)
     number = models.IntegerField(unique=True)
-    description = models.TextField(max_length=5000)
-    schema = models.ImageField(upload_to='cinema_hall/schema/')
+    description = models.TextField()
+    schema = models.FileField(upload_to='cinema_hall/schema/')
     schema_json = models.TextField(default='{}')
     on_top_banner = models.ImageField(upload_to=get_hall_main_image_path)
     seats_amount = models.IntegerField(default=0)

@@ -42,7 +42,7 @@ function buildScheme(scheme, trg){
 		}else{
 			for(i=0; i<=row_seats.length-1; i++){
 				let button_id = 'button_' + row_id + '_'+ i; // id for button
-				let button = '<button type="button" style="width: 20px; height: 25px;" id="'+button_id+'" class="scheme_button"'+
+				let button = '<button type="button" style="width: 20px; height: 25px;" id="'+button_id+'" class="scheme_button scheme_button_free"'+
 				'></button>'; // create button tag
 				parent = $('#'+row_id); // get parent
 				parent.append(button); // add button to parent bloc
