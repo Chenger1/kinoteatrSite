@@ -35,7 +35,7 @@ class Movie(models.Model):
     description = models.TextField()
     main_image = models.ImageField(upload_to=get_main_image_path)
     url = EmbedVideoField()
-    is_2d = models.BooleanField(default=False)
+    is_2d = models.BooleanField(default=True)
     is_3d = models.BooleanField(default=False)
     is_imax = models.BooleanField(default=False)
     released = models.BooleanField(default=False)

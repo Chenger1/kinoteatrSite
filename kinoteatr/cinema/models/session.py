@@ -6,12 +6,19 @@ from cinema.models.user import User
 
 
 class Session(models.Model):
+    types_choice = [
+        (1, '2D'),
+        (2, '3D'),
+        (3, 'IMAX')
+    ]
+
     cinema_hall = models.ForeignKey(CinemaHall, related_name='sessions', on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, related_name='sessions', on_delete=models.CASCADE)
     session_datetime_start = models.DateTimeField()
     session_datetime_end = models.DateTimeField()
     session_hall_schema = models.TextField()
     ticket_price = models.IntegerField()
+    type = models.IntegerField(choices=types_choice)
 
     @property
     def tickets_count(self):

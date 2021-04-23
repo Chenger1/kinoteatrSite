@@ -181,10 +181,14 @@
                                                 {% for session in sessions %}
                                                     <tr>
                                                         <td>{{ session.session_datetime_start }}</td>
-                                                        <td>{{ movie.is_2d_type }} {{movie.is_2d_type}}
-                                                        {{ movie.is_imax_type }}</td>
-                                                        <td>{{ session.cinema_hall.cinema.name }}</td>
-                                                        <td>{{ session.cinema_hall.number }}</td>
+                                                        <td>{{ session.get_type_display }}</td>
+                                                        <td><a href="{% url 'admin_panel:edit_cinema_admin' session.cinema_hall.cinema.pk%}">
+                                                            {{ session.cinema_hall.cinema.name }}</a></td>
+                                                        <td>
+                                                            <a href="{% url 'admin_panel:edit_cinema_hall' session.cinema_hall.pk %}">
+                                                                {{ session.cinema_hall.number }}
+                                                            </a>
+                                                        </td>
                                                         <td>{{ session.ticket_price }}</td>
                                                         <td><a href="{% url 'admin_panel:detail_session_admin' session.pk %}">
                                                             Детали

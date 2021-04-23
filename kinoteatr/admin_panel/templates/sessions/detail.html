@@ -72,6 +72,9 @@
                         <p class="text-muted">{{ session.ticket_price }}</p>
 
                         <hr>
+                        <strong>Формат фильма</strong>
+                        <p class="text-muted">{{ session.get_type_display }}</p>
+                        <hr>
 
                         <strong>Кинотеатр/Зал</strong>
                         <p class="text-muted">{{ session.cinema_hall.cinema.name }}/Зал №{{ session.cinema_hall.number }}</p>
