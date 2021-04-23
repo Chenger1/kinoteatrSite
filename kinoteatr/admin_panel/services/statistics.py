@@ -47,4 +47,4 @@ class Statistic:
 
         bought_tickets = Ticket.objects.filter(bought=True).count()  # how many tickets bought
         result = (bought_tickets*100)/total_seats
-        return result
+        return round(result, 2)
