@@ -100,6 +100,9 @@
                         <ul class="nav nav-pills">
                             <li class="nav-item"><a class="nav-link active" href="#activity"
                                                     data-toggle="tab">О фильме</a></li>
+                            <li class="nav-item">
+                                <a href="#sessionTab" class="nav-link" data-toggle="tab">Сеансы</a>
+                            </li>
                         </ul>
                     </div><!-- /.card-header -->
                     <div class="card-body">
@@ -158,6 +161,41 @@
                                 <!-- /.post -->
                             </div>
                             <!-- /.tab-pane -->
+
+                            <div id="sessionTab" class="tab-pane">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5>Сеансы на ближайшие 7 дней</h5>
+                                        <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th>Время</th>
+                                                <th>Формат</th>
+                                                <th>Кинотреатр</th>
+                                                <th>Зал</th>
+                                                <th>Цена</th>
+                                                <th>Детали</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for session in sessions %}
+                                                    <tr>
+                                                        <td>{{ session.session_datetime_start }}</td>
+                                                        <td>{{ movie.is_2d_type }} {{movie.is_2d_type}}
+                                                        {{ movie.is_imax_type }}</td>
+                                                        <td>{{ session.cinema_hall.cinema.name }}</td>
+                                                        <td>{{ session.cinema_hall.number }}</td>
+                                                        <td>{{ session.ticket_price }}</td>
+                                                        <td><a href="{% url 'admin_panel:detail_session_admin' session.pk %}">
+                                                            Детали
+                                                        </a></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.tab-content -->
                     </div><!-- /.card-body -->

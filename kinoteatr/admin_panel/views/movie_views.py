@@ -5,11 +5,14 @@ from django.views.generic.detail import DetailView
 
 from cinema.models.movie import Movie
 from cinema.models.gallery import MovieGallery
+from cinema.models.session import Session
 
 from admin_panel.forms.movie_form import MovieForm, MovieGalleryFormSet
 
 from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
 from admin_panel.views.permission_mixin import AdminPermissionMixin
+
+import datetime
 
 
 class ListMovies(AdminPermissionMixin, View):
@@ -54,3 +57,15 @@ class DetailMovie(DetailView):
     model = Movie
     template_name = 'movie/movie_detail.html'
     context_object_name = 'movie'
+
+    def get_context_data(self, **kwargs):
+        """
+        Set to context each session for given movie for the next 7 days
+        """
+        context = super().get_context_data(**kwargs)
+        today = datetime.date.today()
+        week = today + datetime.timedelta(days=7)  # get last day of the current 7-days period
+        upcoming_session = self.object.sessions.filter(session_datetime_start__range=[today, week])
+        # filter by date range
+        context['sessions'] = upcoming_session
+        return context
