@@ -11,15 +11,11 @@ class Session(models.Model):
     session_datetime_start = models.DateTimeField()
     session_datetime_end = models.DateTimeField()
     session_hall_schema = models.TextField()
-
-    @property
-    def ticket_price(self):
-        ticket = self.tickets.first()
-        return ticket.ticket_price
+    ticket_price = models.IntegerField()
 
     @property
     def tickets_count(self):
-        return self.tickets.count()-1
+        return self.tickets.count()
 
     @property
     def income(self):
@@ -28,7 +24,6 @@ class Session(models.Model):
 
 class Ticket(models.Model):
     session = models.ForeignKey(Session, related_name='tickets', on_delete=models.CASCADE)
-    ticket_price = models.IntegerField()
     reserved = models.BooleanField(default=False)
     bought = models.BooleanField(default=False)
 

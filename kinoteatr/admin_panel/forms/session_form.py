@@ -50,9 +50,4 @@ class AddSessionForm(forms.ModelForm):
         session.session_datetime_end = self.cleaned_data['datetime_field_end']
         if commit:
             session.save()
-            base_ticket = Ticket.objects.create(
-                session=session,
-                ticket_price=self.cleaned_data['ticket_price'],
-            )
-            base_ticket.save()
         return session
