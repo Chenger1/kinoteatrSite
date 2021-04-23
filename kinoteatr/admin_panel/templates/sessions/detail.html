@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'admin_panel/css/scheme.css' %}">
+{% endblock %}
+
+{% block title %} Сеанс {% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img"
+                                 src="{{ session.movie.main_image.url }}"
+                                 alt="User profile picture">
+                        </div>
+
+                        <h3 class="profile-username text-center">{{ session.movie }}</h3>
+
+                        <p class="text-muted text-center">{{ session.movie.get_genre_display }}</p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Возрастные ограничения</b> <a class="float-right">{{ session.movie.get_age_limit_display }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Язык</b> <a class="float-right">{{ session.movie.get_language_display }}</a>
+                            </li>
+                        </ul>
+
+                        <a href="{% url 'admin_panel:movie_detail_admin' session.movie.pk %}"
+                           class="btn btn-primary btn-block"><b>Страница фильма</b></a>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <!-- About Me Box -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Информация</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <strong>Дата начала сеанса</strong>
+
+                        <p class="text-muted">
+                            {{ session.session_datetime_start }}
+                        </p>
+
+                        <hr>
+
+                        <strong>Длительность сенса</strong>
+
+                        <p class="text-muted">{{ session.movie.running_time }}</p>
+
+                        <hr>
+
+                        <strong>Цена, грн</strong>
+
+                        <p class="text-muted">{{ session.ticket_price }}</p>
+
+                        <hr>
+
+                        <strong>Кинотеатр/Зал</strong>
+                        <p class="text-muted">{{ session.cinema_hall.cinema.name }}/Зал №{{ session.cinema_hall.number }}</p>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <form action="{% url 'admin_panel:revert_ticket_reserving_admin' session.pk %}" method="get" id="revertReserving" >
+                            {% csrf_token %}
+                            <input type="hidden" name="tickets_to_revert" id="tickets_to_revert">
+                            <button type="submit" class="btn btn-outline-secondary">Отменить бронь выбранных билетов</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#activity"
+                                                    data-toggle="tab">О сеансе</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="activity">
+                                <!-- Post -->
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <h5>Всего мест: {{ session.cinema_hall.seats_amount }}</h5>
+                                        </div>
+                                        <div class="col-4">
+                                            <h5>Мест свободно: {{ session.available_seats }}
+                                            (Забронировано: <strong>{{ session.reserved_tickets }}</strong>)</h5>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5>Продано билетов: <strong>{{ session.tickets_count }}</strong>
+                                                Сумма: <strong>{{ session.income }}</strong> грн.</h5>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <img src="{% static 'images/screen.jpg' %}" alt="" width="600">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:50px;">
+                                        <div class="col">
+                                            <div id="scheme_builder" class="text-center">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="scheme_button reserved_button" disabled style="color:white;">Забронированное место</button>
+                                            <button type="button" class="scheme_button bought_button" disabled style="color:white;">Купленное место</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.post -->
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/hall/schema.js' %}"></script>
+<script src="{% static 'admin_panel/js/session/session.js' %}"></script>
+<script>
+    let schema = JSON.parse({{ schema_json|safe }}); // parse json obj with seats and rows of the given cinema hall
+    let tickets = {{ reserved_tickets|safe }} // json obj with info about tickets
+    buildScheme(schema);
+    buildSessionTickets(tickets);
+</script>
+<script>
+    let tickets_to_revert_input = $('#tickets_to_revert'); // hidden input for cancel ticket reserving
+    $('#revertReserving').submit(function(event){
+        let result = [];
+        $('.to_revert').each(function(){ // each obj with class 'to_revert' will be added to result list
+            result.push($(this).val());
+        });
+        if(result.length <1){ // if result list <0, form doesn`t need to be submitted
+            event.preventDefault();
+        }else{
+            tickets_to_revert_input.val(result); // otherwise - send it
+        }
+    });
+</script>
+{% endblock %}
