@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 from cinema.models.movie import Movie
-from cinema.models.page import News, Ad, AboutCinema, CafeBar, VipHall, Advertisement, ChildRoom
+from cinema.models.page import News, Ad, AboutCinema, CafeBar, VipHall, Advertisement, ChildRoom, MobileApp
 from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.banners import OnTopBanner, SliderBanner
 from cinema.utils.get_valid_dir_name import get_valid_dir_name
@@ -149,3 +149,14 @@ class OnTopBannerGallery(models.Model):
 
     def get_images(self):
         return [self.image.path]
+
+
+class MobileAppGallery(models.Model):
+    entity = models.ForeignKey(MobileApp, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='mobile_app/gallery/')
+
+    def get_images(self):
+        return [self.image.path]
+
+    def get_delete_url(self):
+        return reverse('admin_panel:delete_mobile_app_gallery_image', args=[self.pk])

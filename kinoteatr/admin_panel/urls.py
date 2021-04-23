@@ -18,6 +18,7 @@ from admin_panel.views import contacts_views
 from admin_panel.views import user_views
 from admin_panel.views import mailing_views
 from admin_panel.views import session_views
+from admin_panel.views import mobile_app_views
 
 app_name = 'admin'
 
@@ -137,5 +138,9 @@ urlpatterns = [
     path('session/detail/<int:pk>/', session_views.DetailSession.as_view(), name='detail_session_admin'),
     path('session/revert_ticket_reserving/<int:pk>/', session_views.RevertTicketReserving.as_view(),
          name='revert_ticket_reserving_admin'),
+
+    path('mobile_app/edit/', mobile_app_views.EditMobileApp.as_view(), name='edit_mobile_app_admin'),
+    path('mobile_app/delete_mobile_app_gallery_image/<int:pk>/', mobile_app_views.DeleteMobileAppGalleryImage.as_view(),
+         name='delete_mobile_app_gallery_image'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
