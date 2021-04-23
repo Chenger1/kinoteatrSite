@@ -71,7 +71,7 @@ class AddSession(AdminPermissionMixin, CreateView):
         return super().form_invalid(form)
 
 
-class DetailSession(DetailView):
+class DetailSession(AdminPermissionMixin, DetailView):
     model = Session
     template_name = 'sessions/detail.html'
     context_object_name = 'session'
@@ -104,7 +104,7 @@ class DetailSession(DetailView):
         return result
 
 
-class RevertTicketReserving(View):
+class RevertTicketReserving(AdminPermissionMixin, View):
     model = Ticket
 
     def get(self, request, pk):
