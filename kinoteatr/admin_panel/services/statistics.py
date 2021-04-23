@@ -11,7 +11,7 @@ class Statistic:
         return Movie.objects.filter(released=True).count()  # counts only released movies
 
     def get_last_10_movies(self) -> List[Movie]:  # BUT, it is a QuerySet type
-        return Movie.objects.all().order_by('-id')[:10]
+        return Movie.objects.all().order_by('-id')[:5]
 
     def get_users(self) -> int:
         return User.objects.count()

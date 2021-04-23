@@ -66,7 +66,7 @@
                                         <img src="{{ movie.main_image.url }}" alt="Постер" class="img-size-50">
                                     </div>
                                     <div class="product-info">
-                                        <a href="javascript:void(0)" class="product-title">{{ movie.name }}
+                                        <a href="{% url 'admin_panel:movie_detail_admin' movie.pk%}" class="product-title">{{ movie.name }}
                                             <span class="badge badge-warning float-right">{{ movie.get_genre_display }}</span></a>
                                         <span class="product-description">
                                         {{ movie.release }}
