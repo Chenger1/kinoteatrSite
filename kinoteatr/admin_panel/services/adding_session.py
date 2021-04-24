@@ -40,7 +40,8 @@ class Saver:
             'movie': self.object.movie,
             'session_date': self.object.session_datetime_start,
             'session_time': self.object.session_datetime_start.time(),
-            'ticket_price': self.request.get('ticket_price')
+            'ticket_price': self.request.get('ticket_price'),
+            'type': self.object.type
         }  # contain default context info for every session> such as cinema_hall
         for date in self.date_range:
             form_context['session_date'] = date  # different dates for each form
