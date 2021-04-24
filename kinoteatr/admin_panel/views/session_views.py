@@ -3,9 +3,10 @@ from django.views.generic.detail import DetailView
 from django.views.generic import View
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 
 from cinema.models.session import Session, Ticket
-from cinema.models.cinema import Cinema
+from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.movie import Movie
 
 from admin_panel.views.permission_mixin import AdminPermissionMixin
@@ -120,3 +121,19 @@ class RevertTicketReserving(AdminPermissionMixin, View):
         for ticket in tickets.split(','):
             get_object_or_404(self.model, pk=ticket).delete()
         return redirect('admin_panel:detail_session_admin', pk=pk)
+
+
+class CinemaHallFormat(View):
+    def get(self, request):
+        #  Check, which format cinema hall supports
+        # AJAX
+        cinema_hall = get_object_or_404(CinemaHall, pk=request.GET.get('cinema_hall'))
+        context = {}
+        if cinema_hall.is_2d:
+            context['2D'] = '1'
+        if cinema_hall.is_3d:
+            context['3D'] = '2'
+        if cinema_hall.is_imax:
+            context['IMAX'] = '3'
+        #  Client side uses this info for render select tag only with available formats
+        return JsonResponse(context, status=200)

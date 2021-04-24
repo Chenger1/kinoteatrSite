@@ -138,7 +138,9 @@ urlpatterns = [
     path('session/detail/<int:pk>/', session_views.DetailSession.as_view(), name='detail_session_admin'),
     path('session/revert_ticket_reserving/<int:pk>/', session_views.RevertTicketReserving.as_view(),
          name='revert_ticket_reserving_admin'),
+    path('session/get_cinema_hall_format/', session_views.CinemaHallFormat.as_view(), name='cinema_hall_format_session'),
 
+    # MOBILE APP
     path('mobile_app/edit/', mobile_app_views.EditMobileApp.as_view(), name='edit_mobile_app_admin'),
     path('mobile_app/delete_mobile_app_gallery_image/<int:pk>/', mobile_app_views.DeleteMobileAppGalleryImage.as_view(),
          name='delete_mobile_app_gallery_image'),

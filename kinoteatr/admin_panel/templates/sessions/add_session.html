@@ -95,7 +95,7 @@
                                 {{ form.ticket_price }}
                             </div>
                             <div class="col" style="max-width:15%;">
-                                <label for="sessionTye">Формат фильма</label>
+                                <label for="sessionType">Формат фильма</label>
                                 {{ form.type }}
                             </div>
                         </div>
@@ -113,4 +113,23 @@
 </div>
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
+<script>
+    $('#cinemaHall').on('change', function(e){
+    // We cant save session in cinema hall if this hall doesnt support saved session format
+    // For example, we cant save Imax session in cinema hall that support only 2D
+    // So, this function requests available formats for chosen cinema hall
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'admin_panel:cinema_hall_format_session' %}',
+            data: {'cinema_hall': this.value},
+            success: function(response){
+                $('#selectType').find('option').remove();
+                $('#selectType').append(new Option('---------'));
+                for(key in response){
+                    $('#selectType').append(new Option(key, response[key]));
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}
