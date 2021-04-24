@@ -15,7 +15,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-2">
 
                 <!-- Profile Image -->
                 <div class="card card-primary card-outline">
@@ -93,7 +93,7 @@
                 <!-- /.card -->
             </div>
             <!-- /.col -->
-            <div class="col-md-9">
+            <div class="col-10">
                 <div class="card">
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
@@ -122,7 +122,7 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col text-center">
-                                            <img src="{% static 'images/screen.jpg' %}" alt="" width="600">
+                                            <img src="{% static 'images/screen.jpg' %}" alt="" width="800">
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top:50px;">
@@ -134,8 +134,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <button type="button" class="scheme_button reserved_button" disabled style="color:white;">Забронированное место</button>
-                                            <button type="button" class="scheme_button bought_button" disabled style="color:white;">Купленное место</button>
+                                            <button type="button" class="reserved_button" disabled style="color:white; margin-top:10px;">Забронированное место</button>
+                                            <button type="button" class="bought_button" disabled style="color:white; margin-top:10px;">Купленное место</button>
                                         </div>
                                     </div>
                                 </div>
@@ -156,10 +156,13 @@
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/hall/schema.js' %}"></script>
 <script src="{% static 'admin_panel/js/session/session.js' %}"></script>
+<script src="{% static 'admin_panel/js/hall/builder.js' %}"></script>
 <script>
     let schema = JSON.parse({{ schema_json|safe }}); // parse json obj with seats and rows of the given cinema hall
     let tickets = {{ reserved_tickets|safe }} // json obj with info about tickets
-    buildScheme(schema);
+    let render = new renderSchema(schema);
+    render.render_schema();
+    set_style(); // from builder.js
     buildSessionTickets(tickets);
 </script>
 <script>

@@ -1,6 +1,8 @@
 .scheme_button {
 	margin-left: 5px;
 	margin-top: 5px;
+	width: 35px;
+	height: 35px;
 }
 
 .scheme_button_free{
@@ -14,6 +16,8 @@
 
 .scheme_button_selected{
 	background-color:#00a4d6;
+	border: 1px solid #80e1ff;
+}
 }
 
 .scheme_row_counter{
@@ -32,4 +36,47 @@
 
 .to_revert{
 	background-color: green;
+}
+
+.schema_button_remove_tool{
+	margin-left: 25px;
+	margin-top: 5px;
+	width: 30px;
+	height: 35px;
+	background-color: #ff7a70;
+	border: 1px solid #ff7a70;
+	color: white;
+}
+.schema_button_remove_tool:hover{
+	background-color: #ff594d;
+	border: 1px solid #ff594d;
+}
+
+.schema_button_add_tool{
+	margin-top: 5px;
+	width: 30px;
+	height: 35px;
+	background-color: #7aff5c;
+	border: 1px solid #7aff5c;
+	color: white;
+}
+.schema_button_add_tool:hover{
+	background-color: #22b800;
+	border: 1px solid #22b800;
+}
+
+.schema_row_number{
+	width: 75px;
+	height: 35px;
+	margin-right: 25px;
+	float: left;
+	background: none!important;
+	border: none;
+	padding: 0!important;
+	cursor: default !important;
+	color: black;
+};
+
+.schema_row_number:hover{
+	cursor: default !important;
 }
