@@ -30,17 +30,32 @@ class CinemaForm(forms.ModelForm):
 
 
 class CinemaHallForm(forms.ModelForm):
+    cinema = forms.ModelChoiceField(queryset=Cinema.objects.all(), widget=forms.Select(attrs={'id': 'cinema',
+                                                                                              'class': 'form-control'}))
+
     class Meta:
         model = CinemaHall
-        fields = ('number', 'description',
-                  'schema', 'schema_json', 'on_top_banner')
+        exclude = ('seats_amount', 'seo', 'creation_date')
         widgets = {
             'number': forms.NumberInput(attrs={'id': 'hallNumber', 'class': 'form-control'}),
             'description': SummernoteWidget(attrs={'summernote': {'width': '100%'}}),
             'on_top_banner': forms.FileInput(attrs={'id': 'on_top_banner', 'class': 'upload'}),
             'schema': forms.FileInput(attrs={'id': 'schema', 'class': 'upload'}),
-            'schema_json': forms.TextInput(attrs={'id': 'schema_json', 'type': 'hidden'})
+            'schema_json': forms.TextInput(attrs={'id': 'schema_json', 'type': 'hidden'}),
+            'is_vip_hall': forms.CheckboxInput(attrs={'id': 'isVipHall', 'class': 'form-check-input type_checkbox',
+                                                      'type': 'checkbox'}),
+            'is_2d': forms.CheckboxInput(attrs={'id': 'is2D', 'class': 'form-check-input type_checkbox',
+                                                      'type': 'checkbox'}),
+            'is_3d': forms.CheckboxInput(attrs={'id': 'is3D', 'class': 'form-check-input type_checkbox',
+                                                      'type': 'checkbox'}),
+            'is_imax': forms.CheckboxInput(attrs={'id': 'isImax', 'class': 'form-check-input type_checkbox',
+                                                  'type': 'checkbox'}),
         }
+
+    def clean(self):
+        super().clean()
+        if self.cleaned_data['cinema'].halls.filter(number=self.cleaned_data['number']):
+            raise ValidationError('Кинотеатр с таким номер уже существует. Выберите другой')
 
     def save(self, commit=True):
         hall = super().save(commit=False)

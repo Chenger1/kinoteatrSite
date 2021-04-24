@@ -36,13 +36,21 @@ class Cinema(models.Model):
     def get_delete_url(self):
         return reverse('admin_panel:delete_cinema_admin', args=[self.pk])
 
+    @property
+    def next_hall_number(self):
+        # increment number of the last cinema hall to get next number for new one
+        last_hall = self.halls.last()
+        if last_hall:
+            return last_hall.number + 1
+        return 1
+
     def __str__(self):
         return self.name
 
 
 class CinemaHall(models.Model):
     cinema = models.ForeignKey(Cinema, related_name='halls', on_delete=models.CASCADE)
-    number = models.IntegerField(unique=True)
+    number = models.IntegerField()
     description = models.TextField()
     schema = models.FileField(upload_to='cinema_hall/schema/')
     schema_json = models.TextField(default='{}')
@@ -50,6 +58,11 @@ class CinemaHall(models.Model):
     seats_amount = models.IntegerField(default=0)
     seo = models.ForeignKey(Seo, related_name='cinema_hall', on_delete=models.CASCADE,
                             blank=True, null=True)
+    is_2d = models.BooleanField(default=True)
+    is_3d = models.BooleanField(default=False)
+    is_imax = models.BooleanField(default=False)
+
+    is_vip_hall = models.BooleanField(default=False)
 
     creation_date = models.DateField(auto_now_add=True)
 
@@ -58,6 +71,17 @@ class CinemaHall(models.Model):
 
     def clone_schema_json(self):
         return copy.deepcopy(self.schema_json)
+
+    @property
+    def available_formats(self):
+        result = ''
+        if self.is_2d:
+            result += '2D'
+        if self.is_3d:
+            result += ',3D'
+        if self.is_imax:
+            result += ',IMAX'
+        return result
 
     def get_delete_url(self):
         return reverse('admin_panel:delete_cinema_hall', args=[self.pk])

@@ -62,27 +62,30 @@ class AddCinemaHall(AdminPermissionMixin, CreateView):
         self.cinema = self.get_cinema(kwargs.get('pk'))
         return super(AddCinemaHall, self).get(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        self.cinema = self.get_cinema(kwargs.get('pk'))
+        return super(AddCinemaHall, self).post(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if self.request.POST:
             data['formset'] = self.inline_form_set(self.request.POST, self.request.FILES)
             data['seo_form'] = SeoForm(self.request.POST)
-            data['cinema'] = self.get_cinema(self.request.POST.get('cinema_id'))
+            data['cinema'] = self.get_cinema(self.request.POST.get('cinema'))
             data['schema_json'] = json.dumps(self.request.POST.get('schema_json'))
+            data['next_number'] = self.cinema.next_hall_number
         else:
             data['formset'] = self.inline_form_set()
             data['seo_form'] = SeoForm()
             data['cinema'] = self.cinema
+            data['next_number'] = self.cinema.next_hall_number
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
         formset = context['formset']
         seo_form = context['seo_form']
-        self.cinema = self.get_cinema(self.request.POST.get('cinema_id'))
-        self.object = form.save(commit=False)
-        self.object.cinema = self.cinema
-        self.object.save()
+        self.object = form.save()
         with transaction.atomic():
             if formset.is_valid():
                 formset.instance = self.object
