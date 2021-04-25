@@ -51,7 +51,7 @@ class AddSessionForm(forms.ModelForm):
             #  Because if our movie starts at 12:00 PM, there can be movie that will ended in 12:30 in this hall
             #  Since we cant have two session in one hall at the same time, we have to check for this range
 
-            str_date = datetime_field_start.strftime("%y:%m:%d, %h:%m")
+            str_date = datetime_field_start.strftime("%y:%m:%d, %H:%M")
             # transform date to string to place it in message
             #  If we will find another session in this time - raise Validation Error
             raise ValidationError(f'Сеанс на выбранную дату и время уже существует. Дата и время: {str_date}',
