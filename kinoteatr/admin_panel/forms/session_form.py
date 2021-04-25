@@ -42,9 +42,9 @@ class AddSessionForm(forms.ModelForm):
         chosen_date_session = cleaned_data['cinema_hall'].sessions.filter(session_datetime_start__day=datetime_field_start.day)
         #  filter all sessions for the given date in purposes to be sure that there are no other sessions in this time
 
-        if chosen_date_session.filter(session_datetime_start__time__range=(datetime_field_start, datetime_field_end))\
-                or chosen_date_session.filter(session_datetime_end__time__range=(datetime_field_start,
-                                                                                 datetime_field_end)):
+        if chosen_date_session.filter(session_datetime_start__range=(datetime_field_start, datetime_field_end))\
+                or chosen_date_session.filter(session_datetime_end__range=(datetime_field_start,
+                                                                           datetime_field_end)):
             #  if there are sessions which match with current session START time OR
             #  if there are sessions which match with current session END time
             #  We have to check not only for start or end time, but also for this range [start, end]
