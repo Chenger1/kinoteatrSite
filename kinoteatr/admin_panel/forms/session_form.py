@@ -68,5 +68,9 @@ class AddSessionForm(forms.ModelForm):
         session.session_datetime_start = self.cleaned_data['datetime_field_start']
         session.session_datetime_end = self.cleaned_data['datetime_field_end']
         if commit:
+            if not session.movie.released:
+                movie = session.movie
+                movie.released = True  # If movie is not released - change this option because we create session
+                movie.save()
             session.save()
         return session
