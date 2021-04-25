@@ -34,7 +34,7 @@ class DisplaySessions(AdminPermissionMixin, View):
             object_list = object_list.filter(cinema_hall__cinema=cinema)
             cinema = int(cinema)  # cinema pk has to be transformed to integer, otherwise it can`t be seen in template
 # if the way i need
-
+        object_list = object_list.order_by('session_datetime_start')  # order by session start time
         return render(request, self.template_name, {'date': self.date, 'sessions': object_list,
                                                     'cinemas': Cinema.objects.all(),
                                                     'current_cinema': cinema})
