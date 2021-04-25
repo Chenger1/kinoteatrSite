@@ -83,5 +83,9 @@ class CinemaHall(models.Model):
             result += ',IMAX'
         return result
 
+    @property
+    def vip(self):
+        return 'VIP' if self.is_vip_hall else ''
+
     def get_delete_url(self):
         return reverse('admin_panel:delete_cinema_hall', args=[self.pk])

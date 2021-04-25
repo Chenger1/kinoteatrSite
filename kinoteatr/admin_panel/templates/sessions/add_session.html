@@ -42,7 +42,7 @@
                                                 {% for cinema in cinemas %}
                                                 <option value="" disabled>{{ cinema.name }}</option>
                                                 {% for hall in cinema.halls.all %}
-                                                <option value="{{ hall.pk }}">Зал номер: {{ hall.number }} - {{ hall.seats_amount }} мест</option>
+                                                <option value="{{ hall.pk }}">Зал номер: {{ hall.number }}-{{hall.vip}} - {{ hall.seats_amount }} мест</option>
                                                 {% endfor %}
                                                 {% endfor %}
                                             </select>
