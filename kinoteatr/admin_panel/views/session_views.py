@@ -137,3 +137,12 @@ class CinemaHallFormat(View):
             context['IMAX'] = '3'
         #  Client side uses this info for render select tag only with available formats
         return JsonResponse(context, status=200)
+
+
+class DeleteSession(View):
+    model = Session
+
+    def get(self, request, pk):
+        session = get_object_or_404(Session, pk=pk)
+        session.delete()
+        return redirect('admin_panel:display_sessions_admin')
