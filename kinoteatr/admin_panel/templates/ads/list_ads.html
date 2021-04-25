@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load beautify_status %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet"
+      href="{% static 'admin_panel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
 
 {% block title %}
 Акции
@@ -19,9 +26,9 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="card">
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-striped table-valign-middle">
+            <div class="card card-default">
+                <div class="card-body">
+                    <table id="ads_table" class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>Заголовок</th>
@@ -48,4 +55,14 @@
         </div>
     </div>
 </div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+  $(document).ready(function(){
+       $("#ads_table").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+    });
+  });
+</script>
 {% endblock %}
