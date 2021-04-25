@@ -7,7 +7,7 @@
 {% for tag, error in form.errors.items %}
             $(document).Toasts('create', {
                 class: 'bg-danger',
-                title: '{{ tag }}',
+                title: '{{ tag|beauty_error_tag }}',
                 body: '{{ error.as_text|beauty_error }}'
             })
 {% endfor %}

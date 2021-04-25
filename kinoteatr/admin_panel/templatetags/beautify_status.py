@@ -16,3 +16,11 @@ def beauty_filter(value):
 def beauty_filter(value):
     text = value.replace('* ', '')
     return text
+
+
+@register.filter(name='beauty_error_tag')
+def beauty_filter(value):
+    tags = {
+        '__all__': 'Ошибка'
+    }
+    return tags[value]
