@@ -20,17 +20,9 @@
   <div class="login-logo">
     <a href=""><b>Admin</b>Kinoteatr</a>
   </div>
-  {% if form.errors %}
-  <div class="row">
-    <div class="col text-center">
-      <ul style="margin-left: 0; padding-left: 0; list-style-type: none; ">
-        {% for error, value in form.errors.items %}
-         <li><h4 class="h4 mb-3">{{value}}</h4></li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  {% endif %}
+{% if form.errors %}
+    {% include 'errors.html' with errors=form.errors %}
+{% endif %}
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">

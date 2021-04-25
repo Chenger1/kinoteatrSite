@@ -10,3 +10,9 @@ def beauty_filter(value):
         False: 'Выкл'
     }
     return options[value]
+
+
+@register.filter(name='beauty_error')
+def beauty_filter(value):
+    text = value.replace('* ', '')
+    return text

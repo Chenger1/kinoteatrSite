@@ -5,15 +5,7 @@
 
 {% block header %}
 {% if form.errors %}
-<div class="container-fluid">
-    {% for tag, error in form.errors.items %}
-    <div class="row">
-        <div class="col alert alert-warning" role="alert">
-            {{tag}} - {{error.as_text}}
-        </div>
-    </div>
-    {% endfor %}
-</div>
+    {% include 'errors.html' with errors=form.errors %}
 {% endif %}
 {% endblock %}
 

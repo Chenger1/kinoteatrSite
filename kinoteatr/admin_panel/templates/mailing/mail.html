@@ -5,6 +5,9 @@
 <div style="text-align:center;">
     <h3><strong>E-mail</strong></h3>
 </div>
+{% if form.errors %}
+    {% include 'errors.html' with errors=form.errors %}
+{% endif %}
 {% endblock %}
 
 {% block content %}
