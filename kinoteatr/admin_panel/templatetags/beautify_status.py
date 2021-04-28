@@ -23,4 +23,4 @@ def beauty_filter(value):
     tags = {
         '__all__': 'Ошибка'
     }
-    return tags[value]
+    return tags[value] if value in tags.keys() else value
