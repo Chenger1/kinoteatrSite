@@ -79,14 +79,14 @@ class CinemaHall(models.Model):
 
     @property
     def available_formats(self):
-        result = ''
+        result = []
         if self.is_2d:
-            result += '2D'
+            result.append('2D')
         if self.is_3d:
-            result += ',3D'
+            result.append('3D')
         if self.is_imax:
-            result += ',IMAX'
-        return result
+            result.append('IMAX')
+        return ', '.join(result)
 
     @property
     def vip(self):
