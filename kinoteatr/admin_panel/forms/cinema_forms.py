@@ -54,7 +54,8 @@ class CinemaHallForm(forms.ModelForm):
 
     def clean(self):
         super().clean()
-        if self.cleaned_data['cinema'].halls.filter(number=self.cleaned_data['number']):
+        matching = self.cleaned_data['cinema'].halls.filter(number=self.cleaned_data['number']).first()
+        if matching and matching.pk != self.instance.pk:
             raise ValidationError('Кинотеатр с таким номер уже существует. Выберите другой')
 
     def save(self, commit=True):
