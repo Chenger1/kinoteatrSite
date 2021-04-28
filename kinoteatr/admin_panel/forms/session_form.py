@@ -31,6 +31,9 @@ class AddSessionForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        if not self.cleaned_data.get('movie'):
+            raise ValidationError('Выберите, пожалуйста, фильм')
+
         datetime_field_start = datetime.datetime.combine(self.cleaned_data['session_date'],
                                                          self.cleaned_data['session_time'])
         #  Date comes in string format and, also, separated in two parts: Date and Time. So we need to combine them
