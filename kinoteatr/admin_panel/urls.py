@@ -86,6 +86,7 @@ urlpatterns = [
          name='delete_cinema_hall'),
     path('cinemas/delete_cinema_hall_gallery_image/<int:pk>/', cinema_views.DeleteCinemaHallGalleryImage.as_view(),
          name='delete_cinema_hall_gallery_image'),
+    path('cinemas/get_session_schema/', cinema_views.GetCinemaHallSchema.as_view(), name='get_cinema_hall_schema'),
 
     # MAIN PAGE
     path('main_page/edit/', main_page_views.EditMainPage.as_view(), name='edit_main_page_admin'),

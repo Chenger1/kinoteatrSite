@@ -112,7 +112,7 @@
                             {{ form.schema_json }}
                         </div>
                         <div class="form-group">
-                            <label for="">Построить схему зала</label>
+                            <label for="" id="schemaLabel">Построить схему зала</label>
                             <h5>Текущее количество мест: <span id="seats_amount">{{ form.instance.seats_amount }}</span></h5>
                             <div class="row">
                                 <div class="col text-center">
@@ -124,7 +124,6 @@
                             </div>
                             <button type="button" id="save_scheme" class="btn btn-outline-primary"
                             style="margin-top:15px;">Сохранить схему</button>
-                        </div>
                         <hr>
                         <div class="form-group">
                             <label for="formset">Галлерея</label>
@@ -170,39 +169,23 @@
     });
 </script>
 <script>
-    var seats_amount = $('#seats_amount');
-        let default_schema = {  "row_0": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_1": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_2": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_3": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_4": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_5": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_6": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_7": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_8": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_9": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_10": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_11": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_12": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_13": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_14": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_15": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_16": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_17": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_18": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_19": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-						"row_20": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-					}
-		try{
-		    let schema = JSON.parse({{ schema_json|safe }})
-		    var builder = new Builder(schema, renderSchema);
-	        builder.render_schema();
-		}catch{
-		     var builder = new Builder(default_schema, renderSchema);
-		    builder.build_schema_for_interact();
-		}
-    $('#save_scheme').on('click', function(){
-        builder.saveSchema();
-    });
+$(document).ready(function(){
+    $.ajax({
+        method: 'GET',
+        url: '{% url 'admin_panel:get_cinema_hall_schema' %}',
+        data: {'cinema_hall_pk': '{{ form.instance.pk }}'},
+        success: function(response){
+            var builder = new Builder(response['schema'], renderSchema)
+            if(response['trigger']){
+                builder.build_schema_for_interact();
+            }else{
+                builder.render_schema();
+            }
+            $('#save_scheme').on('click', function(){
+                builder.saveSchema();
+            });
+        }
+    })
+});
 </script>
 {% endblock %}

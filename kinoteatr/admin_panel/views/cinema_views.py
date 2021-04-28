@@ -3,6 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import CreateView
 from django.db import transaction
+from django.http import JsonResponse
+from django.conf import settings
 
 from admin_panel.forms.cinema_forms import CinemaForm, CinemaGalleryFormSet, CinemaHallForm, CinemaHallGalleryFormSet
 from admin_panel.forms.seo_form import SeoForm
@@ -13,6 +15,7 @@ from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, De
 from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 import json
+import os
 
 
 class ListCinema(AdminPermissionMixin, View):
@@ -135,3 +138,16 @@ class DeleteCinemaHall(AdminPermissionMixin, View):
 class DeleteCinemaHallGalleryImage(DeleteGalleryImageMixin):
     model = CinemaHallGallery
     redirect_url = 'admin_panel:edit_cinema_hall'
+
+
+class GetCinemaHallSchema(View):
+    def get(self, request):
+        cinema_pk = request.GET.get('cinema_hall_pk')
+        if cinema_pk != 'None':
+            schema = json.loads(get_object_or_404(CinemaHall, pk=cinema_pk).schema_json)
+            trigger = False
+        else:
+            schema = CinemaHall.get_default_schema()
+            trigger = True
+        return JsonResponse({'schema': schema,
+                             'trigger': trigger})

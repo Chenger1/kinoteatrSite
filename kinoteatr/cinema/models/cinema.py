@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from cinema.models.seo import Seo
 from cinema.utils.get_valid_dir_name import get_valid_dir_name
+from cinema.models.utils import DEFAULT_SCHEMA
 
 import copy
 
@@ -71,6 +72,10 @@ class CinemaHall(models.Model):
 
     def clone_schema_json(self):
         return copy.deepcopy(self.schema_json)
+
+    @classmethod
+    def get_default_schema(cls):
+        return DEFAULT_SCHEMA
 
     @property
     def available_formats(self):

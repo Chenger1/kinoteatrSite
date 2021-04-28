@@ -56,8 +56,8 @@ function Builder(schema, render_obj){
 
 		}
 		json_schema = JSON.stringify(scheme_obj) // stringify js object to json
-		scheme_input.attr('value', json_schema); // set attr for hidden input 
-		parent_div.prepend('Схема сохранена!');
+		scheme_input.attr('value', json_schema); // set attr for hidden input
+		$('#schemaLabel').text('Схема сохранена!');
 	};
 
 	function set_event(){
