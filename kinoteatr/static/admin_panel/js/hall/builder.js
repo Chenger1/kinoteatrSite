@@ -150,10 +150,13 @@ function EventManager(set_style, set_event){
 	};
 
 	this.selected_button_event = function(elem){
+		let seats_amount =  $('#seats_amount');
 		// if button already has class 'scheme_button_selected' - delete it. Otherwire - add it. 
 		if($(elem).hasClass('scheme_button_selected')){ 
+			seats_amount.text(Number(seats_amount.text()) + 1);
 			$(elem).removeClass('scheme_button_selected');
 		}else{
+			seats_amount.text(Number(seats_amount.text()) - 1);
 			$(elem).addClass('scheme_button_selected');
 		}
 	};
