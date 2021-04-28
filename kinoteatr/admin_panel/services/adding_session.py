@@ -28,7 +28,7 @@ class Saver:
             For example if first session start at 23.04.2021 and last session at 25.04.2021
             List will contain [23.04.2021, 24.04.2021, 25.04.2021]
         """
-        date_list = [self.object.session_datetime_start + datetime.timedelta(days=x) for x in range(1, self.date_dif.days)]
+        date_list = [self.object.session_datetime_start + datetime.timedelta(days=x) for x in range(1, self.date_dif.days+1)]
         return date_list
 
     def save_multiple(self) -> list:
