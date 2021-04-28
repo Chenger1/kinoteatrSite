@@ -39,25 +39,36 @@ function Builder(schema, render_obj){
 	};
 
 	this.saveSchema = function(){
-		let scheme_input = $('#schema_json'); // hidden input for django form to save json in db
-		let parent_div = $('#scheme_builder'); // div with all roes
-		let scheme_obj = {};
-		let rows = $('div[id*=row_]'); // get all wors which contain 'row_' in id field
-		for(row of rows){ // iterator over all rows
-			let seats = [];
-			for(child of $(row).children('button[id*="button_row_"]')){
-				if(!$(child).hasClass('scheme_button_selected')){ // if buttons is not selected, add it to list of seats
-					seats.push(1);
-				}else{
-					seats.push(0);
-				}
-			}
-			scheme_obj[$(row).attr('id')] = seats; // set row id as a key for object
+		let rows = $('div[id*=row_]'); // get all rows which contain 'row_' in id field
+            let scheme_input = $('#schema_json'); // hidden input for django form to save json in db
+            let parent_div = $('#scheme_builder'); // div with all roes
+            let scheme_obj = {};
+            empty_obj_trigger = true;
+            for(row of rows){ // iterator over all rows
+                let seats = [];
+                for(child of $(row).children('button[id*="button_row_"]')){
+                    if(!$(child).hasClass('scheme_button_selected')){ // if buttons is not selected, add it to list of seats
+                        seats.push(1);
+                        empty_obj_trigger = false;
+                    }else{
+                        seats.push(0);
+                    }
+                }
+                scheme_obj[$(row).attr('id')] = seats; // set row id as a key for object
+            }
+            if(Object.keys(scheme_obj).length < 1){
+                $('#schemaLabel').text('В зале нет ни одного ряда. Добавьте');
+                scheme_input.attr('value', JSON.stringify({}));
+            }else if(empty_obj_trigger == true){
+                $('#schemaLabel').text('В зале нет ни одного ряда. Добавьте');
+                scheme_input.attr('value', JSON.stringify({}));
+            }else{
+                json_schema = JSON.stringify(scheme_obj) // stringify js object to json
+                console.log(scheme_obj);
+                scheme_input.attr('value', json_schema); // set attr for hidden input
+                $('#schemaLabel').text('Схема сохранена!');
+            }
 
-		}
-		json_schema = JSON.stringify(scheme_obj) // stringify js object to json
-		scheme_input.attr('value', json_schema); // set attr for hidden input
-		$('#schemaLabel').text('Схема сохранена!');
 	};
 
 	function set_event(){
