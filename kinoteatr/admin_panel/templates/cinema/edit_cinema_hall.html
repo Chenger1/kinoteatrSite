@@ -35,7 +35,7 @@
                             <div class="col-8">
                                 <div class="form-group limit_width">
                                     <label for="hallNumber">Номер зала</label>
-                                    <input type="number" value="{{ next_number }}" name="number" class="form-control">
+                                    <input type="number" value="{% if next_number %}{{ next_number }}{% else %}{{ form.instance.number }}{% endif %}" name="number" class="form-control">
                                  </div>
                             </div>
                             <div class="col-4">
