@@ -116,6 +116,7 @@ class UpdateCinemaHall(UpdatePageMixin):
             context['schema_json'] = json.dumps(self.request.POST.get('schema_json'))
         else:
             context['schema_json'] = json.dumps(self.object.schema_json)
+        context['cinema'] = self.object.cinema
         return context
 
 
