@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load right_date %}
 
 {% block title %}Список сеансов{% endblock %}
 
@@ -13,7 +14,7 @@
   <form action="{% url 'admin_panel:display_sessions_admin' %}" method="get" id="date_form">
   <div class="row">
       <div class="col-2">
-          <input type="date" class="form-control" id="date" value="{{date.year}}-{% if date.month < 10 %}0{{date.month}}{% else %}{{date.month}}{% endif %}-{{date.day}}"
+          <input type="date" class="form-control" id="date" value="{{date|valid_date_format}}"
           name="date">
       </div>
       <div class="col-2">
