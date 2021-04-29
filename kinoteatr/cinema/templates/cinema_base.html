@@ -10,7 +10,7 @@
     {% block style %}{% endblock %}
 
 </head>
-<body {% if BackgroundImage %} style="background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed; margin:0;" {% endif %}>
+<body {% if BackgroundImage %} style="overflow-x:hidden; background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed; margin:0;" {% endif %}>
 {% if OnTopBanner %}
 <div class="row" style="margin-right:0px;">
     <div id="carouselOnTopBanner" class="carousel slide" data-ride="carousel" style="width:100%;">
