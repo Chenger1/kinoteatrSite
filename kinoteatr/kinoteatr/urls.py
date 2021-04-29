@@ -21,7 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('built_in_admin/', admin.site.urls),
+    path('', include('cinema.urls', namespace='cinema')),
     path('admin/', include('admin_panel.urls', namespace='admin_panel')),
-    path('main/', include('cinema.urls', namespace='cinema')),
     path('summernote/', include('django_summernote.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

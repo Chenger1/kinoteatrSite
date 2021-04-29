@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Title{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'cinema/index.css' %}">
+
+</head>
+<body {% if BackgroundImage %} style="background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed;" {% endif %}>
+{% if OnTopBanner %}
+<div class="row" style="margin-right:0px;">
+    <div id="carouselOnTopBanner" class="carousel slide" data-ride="carousel" style="width:100%;">
+      <div class="carousel-inner">
+            {% for image in OnTopBanner.images.all %}
+                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.image.url }}" class="d-block w-100" alt="..." width="100" height="100">
+                </div>
+            {% endfor %}
+      </div>
+    </div>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row" style="align-items:center; margin-top:15px;">
+        <div class="col-3">
+            <div>
+                <img src="{% static 'images/logo.png' %}" alt="logo" width="200" height="100" class="img-thumbnail">
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col-3">
+                    <form action="">
+                        <input type="text" class="form-control" placeholder="Поиск...">
+                    </form>
+                </div>
+                <div class="col-1"><img src="{% static 'images/social/facebook.png' %}" alt="" width="40" height="40"></div>
+                <div class="col-1"><img src="{% static 'images/social/twitter.png' %}" alt="" width="40" height="40"></div>
+                <div class="col-1"><img src="{% static 'images/social/youtube.png' %}" alt="" width="40" height="40"></div>
+                <div class="col-1"><img src="{% static 'images/social/instagram.png' %}" alt="" width="40" height="40"></div>
+                <div class="col" style="color: white;">
+                    <div class="row">
+                        <div class="col">
+                            {{ MainPage.phone_number1 }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ MainPage.phone_number2 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:15px;">
+                <div class="col">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                        <div class="navbar-collapse justify-content-md-center collapse" id="navbarsExample10" style="">
+                          <ul class="navbar-nav">
+                            <li class="nav-item">
+                              <a class="nav-link black-text" href="#">Афиша</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link black-text" href="#">Расписание</a>
+                            </li>
+                              <li class="nav-item">
+                              <a class="nav-link black-text" href="#">Кинотеатры</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link black-text" href="#" tabindex="-1" aria-disabled="true">Скоро</a>
+                            </li>
+                              <li class="nav-item">
+                              <a class="nav-link black-text" href="#" tabindex="-1" aria-disabled="true">Акции</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle black-text" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">О кинотеатре</a>
+                              <div class="dropdown-menu" aria-labelledby="dropdown10">
+                                    <a class="dropdown-item" href="#">Новости</a>
+                                    <a class="dropdown-item" href="#">Реклама</a>
+                                    <a class="dropdown-item" href="#">Кафе</a>
+                                    <a class="dropdown-item" href="#">Мобильные приложения</a>
+                                    <a class="dropdown-item" href="#">Контакты</a>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    {% block content %}{% endblock %}
+</section>
+
+<div class="container">
+    <footer style="background-color:white;">
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h5>Мобильные приложения</h5>
+            </div>
+            <div class="col">
+                <h5>Афиша</h5>
+                <p class="mainPageFooterLink"><a href="">Расписание</a></p>
+                <p class="mainPageFooterLink"><a href="">Скоро в прокате</a></p>
+                <p class="mainPageFooterLink"><a href="">Кинотеатры</a></p>
+                <p class="mainPageFooterLink"><a href="">Акции</a></p>
+            </div>
+            <div class="col">
+                <h5>О кинотеатре</h5>
+                <p class="mainPageFooterLink"><a href="">Новости</a></p>
+                <p class="mainPageFooterLink"><a href="">Реклама</a></p>
+                <p class="mainPageFooterLink"><a href="">Кафе-бар</a></p>
+                <p class="mainPageFooterLink"><a href="">Контакты</a></p>
+            </div>
+        </div>
+        <div class="row text-center" style="padding-bottom:15px;">
+            <div class="col"><small class="text-muted">@Kinoteatr, 2021, All rights reserved</small></div>
+        </div>
+    </footer>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+<script>
+{% if OnTopBanner %}
+    $('#carouselOnTopBanner').carousel({
+      interval: {% if OnTopBanner.speed == 1 %}5000{% elif OnTopBanner.speed == 2 %}10000{% endif %}
+    });
+{% endif %}
+</script>
+</body>
+</html>

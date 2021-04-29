@@ -1,0 +1,135 @@
+{% extends 'cinema_base.html' %}
+
+{% block content %}
+<div class="container">
+    <div style="background-color: white;">
+        <div class="row" style="margin-top:25px;">
+            <div class="col">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for movie in released_movie %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <a href=""><img src="{{ movie.images.first.image.url }}" class="d-block w-100" alt="..."
+                                            height="500" width="300"></a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h4 class="text-center">Смотрите сегодня {{ day }}</h4>
+                <div class="row">
+                    {% for movie in released_movie %}
+                    <div class="col" style="margin-top:10px;">
+                        <div style="text-align:center;">
+                            <img src="{{ movie.main_image.url }}" alt="logo" width="300" height="400">
+                            <div class="text-center">
+                                <a href=""><h5>{{ movie.name }}</h5></a>
+                                <a href="" class="btn btn-success">Купить билет</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col" style="margin-top:10px; margin-bottom:10px;">
+                        <div style="text-align:center;">
+                            <div class="text-center">
+                                <a href="" class="btn btn-success">Посмотреть расписание</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:25px; margin-bottom:10px;">
+            <div class="col">
+                <h4 class="text-center">Смотрите скоро</h4>
+                <div class="row">
+                    {% for movie in movie_soon %}
+                    <div class="col" style="margin-top:10px;">
+                        <div style="text-align:center;">
+                            <img src="{{ movie.main_image.url }}" alt="logo" width="300" height="400">
+                            <div class="text-center">
+                                <a href=""><h5>{{ movie.name }}</h5></a>
+                                <a href="" class="btn btn-success">Купить билет</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col" style="margin-top:10px;">
+                        <div style="text-align:center;">
+                            <div class="text-center">
+                                <a href="" class="btn btn-success">Посмотреть расписание</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if SliderBanner %}
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-center">Новости и Акции</h3>
+                    <div id="carouselSliderBanners" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for image in SliderBanner.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.image.url }}" class="d-block w-100" alt="..." height="500" width="300">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if Advertisement %}
+            <div class="row" style="margin-top:25px;">
+                <div class="col">
+                    <div id="carouselAdvertisement" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for image in Advertisement.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.image.url }}" class="d-block w-100 contextAd" alt="..." height="500" width="300">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row text-center" style="margin-top:50px;">
+            <div class="col">
+                <h5>Seo</h5>
+                <p>{{ MainPage.seo.seo_description }}</p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+{% if SliderBanner %}
+    $('#carouselSliderBanners').carousel({
+      interval: {% if SliderBanner.speed == 1 %}5000{% elif SliderBanner.speed == 2 %}10000{% endif %}
+    });
+{% endif %}
+
+</script>
+{% endblock %}

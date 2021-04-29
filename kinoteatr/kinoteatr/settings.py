@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_summernote',
     'embed_video',
-    'admin_panel',
     'cinema',
+    'admin_panel',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +127,7 @@ STATICFILES_DIRS = (
     ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
     ('images', Path(__file__).parent.parent.joinpath('static/images')),
     ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
+    ('cinema', Path(__file__).parent.parent.joinpath('static/cinema'))
 )
 
 
