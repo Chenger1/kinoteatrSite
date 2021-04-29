@@ -1,0 +1,69 @@
+{% extends 'cinema_base.html' %}
+{% load static %}
+
+{% block title %}Афиша{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'admin_panel/dist/css/adminlte.min.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <div class="row text-center">
+                <a href="#released" class="btn btn-light btn-lg btn-block active" style="border-radius:unset; border-bottom:1px solid;"
+                 role="tab" data-toggle="tab" id="releasedButton">Афиша</a>
+            </div>
+            <div class="row text-center">
+                <a href="#soon" class="btn btn-light btn-lg btn-block" style="border-radius:unset; border-top:1px solid;"
+                 role="tab" data-toggle="tab" id="soonButton">Скоро</a>
+            </div>
+        </div>
+        <div class="col-10"  style="background-color:#161f27; padding-bottom:25px;">
+            <div class="tab-content">
+                <div class="tab-pane active" id="released">
+                    <div class="row">
+                        {% for movie in released_movie %}
+                            <div class="col" style="margin-top:10px;">
+                                <div style="text-align:center;">
+                                    <img src="{{ movie.main_image.url }}" alt="logo" width="200" height="300">
+                                    <div class="text-center">
+                                        <a href=""><h5>{{ movie.name }}</h5></a>
+                                        <a href="" class="btn btn-success">Купить билет</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane" id="soon">
+                    <div class="row">
+                        {% for movie in movie_soon %}
+                            <div class="col" style="margin-top:10px;">
+                                <div style="text-align:center;">
+                                    <img src="{{ movie.main_image.url }}" alt="logo" width="200" height="300">
+                                    <div class="text-center">
+                                        <a href=""><h5>{{ movie.name }}</h5></a>
+                                        <a href="" class="btn btn-success">Купить билет</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
+<script>
+    $('#releasedButton').on('click', function(){
+        $('#soonButton').removeClass('active');
+    });
+    $('#soonButton').on('click', function(){
+        $('#releasedButton').removeClass('active');
+    });
+</script>
+{% endblock %}

@@ -6,11 +6,11 @@
     <title>{% block title %}Title{% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
     <link rel="stylesheet" href="{% static 'cinema/index.css' %}">
+    {% block style %}{% endblock %}
 
 </head>
-<body {% if BackgroundImage %} style="background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed;" {% endif %}>
+<body {% if BackgroundImage %} style="background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed; margin:0;" {% endif %}>
 {% if OnTopBanner %}
 <div class="row" style="margin-right:0px;">
     <div id="carouselOnTopBanner" class="carousel slide" data-ride="carousel" style="width:100%;">
@@ -28,7 +28,7 @@
     <div class="row" style="align-items:center; margin-top:15px;">
         <div class="col-3">
             <div>
-                <img src="{% static 'images/logo.png' %}" alt="logo" width="200" height="100" class="img-thumbnail">
+                <a href="{% url 'cinema:main_page' %}"><img src="{% static 'images/logo.png' %}" alt="logo" width="200" height="100" class="img-thumbnail"></a>
             </div>
         </div>
         <div class="col-9">
@@ -62,7 +62,7 @@
                         <div class="navbar-collapse justify-content-md-center collapse" id="navbarsExample10" style="">
                           <ul class="navbar-nav">
                             <li class="nav-item">
-                              <a class="nav-link black-text" href="#">Афиша</a>
+                              <a class="nav-link black-text navLink" href="{% url 'cinema:show_list_movies' %}">Афиша</a>
                             </li>
                             <li class="nav-item">
                               <a class="nav-link black-text" href="#">Расписание</a>
@@ -99,9 +99,8 @@
     {% block content %}{% endblock %}
 </section>
 
-<div class="container">
+<div class="container-fluid" style="margin:0; padding: 0;">
     <footer style="background-color:white;">
-        <hr>
         <div class="row">
             <div class="col">
                 <h5>Мобильные приложения</h5>

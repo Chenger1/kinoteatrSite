@@ -11,3 +11,9 @@
 .mainPageFooterLink{
     margin-bottom: 0px;
 }
+.navLink{
+	color:black;
+}
+.navLink:hover{
+    text-decoration: underline;
+}
