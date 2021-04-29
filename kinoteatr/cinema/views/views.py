@@ -56,10 +56,11 @@ class MovieDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['BackgroundImage'] = get_page(self.pages)['BackgroundImage']
-        context['OnTopBanner'] = get_page(self.pages)['OnTopBanner']
-        context['MainPage'] = get_page(self.pages)['MainPage']
-        context['Advertisement'] = get_page(self.pages)['Advertisement']
+        banners_context = get_page(self.pages)
+        context['BackgroundImage'] = banners_context['BackgroundImage']
+        context['OnTopBanner'] = banners_context['OnTopBanner']
+        context['MainPage'] = banners_context['MainPage']
+        context['Advertisement'] = banners_context['Advertisement']
 
         today = datetime.date.today()
         week = today + datetime.timedelta(days=7)  # get last day of the current 7-days period
