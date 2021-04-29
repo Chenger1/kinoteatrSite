@@ -36,6 +36,9 @@ class Session(models.Model):
     def reserved_tickets(self):
         return self.tickets.filter(reserved=True).count()
 
+    def get_absolute_public_url(self):
+        return f'{self.pk}'
+
 
 class Ticket(models.Model):
     session = models.ForeignKey(Session, related_name='tickets', on_delete=models.CASCADE)

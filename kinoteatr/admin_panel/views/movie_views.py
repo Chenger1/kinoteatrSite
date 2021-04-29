@@ -5,7 +5,6 @@ from django.views.generic.detail import DetailView
 
 from cinema.models.movie import Movie
 from cinema.models.gallery import MovieGallery
-from cinema.models.session import Session
 
 from admin_panel.forms.movie_form import MovieForm, MovieGalleryFormSet
 

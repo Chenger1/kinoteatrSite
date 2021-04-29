@@ -94,3 +94,6 @@ class CinemaHall(models.Model):
 
     def get_delete_url(self):
         return reverse('admin_panel:delete_cinema_hall', args=[self.pk])
+
+    def get_absolute_public_url(self):
+        return f'{self.pk}'
