@@ -1,9 +1,10 @@
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 from cinema.models.page import News, Advertisement, MainPage, AboutCinema
 from cinema.models.banners import OnTopBanner, BackgroundImage
 
-from cinema.services.get_banners import get_page
+from cinema.services.get_banners import get_page, get_context_for_generic_views
 
 import datetime
 
@@ -29,4 +30,16 @@ class ListNews(ListView):
         context['Advertisement'] = banners_context['Advertisement']
         context['AboutCinema'] = banners_context['AboutCinema']
 
+        return context
+
+
+class NewsDetail(DetailView):
+    model = News
+    template_name = 'news/public_news_detail.html'
+    context_object_name = 'news'
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(get_context_for_generic_views(self.pages))
         return context

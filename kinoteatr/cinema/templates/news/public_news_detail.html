@@ -1,0 +1,55 @@
+{% extends 'cinema_base.html' %}
+{% load static %}
+
+{% block title %}Новость{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+{% include 'about_cinema_context.html' %}
+
+    <div class="row">
+        <div class="col-10" style="background-color: #182029; padding-top:50px;">
+            <h4 style="color: white; text-align:center;">{{ news.title }}</h4>
+            <div class="row">
+                <div class="col-4">
+                    <div>
+                        <img src="{{ news.main_image.url }}" alt="main_image" class="img-thumbnail">
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="desc">
+                        {{ news.description|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2" style="background-color:white;">
+            {% include 'context_ads.html' with trigger=False %}
+        </div>
+    </div>
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        $('.desc').each(function(){
+            $(this).children().each(function(){
+                recursiveIteration(this);
+            })
+        })
+    })
+
+    function recursiveIteration(elem){
+        if($(elem).children().length <1){
+            setColor(elem);
+        }else{
+            for(child of $(elem).children()){
+                recursiveIteration(child);
+            }
+        }
+    }
+
+    function setColor(elem){
+        $(elem).css('color', 'white');
+    }
+</script>
+{% endblock %}

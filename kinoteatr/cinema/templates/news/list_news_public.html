@@ -5,22 +5,7 @@
 
 {% block content %}
 <div class="container-fluid">
-    {% if AboutCinema %}
-        <div class="row">
-            <div class="col">
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        {% for image in AboutCinema.images.all %}
-                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <img src="{{ image.image.url }}" class="d-block w-100" alt="..."
-                                            height="600">
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    {% include 'about_cinema_context.html' %}
 
     <div class="row">
         <div class="col-10" style="background-color: #182029;">
@@ -28,8 +13,8 @@
             <div class="row">
                 {% for card in news %}
                     <div class="col-3" style="text-align:center;">
-                        <div><a href=""><img src="{{ card.main_image.url }}" alt="" width="250" height="250" style="border-radius: 20px;"></a></div>
-                        <div><a href="" style="color: white;">{{ card.title }}</a></div>
+                        <div><a href="{% url 'cinema:public_news_detail' card.pk %}"><img src="{{ card.main_image.url }}" alt="" width="250" height="250" style="border-radius: 20px;"></a></div>
+                        <div><a href="{% url 'cinema:public_news_detail' card.pk %}" style="color: white;">{{ card.title }}</a></div>
                         <h5 style="color:white;">{{ card.publication_date }}</h5>
                         <div style="color: white!important; text-align:left;" class="desc">
                             {{ card.description |truncatewords_html:12|safe }}
