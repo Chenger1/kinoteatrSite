@@ -15,10 +15,10 @@ def get_page(pages):
 def get_context_for_generic_views(pages):
     context = {}
     banners_context = get_page(pages)
-    context['BackgroundImage'] = banners_context['BackgroundImage']
-    context['OnTopBanner'] = banners_context['OnTopBanner']
-    context['MainPage'] = banners_context['MainPage']
-    context['Advertisement'] = banners_context['Advertisement']
-    context['AboutCinema'] = banners_context['AboutCinema']
+    context['BackgroundImage'] = banners_context.get('BackgroundImage')
+    context['OnTopBanner'] = banners_context.get('OnTopBanner')
+    context['MainPage'] = banners_context.get('MainPage')
+    context['Advertisement'] = banners_context.get('Advertisement')
+    context['AboutCinema'] = banners_context.get('AboutCinema')
 
     return context
