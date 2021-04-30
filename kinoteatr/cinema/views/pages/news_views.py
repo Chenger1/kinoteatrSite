@@ -4,7 +4,7 @@ from django.views.generic.detail import DetailView
 from cinema.models.page import News, Advertisement, MainPage, AboutCinema
 from cinema.models.banners import OnTopBanner, BackgroundImage
 
-from cinema.services.get_banners import get_page, get_context_for_generic_views
+from cinema.services.get_banners import get_context_for_generic_views
 
 import datetime
 
@@ -23,12 +23,7 @@ class ListNews(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        banners_context = get_page(self.pages)
-        context['BackgroundImage'] = banners_context['BackgroundImage']
-        context['OnTopBanner'] = banners_context['OnTopBanner']
-        context['MainPage'] = banners_context['MainPage']
-        context['Advertisement'] = banners_context['Advertisement']
-        context['AboutCinema'] = banners_context['AboutCinema']
+        context.update(get_context_for_generic_views(self.pages))
 
         return context
 
