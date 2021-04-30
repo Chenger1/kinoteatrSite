@@ -10,7 +10,7 @@
     {% block style %}{% endblock %}
 
 </head>
-<body {% if BackgroundImage %} style="overflow-x:hidden; background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed; margin:0;" {% endif %}>
+<body {% if BackgroundImage %} style=" background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed; margin:0;" {% endif %}>
 {% if OnTopBanner %}
 <div class="row" style="margin-right:0px;">
     <div id="carouselOnTopBanner" class="carousel slide" data-ride="carousel" style="width:100%;">
@@ -99,32 +99,32 @@
     {% block content %}{% endblock %}
 </section>
 
-<div class="container-fluid" style="margin:0; padding: 0;">
     <footer style="background-color:white;">
-        <div class="row">
-            <div class="col">
-                <h5>Мобильные приложения</h5>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h5>Мобильные приложения</h5>
+                </div>
+                <div class="col">
+                    <h5>Афиша</h5>
+                    <p class="mainPageFooterLink"><a href="">Расписание</a></p>
+                    <p class="mainPageFooterLink"><a href="">Скоро в прокате</a></p>
+                    <p class="mainPageFooterLink"><a href="">Кинотеатры</a></p>
+                    <p class="mainPageFooterLink"><a href="">Акции</a></p>
+                </div>
+                <div class="col">
+                    <h5>О кинотеатре</h5>
+                    <p class="mainPageFooterLink"><a href="">Новости</a></p>
+                    <p class="mainPageFooterLink"><a href="">Реклама</a></p>
+                    <p class="mainPageFooterLink"><a href="">Кафе-бар</a></p>
+                    <p class="mainPageFooterLink"><a href="">Контакты</a></p>
+                </div>
             </div>
-            <div class="col">
-                <h5>Афиша</h5>
-                <p class="mainPageFooterLink"><a href="">Расписание</a></p>
-                <p class="mainPageFooterLink"><a href="">Скоро в прокате</a></p>
-                <p class="mainPageFooterLink"><a href="">Кинотеатры</a></p>
-                <p class="mainPageFooterLink"><a href="">Акции</a></p>
+            <div class="row text-center" style="padding-bottom:15px;">
+                <div class="col"><small class="text-muted">@Kinoteatr, 2021, All rights reserved</small></div>
             </div>
-            <div class="col">
-                <h5>О кинотеатре</h5>
-                <p class="mainPageFooterLink"><a href="">Новости</a></p>
-                <p class="mainPageFooterLink"><a href="">Реклама</a></p>
-                <p class="mainPageFooterLink"><a href="">Кафе-бар</a></p>
-                <p class="mainPageFooterLink"><a href="">Контакты</a></p>
-            </div>
-        </div>
-        <div class="row text-center" style="padding-bottom:15px;">
-            <div class="col"><small class="text-muted">@Kinoteatr, 2021, All rights reserved</small></div>
         </div>
     </footer>
-</div>
 
 
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
