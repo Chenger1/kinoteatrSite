@@ -1,0 +1,32 @@
+from django.views.generic.list import ListView
+
+from cinema.models.page import News, Advertisement, MainPage, AboutCinema
+from cinema.models.banners import OnTopBanner, BackgroundImage
+
+from cinema.services.get_banners import get_page
+
+import datetime
+
+
+class ListNews(ListView):
+    model = News
+    template_name = 'news/list_news_public.html'
+    context_object_name = 'news'
+    paginate_by = 12
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema]
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(status=True, publication_date__lte=datetime.date.today())
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        banners_context = get_page(self.pages)
+        context['BackgroundImage'] = banners_context['BackgroundImage']
+        context['OnTopBanner'] = banners_context['OnTopBanner']
+        context['MainPage'] = banners_context['MainPage']
+        context['Advertisement'] = banners_context['Advertisement']
+        context['AboutCinema'] = banners_context['AboutCinema']
+
+        return context

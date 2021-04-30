@@ -11,7 +11,7 @@ class News(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
     main_image = models.ImageField(upload_to='news/main_images/')
-    url = models.URLField()
+    url = models.URLField(blank=True)
     publication_date = models.DateField()
     status = models.BooleanField()
 
