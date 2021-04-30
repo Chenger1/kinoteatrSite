@@ -1,0 +1,109 @@
+{% extends 'cinema_base.html' %}
+{% load static %}
+
+{% block title %}Расписание{% endblock %}
+
+{% block content %}
+<div class="container" style="background-color: white;">
+    <div class="row">
+        <div class="col-8">
+            <h3>Расписание в кинотеатре: <span id="cinemaName"></span></h3>
+        </div>
+        <div class="col-4">
+            <select name="" id="selectMovies" class="form-control callback">
+                {% for movie in movies %}
+                    <option value="{{ movie.pk }}">{{ movie.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <h5>Фильтры:</h5>
+            <div class="row">
+                <div class="col">
+                    <small class="text-muted">Кинотеатры</small>
+                    <select name="" id="cinemas" class="form-control callback">
+                        {% for cinema in cinemas %}
+                            <option value="{{ cinema.pk }}" {% if forloop.first %}selected{% endif %}>{{ cinema.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <small class="text-muted">Период</small>
+                    <div class="form-check">
+                        <input type="radio" id="today" class="form-check-input callback" value="0" checked >
+                        <label for="today" class="form-check-label">Сегодня</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="tomorrow" class="form-check-input callback" value="1">
+                        <label for="tomorrow" class="form-check-label">Завтра</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="week" class="form-check-input callback" value="7">
+                        <label for="week" class="form-check-label">Неделя</label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <small class="text-muted">Формат</small>
+                    <div class="form-check">
+                        <input type="checkbox" id="2D" class="form-check-input callback" value="1">
+                        <label for="2D" class="form-check-label">2D</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="3D" class="form-check-input callback" value="2">
+                        <label for="3D" class="form-check-label">3D</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="IMAX" class="form-check-input callback" value="3">
+                        <label for="IMAX" class="form-check-label">IMAX</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row" style="background-color:#f5f5f5;">
+                <div class="col">
+                    <table class="table" id="sessionsTable">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Фильм</th>
+                            <th>Возраст</th>
+                            <th>Формат</th>
+                            <th>Дата</th>
+                            <th>Время</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'cinema/js/showtime.js' %}"></script>
+<script>
+    let handler = new showTimeHandler('{% url 'cinema:showtime_sessions' %}');
+    handler.send_request();
+
+    $(document).ready(function(){
+        $('.callback').each(function(){
+            $(this).on('change', function(){
+                handler.init_handlers($(this));
+            });
+        });
+    })
+</script>
+
+{% endblock %}

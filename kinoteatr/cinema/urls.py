@@ -4,6 +4,7 @@ from django.conf import settings
 
 from cinema.views.views import DisplayMainPage, ListMovies, MovieDetail, MovieSessionDetail
 from cinema.views.pages.news_views import ListNews, NewsDetail
+from cinema.views.showtime_views import ShowTime, ShowTimeSession
 
 app_name = 'cinema'
 
@@ -17,4 +18,8 @@ urlpatterns = [
     # NEWS
     path('news/', ListNews.as_view(), name='list_news'),
     path('news/detail/<int:pk>/', NewsDetail.as_view(), name='public_news_detail'),
+
+    # SHOWTIME
+    path('showtime/', ShowTime.as_view(), name='showtime'),
+    path('showtime/sessions/', ShowTimeSession.as_view(), name='showtime_sessions'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -57,6 +57,9 @@ class Movie(models.Model):
     def get_delete_url(self):
         return reverse('admin_panel:delete_movie_admin', args=[self.pk])
 
+    def get_absolute_public_url(self):
+        return reverse('cinema:movie_detail', args=[self.pk])
+
     @property
     def is_2d_type(self):
         if self.is_2d:
