@@ -5,6 +5,7 @@ from django.conf import settings
 from cinema.views.views import DisplayMainPage, ListMovies, MovieDetail, MovieSessionDetail
 from cinema.views.pages.news_views import ListNews, NewsDetail
 from cinema.views.showtime_views import ShowTime, ShowTimeSession
+from cinema.views.user.user_views import UserDetail
 
 app_name = 'cinema'
 
@@ -22,4 +23,7 @@ urlpatterns = [
     # SHOWTIME
     path('showtime/', ShowTime.as_view(), name='showtime'),
     path('showtime/sessions/', ShowTimeSession.as_view(), name='showtime_sessions'),
+
+    # USER
+    path('user/profile/<int:pk>/', UserDetail.as_view(), name='user_profile'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

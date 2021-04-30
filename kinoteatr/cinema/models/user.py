@@ -42,5 +42,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+    @property
+    def get_birthday_date(self):
+        return self.birthday_date.strftime('%d.%m.%Y')
+
+    @property
+    def get_joined_date(self):
+        return self.date_joined.strftime('%d.%m.%Y')
+
     def __str__(self):
         return self.username
