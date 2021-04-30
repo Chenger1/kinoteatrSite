@@ -1,13 +1,18 @@
 from django.views.generic.detail import DetailView
 from django.views.generic import View
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
+from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
+from django.urls import reverse
 
-from cinema.models.user import User
 from cinema.models.banners import OnTopBanner, BackgroundImage
 from cinema.models.page import MainPage
 
+from cinema.forms.user_form import LoginForm
+
 from cinema.services.get_banners import get_context_for_generic_views
+
+User = get_user_model()
 
 
 class UserDetail(DetailView):
@@ -26,3 +31,12 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('cinema:main_page')
+
+
+class LoginUser(LoginView):
+    authentication_form = LoginForm
+    template_name = 'user/login.html'
+
+    def get_success_url(self):
+        return reverse('cinema:main_page')
+

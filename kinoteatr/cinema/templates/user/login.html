@@ -1,0 +1,36 @@
+{% extends 'user/user_base_form.html' %}
+
+{% block title %}Sign In{% endblock %}
+{% block content %}
+    <main class="form-signin">
+        <form method="post">
+            {% csrf_token %}
+            <!--    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
+
+            <h1 class="h3 mb-3 fw-normal">Вход</h1>
+            {% if error %}
+                <h4 class="h4 mb-3">{{error}}</h4>
+            {% endif %}
+
+            <div class="form-floating">
+                <input class="form-control" id="floatingInput" placeholder="name@example.com" name="email" value="" required>
+                <label for="floatingInput">email</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="mb-3">
+                <label>
+                    Нет аккаунта? <a class="link-secondary" href="">Регистрация</a>
+                </label>
+                <label>
+                    Вернуться на <a class="link-secondary" href="{% url 'cinema:main_page' %}">главную</a> страницу
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-secondary" type="submit">Вход</button>
+            <p class="mt-5 mb-3 text-muted">&copy; Kinoteatr 2021</p>
+        </form>
+    </main>
+{% endblock %}
