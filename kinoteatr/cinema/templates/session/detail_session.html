@@ -37,7 +37,8 @@
                 <div class="col">
                     <h3>{{ session.movie.name }}</h3>
                     <p>{{ session.session_datetime_start }}</p>
-                    <p>Зал номер: <span style="font-weight:bold;">{{ session.cinema_hall.number }}</span> в
+                    <p>Зал номер: <span style="font-weight:bold;"><a href="{{ session.cinema_hall.get_absolute_public_url }}">
+                        {{ session.cinema_hall.number }}</a></span> в
                         <span style="font-weight:bold;">{{ session.cinema_hall.cinema.name }}</span></p>
                 </div>
             </div>

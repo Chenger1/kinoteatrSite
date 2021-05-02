@@ -8,35 +8,26 @@
 
 {% block content %}
 <div class="container-fluid">
-    {% include 'about_cinema_context.html' %}
+        <div class="row">
+        <div class="col">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for image in cinema_hall.cinema.images.all %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <img src="{{ image.image.url }}" class="d-block w-100" alt="..."
+                             height="600">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row" style="background-color:white; padding-bottom:50px;">
         <div class="col-3">
             <div class="row">
                 <div class="col">
-                    <img src="{{ cinema.on_top_banner.url }}" alt="Poster" class="img-thumbnail" width="300"
-                         height="300">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
                     {% include 'context_ads.html' with width=300 height=300 %}
-                </div>
-            </div>
-            <div class="row" style="margin-top:25px;">
-                <div class="col">
-                    <h5>Количество залов: {{ cinema.cinema_halls_count }}</h5>
-                    <table class="table">
-                        <tbody>
-                        {% for hall in cinema.halls.all %}
-                        <tr>
-                            <td style="border: 1px solid black; padding:0;">
-                                <a href="{{ hall.get_absolute_public_url }}" class="btn btn-block" style="text-align:left;">Зал {{ hall.number }}</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
             </div>
             <div class="row" style="margin-top:25px;">
@@ -64,35 +55,31 @@
         </div>
         <div class="col-9">
             <div class="row" style="margin-top:25px;">
-                <div class="col-3">
-                    <img src="{{ cinema.logo.url }}" alt="logo" class="img-thumbnail" width="200" height="200">
-                </div>
-                <div class="col">
-                    <h3>Кинотеатр: <span style="font-weight:bold;">{{ cinema.name }}</span></h3>
-                </div>
-                <div class="col-2">
-                    <a href="{% url 'cinema:showtime' %}" class="btn btn-success">Расписание</a>
+                <div class="col" style="text-align:center;">
+                    <h3>Зал: <span style="font-weight:bold;">{{ cinema_hall.number }}</span></h3>
                 </div>
             </div>
 
             <div class="row" style="margin-top:50px;">
                 <div class="col">
-                    <p>{{ cinema.description|safe }}</p>
+                    <p>{{ cinema_hall.description|safe }}</p>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    <h5>Что у нас есть?</h5>
-                    <p>{{ cinema.conditions|safe }}</p>
-                </div>
-            </div>
+                <div class="col" style="text-align:center;">
+                    <h5>Карта зала</h5>
+                    <div id="scheme_builder">
 
-            <div class="row">
+                    </div>
+                </div>
+            </div>
+            {% if cinema_hall.images.all %}
+            <div class="row" style="margin-top:25px;">
                 <div class="col">
                     <h5 style="text-align:center;">Фотогалерея</h5>
                     <div id="carouselCinema" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
-                            {% for image in cinema.images.all %}
+                            {% for image in cinema_hall.images.all %}
                             <div class="carousel-item {% if forloop.first %}active{% endif %}">
                                 <img src="{{ image.image.url }}" class="d-block w-100" alt="..."
                                      height="500">
@@ -112,8 +99,23 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/hall/schema.js' %}"></script>
+<script src="{% static 'admin_panel/js/hall/builder.js' %}"></script>
+<script>
+    $.ajax({
+        method: 'GET',
+        url: '{% url 'cinema:get_cinema_hall_schema' %}',
+        data: {'cinema_hall_pk': '{{ cinema_hall.pk }}'},
+        success: function(response){
+            let render = new renderSchema(response['schema']);
+            render.render_schema();
+            set_style(); // from builder.js
+        }
+    });
+</script>
 {% endblock %}
