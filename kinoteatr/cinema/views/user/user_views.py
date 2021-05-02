@@ -3,11 +3,12 @@ from django.views.generic import View
 from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
 from cinema.models.banners import OnTopBanner, BackgroundImage
 from cinema.models.page import MainPage
+from cinema.models.session import Ticket
 
 from cinema.forms.user_form import LoginForm, RegistrationForm
 
@@ -25,6 +26,7 @@ class UserDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(get_context_for_generic_views(self.pages))
+        context['tickets'] = self.object.tickets.all()
         return context
 
 
@@ -60,3 +62,13 @@ class RegistrationView(View):
             return redirect('cinema:main_page')
         else:
             return render(request, self.template_name, {'form': form})
+
+
+class RevertTicket(View):
+    model = Ticket
+
+    def get(self, request, pk):
+        ticket = get_object_or_404(self.model, pk=pk)
+        if ticket in request.user.tickets.all():
+            ticket.delete()
+        return redirect('cinema:user_profile', pk=request.user.pk)

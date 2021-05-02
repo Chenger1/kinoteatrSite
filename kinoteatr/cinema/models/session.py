@@ -52,6 +52,18 @@ class Ticket(models.Model):
     user = models.ForeignKey(User, related_name='tickets', on_delete=models.CASCADE, blank=True)
 
     @property
+    def beauty_row_number(self):
+        return self.row_number + 1
+
+    @property
+    def beauty_seat_number(self):
+        return self.seat_number + 1
+
+    @property
+    def status(self):
+        return 'Забронирован' if self.reserved else 'Куплен'
+
+    @property
     def ticket_state(self):
         if self.bought:
             return 1

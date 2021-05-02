@@ -5,7 +5,7 @@ from django.conf import settings
 from cinema.views.views import DisplayMainPage, ListMovies, MovieDetail, MovieSessionDetail
 from cinema.views.pages.news_views import ListNews, NewsDetail
 from cinema.views.showtime_views import ShowTime, ShowTimeSession
-from cinema.views.user.user_views import UserDetail, Logout, LoginUser, RegistrationView
+from cinema.views.user.user_views import UserDetail, Logout, LoginUser, RegistrationView, RevertTicket
 from cinema.views.sessions_view import SessionDetail, GetHallSchema, ReserveTicket, BuyTicket
 
 app_name = 'cinema'
@@ -30,6 +30,7 @@ urlpatterns = [
     path('user/logout/', Logout.as_view(), name='logout'),
     path('user/login/', LoginUser.as_view(), name='login'),
     path('user/registration/', RegistrationView.as_view(), name='registration'),
+    path('user/revert_ticket/<int:pk>/', RevertTicket.as_view(), name='revert_ticket'),
 
     # SESSION
     path('session/detail_session/<int:pk>/', SessionDetail.as_view(), name='session_detail'),

@@ -1,6 +1,11 @@
 {% extends 'cinema_base.html' %}
+{% load static %}
 
 {% block title %}Кабинет пользователя{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container" style="background-color:white;">
@@ -21,7 +26,7 @@
             </ul>
         </div>
     </div>
-    <div class="tab-content">
+    <div class="tab-content" style="padding-bottom:50px;">
         <div class="tab-pane active" id="information">
             <div class="row">
                 <div class="col text-center">
@@ -83,9 +88,55 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane" id="tickets">
-            sdf
+        <div class="tab-pane" id="tickets" style="margin-top:25px;">
+            <div class="row">
+                <div class="col">
+                    <table class="table table-bordered table-hover" id="tickets_table">
+                        <thead>
+                            <tr>
+                                <th>Фильм</th>
+                                <th>Зал</th>
+                                <th>Место/Ряд</th>
+                                <th>Статус</th>
+                                <th>Время</th>
+                                <th>Сеанс</th>
+                                <th>Опции</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in tickets %}
+                                <tr>
+                                    <th><a href="{{ ticket.session.movie.get_absolute_public_url }}">{{ ticket.session.movie.name }}</a></th>
+                                    <th><a href="{{ ticket.session.cinema_hall.number.get_absolute_public_url }}">{{ ticket.session.cinema_hall.number }}</a></th>
+                                    <th>{{ ticket.beauty_seat_number }}/{{ ticket.beauty_row_number }}</th>
+                                    <th>{{ ticket.status }}</th>
+                                    <th>{{ ticket.session.session_datetime_start }}</th>
+                                    <th><a href="{{ ticket.session.get_absolute_public_url }}">Детали</a></th>
+                                    <th>
+                                        {% if ticket.reserved %}
+                                            <a href="{% url 'cinema:revert_ticket' ticket.pk %}">Отменить бронь</a>
+                                        {% else %}
+                                            <a href="{% url 'cinema:revert_ticket' ticket.pk %}">Вернуть билет</a>
+                                        {% endif %}
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+  $(document).ready(function(){
+       $("#tickets_table").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+    });
+  });
+</script>
 {% endblock %}
