@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
+from django.contrib.auth.password_validation import validate_password
 
 
 User = get_user_model()
@@ -45,3 +46,35 @@ class LoginForm(forms.Form):
     def get_invalid_login_error(self):
         return ValidationError(
             self.errors_messages['invalid_login'])
+
+
+class RegistrationForm(forms.ModelForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'password1'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'password2'}))
+    city = forms.CharField(required=False, widget=forms.TextInput(attrs={'id': 'city', 'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'phone_number', 'password1', 'password2', 'city')
+        widgets = {
+            'username': forms.TextInput(attrs={'id': 'username', 'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'id': 'email', 'type': 'email', 'class': 'form-control'}),
+            'phone_number': forms.TextInput(attrs={'id': 'phoneNumber', 'class': 'form-control'})
+        }
+
+    def clean(self):
+        super().clean()
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
+
+        if password1 != password2:
+            raise ValidationError('Введенные пароли не совпадают')
+        else:
+            validate_password(password2)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password2'])
+        if commit:
+            user.save()
+        return user

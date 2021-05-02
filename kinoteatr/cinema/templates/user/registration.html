@@ -1,0 +1,77 @@
+{% extends 'user/user_base_form.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<main class="form-register">
+    <form method="post">
+        {% csrf_token %}
+        <!--    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
+
+        <h1 class="h3 mb-3 fw-normal">Registration</h1>
+        {% if form.errors %}
+            <ul style="margin-left: 0; padding-left: 0; list-style-type: none; ">
+                {% for error, text in form.errors.items %}
+                    <li><h4 class="h4 mb-3">{{text}}</h4></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="row inputs">
+            <div class="col">
+                <div class="form-floating">
+                    {{ form.username }}
+                    <label for="username">Псевдоним</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating">
+                    {{ form.email }}
+                    <label for="email">Email</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row inputs">
+            <div class="col">
+                <div class="form-floating">
+                    {{ form.password1 }}
+                    <label for="password1">Пароль</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating">
+                    {{ form.password2 }}
+                    <label for="password2">Повторите пароль</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row inputs">
+            <div class="col">
+                <div class="form-floating">
+                    {{ form.phone_number }}
+                    <label for="phone_number">Номер телефона</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating">
+                    {{ form.city }}
+                    <label for="city">Город (Необязательно)</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3 width_limit">
+            <label>
+                Уже есть аккаунт? <a class="link-secondary" href="">Вход</a>
+            </label>
+            <label>
+                Вернутся на <a class="link-secondary" href="">главную</a> страницу
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-secondary width_limit" type="submit">Регистрация</button>
+        <p class="mt-5 mb-3 text-muted">&copy; Kinoteatr 2021</p>
+    </form>
+</main>
+{% endblock %}
