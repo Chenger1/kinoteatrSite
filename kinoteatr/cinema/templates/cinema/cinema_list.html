@@ -1,0 +1,35 @@
+{% extends 'cinema_base.html' %}
+{% load static %}
+
+{% block title %}Кинотеатры{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {% include 'about_cinema_context.html' %}
+
+    <div class="row">
+        <div class="col-10" style="background-color: #182029;">
+            <h4 style="color: white; text-align:center;">Наши кинотеатры</h4>
+            <div class="row">
+                {% for cinema in cinemas %}
+                    <div class="col-6" style="text-align:center;">
+                        <div><a href=""><img src="{{ cinema.on_top_banner.url }}" alt="" width="350" height="350" style="border-radius: 20px;"></a></div>
+                        <div><h4><a href="" style="color: white;">{{ cinema.name }}</a></h4></div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if is_paginated %}
+            <div class="row" style="margin-top:50px;">
+                <div class="col offset-5">
+                    {% include 'pagination.html' %}
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+        <div class="col-2" style="background-color: white;">
+            {% include 'context_ads.html' with trigger=False %}
+        </div>
+    </div>
+</div>
+{% endblock %}
