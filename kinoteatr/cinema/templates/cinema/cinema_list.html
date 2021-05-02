@@ -13,8 +13,8 @@
             <div class="row">
                 {% for cinema in cinemas %}
                     <div class="col-6" style="text-align:center;">
-                        <div><a href=""><img src="{{ cinema.on_top_banner.url }}" alt="" width="350" height="350" style="border-radius: 20px;"></a></div>
-                        <div><h4><a href="" style="color: white;">{{ cinema.name }}</a></h4></div>
+                        <div><a href="{{ cinema.get_absolute_public_url }}"><img src="{{ cinema.on_top_banner.url }}" alt="" width="350" height="350" style="border-radius: 20px;"></a></div>
+                        <div><h4><a href="{{ cinema.get_absolute_public_url }}" style="color: white;">{{ cinema.name }}</a></h4></div>
                     </div>
                 {% endfor %}
             </div>

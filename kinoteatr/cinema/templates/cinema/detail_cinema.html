@@ -1,0 +1,119 @@
+{% extends 'cinema_base.html' %}
+{% load static %}
+
+{% block title %}{{ cinema.name }}{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'admin_panel/css/scheme.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {% include 'about_cinema_context.html' %}
+
+    <div class="row" style="background-color:white; padding-bottom:50px;">
+        <div class="col-3">
+            <div class="row">
+                <div class="col">
+                    <img src="{{ cinema.on_top_banner.url }}" alt="Poster" class="img-thumbnail" width="300"
+                         height="300">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% include 'context_ads.html' with width=300 height=300 %}
+                </div>
+            </div>
+            <div class="row" style="margin-top:25px;">
+                <div class="col">
+                    <h5>Количество залов: {{ cinema.cinema_halls_count }}</h5>
+                    <table class="table">
+                        <tbody>
+                        {% for hall in cinema.halls.all %}
+                        <tr>
+                            <td style="border: 1px solid black; padding:0;">
+                                <a href="" class="btn btn-block" style="text-align:left;">Зал {{ hall.number }}</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="margin-top:25px;">
+                <div class="col">
+                    <h5>Смотрите сегодня:</h5>
+                    <table class="table">
+                        <tbody>
+                        {% for session in sessions %}
+                        <tr>
+                            <td style="border: 1px solid black; padding:0;">
+                                <a href="{{ session.get_absolute_public_url }}" class="btn btn-block" style="text-align:left;">
+                                    <span style="font-weight:bold;">"{{ session.movie.name }}"</span>
+                                    в зале номер <span style="font-weight:bold;">{{ session.cinema_hall.number }}</span> в
+                                    <span style="font-weight:bold;">{{ session.session_datetime_start.time }}</span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="{% url 'cinema:showtime' %}" class="btn btn-success btn-block">Расписание</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-9">
+            <div class="row" style="margin-top:25px;">
+                <div class="col-3">
+                    <img src="{{ cinema.logo.url }}" alt="logo" class="img-thumbnail" width="200" height="200">
+                </div>
+                <div class="col">
+                    <h3>Кинотеатр: <span style="font-weight:bold;">{{ cinema.name }}</span></h3>
+                </div>
+                <div class="col-2">
+                    <a href="{% url 'cinema:showtime' %}" class="btn btn-success">Расписание</a>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:50px;">
+                <div class="col">
+                    <p>{{ cinema.description|safe }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>Что у нас есть?</h5>
+                    <p>{{ cinema.conditions|safe }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h5 style="text-align:center;">Фотогалерея</h5>
+                    <div id="carouselCinema" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for image in cinema.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.image.url }}" class="d-block w-100" alt="..."
+                                     height="500">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselCinema" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselCinema" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+{% endblock %}

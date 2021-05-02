@@ -37,6 +37,13 @@ class Cinema(models.Model):
     def get_delete_url(self):
         return reverse('admin_panel:delete_cinema_admin', args=[self.pk])
 
+    def get_absolute_public_url(self):
+        return reverse('cinema:cinema_detail', args=[self.pk])
+
+    @property
+    def cinema_halls_count(self):
+        return self.halls.count()
+
     @property
     def next_hall_number(self):
         # increment number of the last cinema hall to get next number for new one
