@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def get_birthday_date(self):
-        return self.birthday_date.strftime('%d.%m.%Y')
+        return self.birthday_date.strftime('%d.%m.%Y') if self.birthday_date else ''
 
     @property
     def get_joined_date(self):

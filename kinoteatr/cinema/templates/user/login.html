@@ -1,4 +1,5 @@
 {% extends 'user/user_base_form.html' %}
+{% load beautify_status %}
 
 {% block title %}Sign In{% endblock %}
 {% block content %}
@@ -8,8 +9,10 @@
             <!--    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
 
             <h1 class="h3 mb-3 fw-normal">Вход</h1>
-            {% if error %}
-                <h4 class="h4 mb-3">{{error}}</h4>
+            {% if form.errors %}
+                {% for tag, error in form.errors.items %}
+                    <h4 class="h4 mb-3">{{ tag|beauty_error_tag }}:{{error}}</h4>
+                {% endfor %}
             {% endif %}
 
             <div class="form-floating">
