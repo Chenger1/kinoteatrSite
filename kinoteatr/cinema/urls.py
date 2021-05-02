@@ -7,6 +7,7 @@ from cinema.views.pages.news_views import ListNews, NewsDetail
 from cinema.views.showtime_views import ShowTime, ShowTimeSession
 from cinema.views.user.user_views import UserDetail, Logout, LoginUser, RegistrationView, RevertTicket
 from cinema.views.sessions_view import SessionDetail, GetHallSchema, ReserveTicket, BuyTicket
+from cinema.views.cinema.cinema_views import CinemaList
 
 app_name = 'cinema'
 
@@ -37,4 +38,7 @@ urlpatterns = [
     path('session/get_hall_schema/', GetHallSchema.as_view(), name='get_hall_schema_for_session'),
     path('session/reserve_ticket/', ReserveTicket.as_view(), name='reserve_ticket'),
     path('session/buy_ticket/', BuyTicket.as_view(), name='buy_ticket'),
+
+    # CINEMA
+    path('cinema/cinema_list/', CinemaList.as_view(), name='cinema_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
