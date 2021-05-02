@@ -25,13 +25,14 @@
 }
 
 .reserved_button{
-	background-color: red;
-	border: 1px solid red;
+	background-color: gray;
+	border: 1px solid gray;
 }
 
 .bought_button{
-	background-color: gray;
-	border: 1px solid gray;
+	background-color: black;
+	color:white;
+	border: 1px solid black;
 }
 
 .to_revert{

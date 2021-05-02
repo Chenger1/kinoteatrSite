@@ -41,7 +41,7 @@ function renderSchema(schema){
 	this.render_row = function(inc_value){
 		// using value from incrementor, render new row and return its id
 		let row_id = 'row_' + inc_value;
-		let row_div = '<div id="'+row_id+'"></div>';
+		let row_div = '<div id="'+row_id+'" value="'+ inc_value +'"></div>';
 		this.parent_div.append(row_div);
 		return row_id;
 	};
@@ -49,7 +49,7 @@ function renderSchema(schema){
 	this.render_row_button = function(row_id, inc_value){
 		// using row id and incrementor value, render new button in the given row
 		let button_id = 'button_' + row_id + '_'+ inc_value;
-		let button = '<button type="button" id="'+ button_id +'" class="scheme_button">'+ Number(inc_value+1) +'</button>'
+		let button = '<button type="button" id="'+ button_id +'" class="scheme_button" value="'+ inc_value +'">'+ Number(inc_value+1) +'</button>'
 		parent = $('#' + row_id);
 		parent.append(button);
 	};

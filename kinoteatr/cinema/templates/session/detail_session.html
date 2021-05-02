@@ -1,0 +1,124 @@
+{% extends 'cinema_base.html' %}
+{% load static %}
+
+{% block title %}Детали сеанса{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'admin_panel/css/scheme.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for image in session.cinema_hall.images.all %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <img src="{{ image.image.url }}" class="d-block w-100" alt="..."
+                             height="600">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="background-color:white;">
+        <div class="col-3">
+            <div>
+                <img src="{{ session.movie.main_image.url }}" alt="Poster"  class="img-thumbnail" width="300" height="300">
+            </div>
+            <div>
+                {% include 'context_ads.html' with width=300 height=300 %}
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col">
+                    <h3>{{ session.movie.name }}</h3>
+                    <p>{{ session.session_datetime_start }}</p>
+                    <p>Зал номер: <span style="font-weight:bold;">{{ session.cinema_hall.number }}</span> в
+                        <span style="font-weight:bold;">{{ session.cinema_hall.cinema.name }}</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <h5>Цена в грн. : <button class="" style="background-color:#ebebeb; color:black;" disabled>{{ session.ticket_price }}</button></h5>
+                </div>
+                <div class="col-4">
+                    <h5>Статус: <button class="reserved_button" style="color:white;" disabled>Забронировано</button>
+                                <button class="bought_button" style="color:white;" disabled>Куплено</button></h5>
+                </div>
+                <div class="col-5">
+                    <h5>Ваш заказ: <span style="border: 5px solid #ffc400;"
+                    >Билетов: <span id="tickets">0</span> Сумма: <span id="total">0</span> </span></h5>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:50px;">
+                <div class="col">
+                    <div class="col text-center">
+                        <img src="{% static 'images/screen.jpg' %}" alt="" width="800">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:50px;">
+                <div class="col">
+                    <div id="scheme_builder" class="text-center">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:75px;">
+                <div class="col"><p>Стоимость услуги бронирования - 3 грн. за каждое место</p></div>
+            </div>
+            <div class="row">
+                <div class="col"><p>ЗАБРОНИРОВАННЫЕ БИЛЕТЫ НУЖНО ВЫКУПИТЬ НА КАССЕ КИНОТЕАТРА НЕ ПОЗДНЕЕ ЧЕМ ЗА ПОЛЧАСА ДО НАЧАЛА СЕАНСА</p></div>
+            </div>
+            <div class="row">
+                <div class="col offset-4">
+                    {% if request.user.is_authenticated %}
+                        <button class="btn btn-outline-primary" id="reserve">Забронировать</button>
+                        <button class="btn btn-outline-success" id="buy">Купить</button>
+                    {% else %}
+                        Создайте профиль пользователя чтобы бронировать или покупать билеты онлайн
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/hall/schema.js' %}"></script>
+<script src="{% static 'admin_panel/js/hall/builder.js' %}"></script>
+<script src="{% static 'cinema/js/public_session.js' %}"></script>
+<script>
+
+$(document).ready(function(){
+    $.ajax({
+        method: 'GET',
+        url: '{% url 'cinema:get_hall_schema_for_session' %}',
+        data: {'cinema_hall_pk': '{{ session.cinema_hall.pk }}', 'session': '{{session.pk}}'},
+        success: function(response){
+            let render = new publicSession(response['schema'], renderSchema, set_style,
+                response['reserved_tickets'], response['ticket_price'], '{{session.pk}}', '{{session.cinema_hall.pk}}');
+
+            function button_event(url){
+                 render.set_button_event(url)
+            }
+
+            render.render_schema();
+            $('#reserve').on('click', function(){
+               button_event('{% url "cinema:reserve_ticket" %}')
+            });
+            $('#buy').on('click', function(){
+                button_event('{% url "cinema:buy_ticket" %}')
+            })
+        }
+    })
+});
+
+</script>
+{% endblock %}

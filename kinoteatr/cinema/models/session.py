@@ -1,8 +1,11 @@
 from django.db import models
+from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 from cinema.models.cinema import CinemaHall
 from cinema.models.movie import Movie
-from cinema.models.user import User
+
+User = get_user_model()
 
 
 class Session(models.Model):
@@ -37,7 +40,7 @@ class Session(models.Model):
         return self.tickets.filter(reserved=True).count()
 
     def get_absolute_public_url(self):
-        return f'{self.pk}'
+        return reverse('cinema:session_detail', args=[self.pk])
 
 
 class Ticket(models.Model):
@@ -46,6 +49,7 @@ class Ticket(models.Model):
     seat_number = models.IntegerField()
     reserved = models.BooleanField(default=False)
     bought = models.BooleanField(default=False)
+    user = models.ForeignKey(User, related_name='tickets', on_delete=models.CASCADE, blank=True)
 
     @property
     def ticket_state(self):
@@ -55,8 +59,3 @@ class Ticket(models.Model):
             return 0
         else:
             return None
-
-
-class UserTicket(models.Model):
-    user = models.ForeignKey(User, related_name='tickets', on_delete=models.CASCADE)
-    ticket = models.ForeignKey(Ticket, related_name='tickets', on_delete=models.CASCADE)
