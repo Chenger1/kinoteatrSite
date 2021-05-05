@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 import datetime
+import pytz
 
 from cinema.models.session import Session
 
@@ -35,11 +36,12 @@ class AddSessionForm(forms.ModelForm):
             raise ValidationError('Выберите, пожалуйста, фильм')
 
         datetime_field_start = datetime.datetime.combine(self.cleaned_data['session_date'],
-                                                         self.cleaned_data['session_time'])
+                                                         self.cleaned_data['session_time'],
+                                                         tzinfo=pytz.UTC)
         #  Date comes in string format and, also, separated in two parts: Date and Time. So we need to combine them
 
         datetime_field_end = datetime_field_start + datetime.timedelta(hours=cleaned_data['movie'].running_time.hour,
-                                                                       minutes=cleaned_data['movie'].running_time.minute)
+                                                                       minutes=cleaned_data['movie'].running_time.minute,)
         #  Using session start time and movie running time we can calculate session END time
 
         chosen_date_session = cleaned_data['cinema_hall'].sessions.filter(session_datetime_start__day=datetime_field_start.day)
@@ -47,14 +49,16 @@ class AddSessionForm(forms.ModelForm):
 
         if chosen_date_session.filter(session_datetime_start__range=(datetime_field_start, datetime_field_end))\
                 or chosen_date_session.filter(session_datetime_end__range=(datetime_field_start,
-                                                                           datetime_field_end)):
+                                                                           datetime_field_end))\
+                or chosen_date_session.filter(session_datetime_start__lte=datetime_field_start,
+                                              session_datetime_end__gte=datetime_field_end):
             #  if there are sessions which match with current session START time OR
             #  if there are sessions which match with current session END time
             #  We have to check not only for start or end time, but also for this range [start, end]
             #  Because if our movie starts at 12:00 PM, there can be movie that will ended in 12:30 in this hall
             #  Since we cant have two session in one hall at the same time, we have to check for this range
 
-            str_date = datetime_field_start.strftime("%y:%m:%d, %H:%M")
+            str_date = datetime_field_start.strftime("%d-%m-%Y, %H:%M")
             # transform date to string to place it in message
             #  If we will find another session in this time - raise Validation Error
             raise ValidationError(f'Сеанс на выбранную дату и время уже существует. Дата и время: {str_date}',

@@ -64,10 +64,10 @@
 
         <div class="mb-3 width_limit">
             <label>
-                Уже есть аккаунт? <a class="link-secondary" href="">Вход</a>
+                Уже есть аккаунт? <a class="link-secondary" href="{% url 'cinema:login' %}">Вход</a>
             </label>
             <label>
-                Вернутся на <a class="link-secondary" href="">главную</a> страницу
+                Вернутся на <a class="link-secondary" href="{% url 'cinema:main_page' %}">главную</a> страницу
             </label>
         </div>
         <button class="w-100 btn btn-lg btn-secondary width_limit" type="submit">Регистрация</button>
