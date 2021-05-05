@@ -86,7 +86,9 @@
                                     {% if CafeBar %}
                                     <a class="dropdown-item" href="{% url 'cinema:cafe_bar' %}">Кафе</a>
                                     {% endif %}
-                                    <a class="dropdown-item" href="#">Мобильные приложения</a>
+                                    {% if MobileApp %}
+                                    <a class="dropdown-item" href="{% url 'cinema:mobile_app' %}">Мобильные приложения</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="#">Контакты</a>
                               </div>
                             </li>

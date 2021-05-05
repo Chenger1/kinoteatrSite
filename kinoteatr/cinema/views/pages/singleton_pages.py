@@ -1,14 +1,14 @@
 from django.views.generic import View
 from django.shortcuts import render
 
-from cinema.models.page import Advertisement, CafeBar
+from cinema.models.page import Advertisement, CafeBar, MobileApp
 
 from cinema.services.get_banners import get_context_for_generic_views
 
 
 class DisplaySingletonPage(View):
     model = None
-    template_name = None
+    template_name = 'pages/singleton_page.html'
 
     def get(self, request):
         context = {}
@@ -20,9 +20,11 @@ class DisplaySingletonPage(View):
 
 class DisplayAdvertisement(DisplaySingletonPage):
     model = Advertisement
-    template_name = 'pages/advertisement.html'
 
 
 class DisplayCafeBar(DisplaySingletonPage):
     model = CafeBar
-    template_name = 'pages/cafe_bar.html'
+
+
+class DisplayMobileApp(DisplaySingletonPage):
+    model = MobileApp

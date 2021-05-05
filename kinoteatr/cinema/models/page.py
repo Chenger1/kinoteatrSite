@@ -107,6 +107,10 @@ class CafeBar(SingletonModel):
     def get_absolute_url(self):
         return reverse('admin_panel:edit_cafe_bar_admin')
 
+    @property
+    def title_string(self):
+        return 'Наши кафе'
+
 
 class VipHall(SingletonModel):
     title = models.CharField(max_length=100)
@@ -121,6 +125,10 @@ class VipHall(SingletonModel):
 
     def get_absolute_url(self):
         return reverse('admin_panel:edit_vip_hall_admin')
+
+    @property
+    def title_string(self):
+        return 'Наши Vip-залы'
 
 
 class Advertisement(SingletonModel):
@@ -137,6 +145,10 @@ class Advertisement(SingletonModel):
     def get_absolute_url(self):
         return reverse('admin_panel:edit_advertisement_admin')
 
+    @property
+    def title_string(self):
+        return 'Рекламодателям'
+
 
 class ChildRoom(SingletonModel):
     title = models.CharField(max_length=100)
@@ -152,6 +164,10 @@ class ChildRoom(SingletonModel):
     def get_absolute_url(self):
         return reverse('admin_panel:edit_child_room_admin')
 
+    @property
+    def title_string(self):
+        return 'Детская комната'
+
 
 class MobileApp(SingletonModel):
     title = models.CharField(max_length=100)
@@ -166,3 +182,7 @@ class MobileApp(SingletonModel):
 
     def get_absolute_url(self):
         return reverse('admin_panel:edit_mobile_app_admin')
+
+    @property
+    def title_string(self):
+        return 'Мобильное приложение'
