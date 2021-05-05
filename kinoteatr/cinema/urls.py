@@ -9,6 +9,7 @@ from cinema.views.sessions_view import SessionDetail, GetHallSchema, ReserveTick
 from cinema.views.cinema.cinema_views import CinemaList, CinemaDetail, CinemaHallDetail, GetCinemaHallSchema
 from cinema.views.pages.ads_news_views import ListNews, ListAd, NewsDetail, AdDetail
 from cinema.views.pages.singleton_pages import DisplayAdvertisement, DisplayCafeBar, DisplayMobileApp, DisplayVipHall, DisplayAboutCinema
+from cinema.views.pages.contact_views import DisplayContactPage
 
 app_name = 'cinema'
 
@@ -55,5 +56,8 @@ urlpatterns = [
     path('cafe_bar/', DisplayCafeBar.as_view(), name='cafe_bar'),
     path('mobile_app/', DisplayMobileApp.as_view(), name='mobile_app'),
     path('vip_hall/', DisplayVipHall.as_view(), name='vip_hall'),
-    path('about_cinema/', DisplayAboutCinema.as_view(), name='about_cinema')
+    path('about_cinema/', DisplayAboutCinema.as_view(), name='about_cinema'),
+
+    # CONTACTS
+    path('contacts/', DisplayContactPage.as_view(), name='contacts'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

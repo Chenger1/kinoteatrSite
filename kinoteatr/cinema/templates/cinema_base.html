@@ -95,7 +95,7 @@
                                     {% if AboutCinema %}
                                         <a class="dropdown-item" href="{% url 'cinema:about_cinema' %}">О нашей сети</a>
                                     {% endif %}
-                                    <a class="dropdown-item" href="#">Контакты</a>
+                                    <a class="dropdown-item" href="{% url 'cinema:contacts' %}">Контакты</a>
                               </div>
                             </li>
                               {% if request.user.is_authenticated %}
