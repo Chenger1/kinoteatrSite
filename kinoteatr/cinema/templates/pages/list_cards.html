@@ -1,7 +1,13 @@
 {% extends 'cinema_base.html' %}
 {% load static %}
 
-{% block title %}Новости{% endblock %}
+{% block title %}
+{% if ad %}
+Акции
+{% elif news %}
+Новости
+{% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -9,12 +15,18 @@
 
     <div class="row">
         <div class="col-10" style="background-color: #182029;">
-            <h4 style="color: white; text-align:center;">Новости</h4>
+            <h4 style="color: white; text-align:center;">
+                {% if ad %}
+                    Акции
+                {% elif news %}
+                    Новости
+                {% endif %}
+            </h4>
             <div class="row">
-                {% for card in news %}
+                {% for card in object_list %}
                     <div class="col-3" style="text-align:center;">
-                        <div><a href="{% url 'cinema:public_news_detail' card.pk %}"><img src="{{ card.main_image.url }}" alt="" width="250" height="250" style="border-radius: 20px;"></a></div>
-                        <div><a href="{% url 'cinema:public_news_detail' card.pk %}" style="color: white;">{{ card.title }}</a></div>
+                        <div><a href="{{ card.get_absolute_public_url }}"><img src="{{ card.main_image.url }}" alt="" width="250" height="250" style="border-radius: 20px;"></a></div>
+                        <div><a href="{{ card.get_absolute_public_url }}" style="color: white;">{{ card.title }}</a></div>
                         <h5 style="color:white;">{{ card.publication_date }}</h5>
                         <div style="color: white!important; text-align:left;" class="desc">
                             {{ card.description |truncatewords_html:12|safe }}

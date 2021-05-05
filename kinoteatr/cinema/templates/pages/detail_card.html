@@ -1,7 +1,13 @@
 {% extends 'cinema_base.html' %}
 {% load static %}
 
-{% block title %}Новость{% endblock %}
+{% block title %}
+{% if ad %}
+Акции
+{% elif news %}
+Новости
+{% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -9,16 +15,16 @@
 
     <div class="row">
         <div class="col-10" style="background-color: #182029; padding-top:50px;">
-            <h4 style="color: white; text-align:center;">{{ news.title }}</h4>
+            <h4 style="color: white; text-align:center;">{{ object.title }}</h4>
             <div class="row">
                 <div class="col-4">
                     <div>
-                        <img src="{{ news.main_image.url }}" alt="main_image" class="img-thumbnail">
+                        <img src="{{ object.main_image.url }}" alt="main_image" class="img-thumbnail">
                     </div>
                 </div>
                 <div class="col-8">
                     <div class="desc">
-                        {{ news.description|safe }}
+                        {{ object.description|safe }}
                     </div>
                 </div>
             </div>
