@@ -1,4 +1,4 @@
-from cinema.models.page import CafeBar, Advertisement, MobileApp, AboutCinema, MainPage
+from cinema.models.page import CafeBar, Advertisement, MobileApp, AboutCinema, MainPage, VipHall
 from cinema.models.banners import OnTopBanner, BackgroundImage, SliderBanner
 
 
@@ -18,7 +18,7 @@ def get_page(pages):
 
 def get_context_for_generic_views():
     pages = [CafeBar, Advertisement, MobileApp, AboutCinema, MainPage,
-             OnTopBanner, BackgroundImage, SliderBanner]
+             OnTopBanner, BackgroundImage, SliderBanner, VipHall]
     context = {}
     banners_context = get_page(pages)
     context['BackgroundImage'] = banners_context.get('BackgroundImage')
@@ -29,5 +29,6 @@ def get_context_for_generic_views():
     context['CafeBar'] = banners_context.get('CafeBar')
     context['MobileApp'] = banners_context.get('MobileApp')
     context['SliderBanner'] = banners_context.get('SliderBanner')
+    context['VipHall'] = banners_context.get('VipHall')
 
     return context
