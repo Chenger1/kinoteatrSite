@@ -92,6 +92,9 @@
                                     {% if VipHall %}
                                         <a class="dropdown-item" href="{% url 'cinema:vip_hall' %}">Vip-залы</a>
                                     {% endif %}
+                                    {% if AboutCinema %}
+                                        <a class="dropdown-item" href="{% url 'cinema:about_cinema' %}">О нашей сети</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="#">Контакты</a>
                               </div>
                             </li>

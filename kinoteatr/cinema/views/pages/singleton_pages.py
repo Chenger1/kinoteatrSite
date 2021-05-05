@@ -1,7 +1,7 @@
 from django.views.generic import View
 from django.shortcuts import render
 
-from cinema.models.page import Advertisement, CafeBar, MobileApp, VipHall
+from cinema.models.page import Advertisement, CafeBar, MobileApp, VipHall, AboutCinema
 
 from cinema.services.get_banners import get_context_for_generic_views
 
@@ -32,3 +32,7 @@ class DisplayMobileApp(DisplaySingletonPage):
 
 class DisplayVipHall(DisplaySingletonPage):
     model = VipHall
+
+
+class DisplayAboutCinema(DisplaySingletonPage):
+    model = AboutCinema
