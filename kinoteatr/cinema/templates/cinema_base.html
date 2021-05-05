@@ -126,22 +126,32 @@
     <footer style="background-color:white;">
         <div class="container">
             <div class="row">
+                {% if MobileApp %}
                 <div class="col">
                     <h5>Мобильные приложения</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="{% url 'cinema:mobile_app' %}"> <img src="{% static 'images/social/apple.png' %}" alt="Apple" width="120" height="50"></a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'cinema:mobile_app' %}"><img src="{% static 'images/social/google.png' %}" alt="Apple" width="120" height="50"></a>
+                        </div>
+                    </div>
                 </div>
+                {% endif %}
                 <div class="col">
                     <h5>Афиша</h5>
-                    <p class="mainPageFooterLink"><a href="">Расписание</a></p>
-                    <p class="mainPageFooterLink"><a href="">Скоро в прокате</a></p>
-                    <p class="mainPageFooterLink"><a href="">Кинотеатры</a></p>
-                    <p class="mainPageFooterLink"><a href="">Акции</a></p>
+                    <p class="mainPageFooterLink"><a href="{% url 'cinema:showtime' %}">Расписание</a></p>
+                    <p class="mainPageFooterLink"><a href="{% url 'cinema:show_list_movies_soon' %}">Скоро в прокате</a></p>
+                    <p class="mainPageFooterLink"><a href="{% url 'cinema:cinema_list' %}">Кинотеатры</a></p>
+                    <p class="mainPageFooterLink"><a href="{% url 'cinema:list_ads' %}">Акции</a></p>
                 </div>
                 <div class="col">
                     <h5>О кинотеатре</h5>
-                    <p class="mainPageFooterLink"><a href="">Новости</a></p>
-                    <p class="mainPageFooterLink"><a href="">Реклама</a></p>
-                    <p class="mainPageFooterLink"><a href="">Кафе-бар</a></p>
-                    <p class="mainPageFooterLink"><a href="">Контакты</a></p>
+                    <p class="mainPageFooterLink"><a href="{% url 'cinema:list_news' %}">Новости</a></p>
+                    <p class="mainPageFooterLink"><a href="{% url 'cinema:advertisement' %}">Реклама</a></p>
+                    <p class="mainPageFooterLink"><a href="{% url 'cinema:cafe_bar' %}">Кафе-бар</a></p>
+                    <p class="mainPageFooterLink"><a href="{% url 'cinema:contacts' %}">Контакты</a></p>
                 </div>
             </div>
             <div class="row text-center" style="padding-bottom:15px;">

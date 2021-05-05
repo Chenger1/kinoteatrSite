@@ -39,7 +39,7 @@
                             <img src="{{ movie.main_image.url }}" alt="logo" width="300" height="400">
                             <div class="text-center">
                                 <a href="{% url 'cinema:movie_detail' movie.pk %}"><h5>{{ movie.name }}</h5></a>
-                                <a href="" class="btn btn-success">Купить билет</a>
+                                <a href="{% url 'cinema:showtime' %}" class="btn btn-success">Купить билет</a>
                             </div>
                         </div>
                     </div>
@@ -66,20 +66,10 @@
                             <img src="{{ movie.main_image.url }}" alt="logo" width="300" height="400">
                             <div class="text-center">
                                 <a href="{% url 'cinema:movie_detail' movie.pk %}"><h5>{{ movie.name }}</h5></a>
-                                <a href="" class="btn btn-success">Купить билет</a>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
-                </div>
-                <div class="row">
-                    <div class="col" style="margin-top:10px;">
-                        <div style="text-align:center;">
-                            <div class="text-center">
-                                <a href="" class="btn btn-success">Посмотреть расписание</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
