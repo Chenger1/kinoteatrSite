@@ -6,8 +6,6 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
-from cinema.models.banners import OnTopBanner, BackgroundImage
-from cinema.models.page import MainPage, Advertisement, CafeBar
 from cinema.models.session import Ticket
 
 from cinema.forms.user_form import LoginForm, RegistrationForm
@@ -20,12 +18,11 @@ User = get_user_model()
 class UserDetail(DetailView):
     model = User
     template_name = 'user/profile.html'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, CafeBar]
     context_object_name = 'user'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(get_context_for_generic_views(self.pages))
+        context.update(get_context_for_generic_views())
         context['tickets'] = self.object.tickets.all()
         return context
 

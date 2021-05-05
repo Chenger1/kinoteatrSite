@@ -3,10 +3,8 @@ from django.views.generic import View
 from django.views.generic.detail import DetailView
 from django.http import JsonResponse
 
-from cinema.services.get_banners import get_page
+from cinema.services.get_banners import get_context_for_generic_views
 from cinema.services.utils import get_current_date
-from cinema.models.banners import OnTopBanner, BackgroundImage, SliderBanner
-from cinema.models.page import MainPage, Advertisement, CafeBar
 from cinema.models.movie import Movie
 from cinema.models.cinema import Cinema
 
@@ -15,8 +13,6 @@ import datetime
 
 class DisplayMainPage(View):
     template_name = 'cinema_index.html'
-    pages = [OnTopBanner, BackgroundImage, MainPage, SliderBanner,
-             Advertisement, CafeBar]
 
     def get(self, request):
         context = self.get_context()
@@ -24,8 +20,8 @@ class DisplayMainPage(View):
         return render(request, self.template_name, context)
 
     def get_context(self):
-        context = get_page(self.pages)
-
+        context = {}
+        context.update(get_context_for_generic_views())
         context['released_movie'] = Movie.objects.filter(released=True)
         context['movie_soon'] = Movie.objects.filter(released=False)
         context['day'] = get_current_date()
@@ -35,7 +31,6 @@ class DisplayMainPage(View):
 
 class ListMoviesMixin(View):
     template_name = 'movie/show_movies_list.html'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, CafeBar]
     current = None
 
     def get(self, request):
@@ -43,7 +38,8 @@ class ListMoviesMixin(View):
         return render(request, self.template_name, context)
 
     def get_context(self):
-        context = get_page(self.pages)
+        context = {}
+        context.update(get_context_for_generic_views())
         context['released_movie'] = Movie.objects.filter(released=True)
         context['movie_soon'] = Movie.objects.filter(released=False)
         if self.current == 'movies':
@@ -66,16 +62,11 @@ class ListMovies(ListMoviesMixin):
 class MovieDetail(DetailView):
     model = Movie
     template_name = 'movie/movie_detail_public.html'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, CafeBar]
     context_object_name = 'movie'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        banners_context = get_page(self.pages)
-        context['BackgroundImage'] = banners_context['BackgroundImage']
-        context['OnTopBanner'] = banners_context['OnTopBanner']
-        context['MainPage'] = banners_context['MainPage']
-        context['Advertisement'] = banners_context['Advertisement']
+        context.update(get_context_for_generic_views())
 
         today = datetime.date.today()
         week = today + datetime.timedelta(days=7)  # get last day of the current 7-days period

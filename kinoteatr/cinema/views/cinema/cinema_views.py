@@ -5,8 +5,6 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 from cinema.models.cinema import Cinema, CinemaHall
-from cinema.models.page import MainPage, Advertisement, AboutCinema, CafeBar
-from cinema.models.banners import OnTopBanner, BackgroundImage
 from cinema.models.session import Session
 
 from cinema.services.get_banners import get_context_for_generic_views
@@ -19,12 +17,11 @@ class CinemaList(ListView):
     model = Cinema
     template_name = 'cinema/cinema_list.html'
     context_object_name = 'cinemas'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema, CafeBar]
     paginate_by = 6
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(get_context_for_generic_views(self.pages))
+        context.update(get_context_for_generic_views())
 
         return context
 
@@ -33,11 +30,10 @@ class CinemaDetail(DetailView):
     model = Cinema
     template_name = 'cinema/detail_cinema.html'
     context_object_name = 'cinema'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema, CafeBar]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(get_context_for_generic_views(self.pages))
+        context.update(get_context_for_generic_views())
         context['sessions'] = Session.objects.filter(cinema_hall__cinema=self.object,
                                                      session_datetime_start__date=datetime.datetime.today())[:6]
         return context
@@ -47,11 +43,10 @@ class CinemaHallDetail(DetailView):
     model = CinemaHall
     template_name = 'cinema/detail_cinema_hall.html'
     context_object_name = 'cinema_hall'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema, CafeBar]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(get_context_for_generic_views(self.pages))
+        context.update(get_context_for_generic_views())
         context['sessions'] = Session.objects.filter(cinema_hall=self.object,
                                                      session_datetime_start__date=datetime.datetime.today())[:6]
         return context
