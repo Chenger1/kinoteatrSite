@@ -23,6 +23,9 @@ class News(models.Model):
     def get_delete_url(self):
         return reverse('admin_panel:delete_news_admin', args=[self.pk])
 
+    def get_absolute_public_url(self):
+        return reverse('cinema:public_news_detail', args=[self.pk])
+
     def __str__(self):
         return self.title
 
@@ -42,6 +45,9 @@ class Ad(models.Model):
 
     def get_delete_url(self):
         return reverse('admin_panel:delete_ad_admin', args=[self.pk])
+
+    def get_absolute_public_url(self):
+        return reverse('cinema:public_ad_detail', args=[self.pk])
 
     def __str__(self):
         return self.title

@@ -3,11 +3,11 @@ from django.contrib.staticfiles.urls import static
 from django.conf import settings
 
 from cinema.views.views import DisplayMainPage, ListMovies, MovieDetail, MovieSessionDetail
-from cinema.views.pages.news_views import ListNews, NewsDetail
 from cinema.views.showtime_views import ShowTime, ShowTimeSession
 from cinema.views.user.user_views import UserDetail, Logout, LoginUser, RegistrationView, RevertTicket
 from cinema.views.sessions_view import SessionDetail, GetHallSchema, ReserveTicket, BuyTicket
 from cinema.views.cinema.cinema_views import CinemaList, CinemaDetail, CinemaHallDetail, GetCinemaHallSchema
+from cinema.views.pages.ads_news_views import ListNews, ListAd, NewsDetail, AdDetail
 
 app_name = 'cinema'
 
@@ -21,6 +21,9 @@ urlpatterns = [
     # NEWS
     path('news/', ListNews.as_view(), name='list_news'),
     path('news/detail/<int:pk>/', NewsDetail.as_view(), name='public_news_detail'),
+
+    path('ads/', ListAd.as_view(), name='list_ads'),
+    path('ads/detail/<int:pk>/', AdDetail.as_view(), name='public_ad_detail'),
 
     # SHOWTIME
     path('showtime/', ShowTime.as_view(), name='showtime'),
