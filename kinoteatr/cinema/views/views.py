@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from cinema.services.get_banners import get_page
 from cinema.services.utils import get_current_date
 from cinema.models.banners import OnTopBanner, BackgroundImage, SliderBanner
-from cinema.models.page import MainPage, Advertisement
+from cinema.models.page import MainPage, Advertisement, CafeBar
 from cinema.models.movie import Movie
 from cinema.models.cinema import Cinema
 
@@ -16,7 +16,7 @@ import datetime
 class DisplayMainPage(View):
     template_name = 'cinema_index.html'
     pages = [OnTopBanner, BackgroundImage, MainPage, SliderBanner,
-             Advertisement]
+             Advertisement, CafeBar]
 
     def get(self, request):
         context = self.get_context()
@@ -35,7 +35,7 @@ class DisplayMainPage(View):
 
 class ListMoviesMixin(View):
     template_name = 'movie/show_movies_list.html'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, CafeBar]
     current = None
 
     def get(self, request):
@@ -66,7 +66,7 @@ class ListMovies(ListMoviesMixin):
 class MovieDetail(DetailView):
     model = Movie
     template_name = 'movie/movie_detail_public.html'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, CafeBar]
     context_object_name = 'movie'
 
     def get_context_data(self, **kwargs):

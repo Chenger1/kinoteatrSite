@@ -1,7 +1,7 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
-from cinema.models.page import Ad, News, Advertisement, MainPage, AboutCinema
+from cinema.models.page import Ad, News, Advertisement, MainPage, AboutCinema, CafeBar
 from cinema.models.banners import OnTopBanner, BackgroundImage
 
 from cinema.services.get_banners import get_context_for_generic_views
@@ -13,7 +13,7 @@ class ListInstanceMixin(ListView):
     model = None
     template_name = None
     paginate_by = 12
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema, CafeBar]
 
     def get_queryset(self):
         queryset = self.model.objects.filter(status=True, publication_date__lte=datetime.date.today())
@@ -36,7 +36,7 @@ class InstanceDetailMixin(DetailView):
     model = None
     template_name = None
     context_object_name = None
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema, CafeBar]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

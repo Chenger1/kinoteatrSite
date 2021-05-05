@@ -20,5 +20,6 @@ def get_context_for_generic_views(pages):
     context['MainPage'] = banners_context.get('MainPage')
     context['Advertisement'] = banners_context.get('Advertisement')
     context['AboutCinema'] = banners_context.get('AboutCinema')
+    context['CafeBar'] = banners_context.get('CafeBar')
 
     return context

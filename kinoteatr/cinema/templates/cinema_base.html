@@ -83,7 +83,9 @@
                                     {% if Advertisement %}
                                     <a class="dropdown-item" href="{% url 'cinema:advertisement' %}">Реклама</a>
                                     {% endif %}
-                                    <a class="dropdown-item" href="#">Кафе</a>
+                                    {% if CafeBar %}
+                                    <a class="dropdown-item" href="{% url 'cinema:cafe_bar' %}">Кафе</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="#">Мобильные приложения</a>
                                     <a class="dropdown-item" href="#">Контакты</a>
                               </div>

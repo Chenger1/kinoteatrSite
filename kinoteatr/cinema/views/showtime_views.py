@@ -4,7 +4,7 @@ from django.http import JsonResponse
 
 from cinema.services.get_banners import get_context_for_generic_views
 from cinema.models.banners import OnTopBanner, BackgroundImage
-from cinema.models.page import MainPage, Advertisement
+from cinema.models.page import MainPage, Advertisement, CafeBar
 from cinema.models.cinema import Cinema
 from cinema.models.session import Session
 from cinema.models.movie import Movie
@@ -15,7 +15,7 @@ import datetime
 
 class ShowTime(View):
     template_name = 'showtime.html'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, CafeBar]
 
     def get(self, request):
         context = get_context_for_generic_views(self.pages)

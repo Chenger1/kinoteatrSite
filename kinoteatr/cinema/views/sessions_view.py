@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from cinema.services.get_banners import get_context_for_generic_views
 from cinema.models.session import Session
 from cinema.models.banners import OnTopBanner, BackgroundImage
-from cinema.models.page import MainPage, Advertisement
+from cinema.models.page import MainPage, Advertisement, CafeBar
 from cinema.models.cinema import CinemaHall
 
 from cinema.forms.session_form import TicketForm
@@ -20,7 +20,7 @@ class SessionDetail(DetailView):
     model = Session
     template_name = 'session/detail_session.html'
     context_object_name = 'session'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, CafeBar]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 from cinema.models.cinema import Cinema, CinemaHall
-from cinema.models.page import MainPage, Advertisement, AboutCinema
+from cinema.models.page import MainPage, Advertisement, AboutCinema, CafeBar
 from cinema.models.banners import OnTopBanner, BackgroundImage
 from cinema.models.session import Session
 
@@ -19,7 +19,7 @@ class CinemaList(ListView):
     model = Cinema
     template_name = 'cinema/cinema_list.html'
     context_object_name = 'cinemas'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema, CafeBar]
     paginate_by = 6
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -33,7 +33,7 @@ class CinemaDetail(DetailView):
     model = Cinema
     template_name = 'cinema/detail_cinema.html'
     context_object_name = 'cinema'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema, CafeBar]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -47,7 +47,7 @@ class CinemaHallDetail(DetailView):
     model = CinemaHall
     template_name = 'cinema/detail_cinema_hall.html'
     context_object_name = 'cinema_hall'
-    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement, AboutCinema, CafeBar]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
