@@ -33,7 +33,6 @@ class IndexAdmin(AdminPermissionMixin, View):
 class LoginUserAdmin(LoginView):
     authentication_form = LoginForm
     template_name = 'registration/login.html'
-    redirect_authenticated_user = True
 
 
 class LogoutAdmin(View):
