@@ -80,7 +80,9 @@
                               <a class="nav-link dropdown-toggle black-text" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">О кинотеатре</a>
                               <div class="dropdown-menu" aria-labelledby="dropdown10">
                                     <a class="dropdown-item" href="{% url 'cinema:list_news' %}">Новости</a>
-                                    <a class="dropdown-item" href="#">Реклама</a>
+                                    {% if Advertisement %}
+                                    <a class="dropdown-item" href="{% url 'cinema:advertisement' %}">Реклама</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="#">Кафе</a>
                                     <a class="dropdown-item" href="#">Мобильные приложения</a>
                                     <a class="dropdown-item" href="#">Контакты</a>

@@ -8,6 +8,7 @@ from cinema.views.user.user_views import UserDetail, Logout, LoginUser, Registra
 from cinema.views.sessions_view import SessionDetail, GetHallSchema, ReserveTicket, BuyTicket
 from cinema.views.cinema.cinema_views import CinemaList, CinemaDetail, CinemaHallDetail, GetCinemaHallSchema
 from cinema.views.pages.ads_news_views import ListNews, ListAd, NewsDetail, AdDetail
+from cinema.views.pages.singleton_pages import DisplayAdvertisement
 
 app_name = 'cinema'
 
@@ -48,4 +49,7 @@ urlpatterns = [
     path('cinema/cinema_detail/<int:pk>/', CinemaDetail.as_view(), name='cinema_detail'),
     path('cinema/cinema_hall_detail/<int:pk>/', CinemaHallDetail.as_view(), name='cinema_hall_detail'),
     path('cinema/cinema_hall_get_schema/', GetCinemaHallSchema.as_view(), name='get_cinema_hall_schema'),
+
+    # SINGLETON PAGES
+    path('advertisement/', DisplayAdvertisement.as_view(), name='advertisement'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

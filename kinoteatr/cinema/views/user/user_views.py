@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
 from cinema.models.banners import OnTopBanner, BackgroundImage
-from cinema.models.page import MainPage
+from cinema.models.page import MainPage, Advertisement
 from cinema.models.session import Ticket
 
 from cinema.forms.user_form import LoginForm, RegistrationForm
@@ -20,7 +20,7 @@ User = get_user_model()
 class UserDetail(DetailView):
     model = User
     template_name = 'user/profile.html'
-    pages = [OnTopBanner, BackgroundImage, MainPage]
+    pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement]
     context_object_name = 'user'
 
     def get_context_data(self, **kwargs):
