@@ -12,11 +12,11 @@
     <div class="row">
         <div class="col-2">
             <div class="row text-center">
-                <a href="#released" class="btn btn-light btn-lg btn-block active" style="border-radius:unset; border-bottom:1px solid;"
+                <a href="#released" class="btn btn-light btn-lg btn-block {% if current_movies %}active{% endif %}" style="border-radius:unset; border-bottom:1px solid;"
                  role="tab" data-toggle="tab" id="releasedButton">Афиша</a>
             </div>
             <div class="row text-center">
-                <a href="#soon" class="btn btn-light btn-lg btn-block" style="border-radius:unset; border-top:1px solid;"
+                <a href="#soon" class="btn btn-light btn-lg btn-block {% if soon_movies %}active{% endif %}" style="border-radius:unset; border-top:1px solid;"
                  role="tab" data-toggle="tab" id="soonButton">Скоро</a>
             </div>
             <div class="row" style="margin-top:25px;">
@@ -34,7 +34,7 @@
         </div>
         <div class="col-10"  style="background-color:#161f27; padding-bottom:25px;">
             <div class="tab-content">
-                <div class="tab-pane active" id="released">
+                <div class="tab-pane {% if current_movies %}active{% endif %}" id="released">
                     <div class="row">
                         {% for movie in released_movie %}
                             <div class="col" style="margin-top:10px;">
@@ -49,7 +49,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="tab-pane" id="soon">
+                <div class="tab-pane {% if soon_movies %}active{% endif %}" id="soon">
                     <div class="row">
                         {% for movie in movie_soon %}
                             <div class="col" style="margin-top:10px;">

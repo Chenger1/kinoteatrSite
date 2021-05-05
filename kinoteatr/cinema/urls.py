@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.staticfiles.urls import static
 from django.conf import settings
 
-from cinema.views.views import DisplayMainPage, ListMovies, MovieDetail, MovieSessionDetail
+from cinema.views.views import DisplayMainPage, ListMovies, MovieDetail, MovieSessionDetail, ListSoonMovies
 from cinema.views.showtime_views import ShowTime, ShowTimeSession
 from cinema.views.user.user_views import UserDetail, Logout, LoginUser, RegistrationView, RevertTicket
 from cinema.views.sessions_view import SessionDetail, GetHallSchema, ReserveTicket, BuyTicket
@@ -15,6 +15,7 @@ app_name = 'cinema'
 urlpatterns = [
     path('', DisplayMainPage.as_view(), name='main_page'),
     path('show_movies_list/', ListMovies.as_view(), name='show_list_movies'),
+    path('show_movies_list_soon/', ListSoonMovies.as_view(), name='show_list_movies_soon'),
     path('movie_detail/<int:pk>/', MovieDetail.as_view(), name='movie_detail'),
     path('movie_detail/sessions', MovieSessionDetail.as_view(), name='movie_sessions'),
 

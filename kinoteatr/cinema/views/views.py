@@ -33,9 +33,10 @@ class DisplayMainPage(View):
         return context
 
 
-class ListMovies(View):
+class ListMoviesMixin(View):
     template_name = 'movie/show_movies_list.html'
     pages = [OnTopBanner, BackgroundImage, MainPage, Advertisement]
+    current = None
 
     def get(self, request):
         context = self.get_context()
@@ -45,7 +46,21 @@ class ListMovies(View):
         context = get_page(self.pages)
         context['released_movie'] = Movie.objects.filter(released=True)
         context['movie_soon'] = Movie.objects.filter(released=False)
+        if self.current == 'movies':
+            context['current_movies'] = True
+        elif self.current == 'soon':
+            context['soon_movies'] = True
+        else:
+            context['undefined'] = True
         return context
+
+
+class ListSoonMovies(ListMoviesMixin):
+    current = 'soon'
+
+
+class ListMovies(ListMoviesMixin):
+    current = 'movies'
 
 
 class MovieDetail(DetailView):
