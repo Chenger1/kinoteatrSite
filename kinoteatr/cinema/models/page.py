@@ -68,8 +68,7 @@ class MainPage(SingletonModel):
 class Contact(models.Model):
     cinema = models.OneToOneField(Cinema, related_name='contacts', on_delete=models.CASCADE)
     address = models.TextField(blank=True)
-    coord_x = models.FloatField(blank=True, null=True)
-    coord_y = models.FloatField(blank=True, null=True)
+    map = models.TextField()
     status = models.BooleanField(default=True)
     top_seo = models.BooleanField(default=False)
     seo = models.ForeignKey(Seo, related_name='contacts', on_delete=models.CASCADE, blank=True, null=True)

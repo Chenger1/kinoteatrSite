@@ -80,9 +80,9 @@
                                                     {{ contact.address|safe }}
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col" style="min-height: 500px;">
-                                                        {% if contact.coord_x and contact.coord_y %}
-                                                            {% include 'map.html' with object=contact %}
+                                                    <div class="col" style="min-height: 500px; text-align:center;">
+                                                        {% if contact.map %}
+                                                            {{ contact.map|safe }}
                                                         {% endif %}
                                                     </div>
                                                 </div>
