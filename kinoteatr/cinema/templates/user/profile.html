@@ -4,7 +4,8 @@
 {% block title %}Кабинет пользователя{% endblock %}
 {% block style %}
 <link rel="stylesheet" href="{% static 'admin_panel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
-<link rel="stylesheet" href="{% static 'admin_panel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet"
+      href="{% static 'admin_panel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -21,9 +22,9 @@
                        data-toggle="tab">Билеты</a>
                 </li>
                 {% if request.user.is_staff or request.user.is_superuser %}
-                    <li class="nav-item" style="margin-left: 15px;">
-                        <a href="{% url 'admin_panel:admin_panel'%}" class="btn btn-info">Панель администратора</a>
-                    </li>
+                <li class="nav-item" style="margin-left: 15px;">
+                    <a href="{% url 'admin_panel:admin_panel'%}" class="btn btn-info">Панель администратора</a>
+                </li>
                 {% endif %}
                 <li class="nav-item ml-auto" style="">
                     <a href="{% url 'cinema:logout'%}" class="btn btn-danger">Выйти</a>
@@ -38,94 +39,106 @@
                     <h4>Кабинет пользователя {{ user }}</h4>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="first_name">Имя:</label>
-                        <input type="text" class="form-control" disabled id="first_name" value="{{ user.first_name }}">
+        {% if form.errors %}
+            <ul style="margin-left: 0; padding-left: 0; list-style-type: none; ">
+                {% for error, text in form.errors.items %}
+                    <li><h4 class="h4 mb-3">{{text}}</h4></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+            <form action="" method="post" id="form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="firstName">Имя</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Фамилия</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Псевдоним</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Адрес</label>
+                            {{ form.address }}
+                        </div>
+                        <div class="form-group">
+                            <label for="cardNumber">Номер карты</label>
+                            {{ form.card_number }}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="last_name">Фамилия:</label>
-                        <input type="text" class="form-control" disabled id="last_name" value="{{ user.last_name }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Псевдоним:</label>
-                        <input type="text" class="form-control" disabled id="username" value="{{ user.username }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="text" class="form-control" disabled id="email" value="{{ user.email }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Адрес:</label>
-                        <input type="text" class="form-control" disabled id="address" value="{{ user.address }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="card_number">Номер карты:</label>
-                        <input type="text" class="form-control" disabled id="card_number" value="{{ user.card_number }}">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="phoneNumber">Номер телефона</label>
+                            {{ form.phone_number }}
+                        </div>
+                        <div class="form-group">
+                            <label for="language">Язык</label>
+                            {{ form.language }}
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Гендер</label>
+                            {{ form.gender }}
+                        </div>
+                        <div class="form-group">
+                            <label for="birthdayDate">День рождения</label>
+                            {{ form.birthday_date }}
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Город</label>
+                            {{ form.city }}
+                        </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="phone">Номер телефона:</label>
-                        <input type="text" class="form-control" disabled id="phone" value="{{ user.phone_number }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="language">Язык:</label>
-                        <input type="text" class="form-control" disabled id="language" value="{{ user.get_language_display }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Гендер:</label>
-                        <input type="text" class="form-control" disabled id="gender" value="{{ user.get_gender_display }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="birthday">Дата рождения:</label>
-                        <input type="text" class="form-control" disabled id="birthday" value="{{ user.get_birthday_date }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="city">Город:</label>
-                        <input type="text" class="form-control" disabled id="city" value="{{ user.city }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="registration">Дата регистрации:</label>
-                        <input type="text" class="form-control" disabled id="registration" value="{{ user.get_joined_date }}">
+                <div class="row">
+                    <div class="col text-center">
+                        <button class="btn btn-info" id="edit_info" type="button">Редактировать информацию</button>
+                        <button type="submit" class="btn btn-info" id="save" style="display:none;">Сохранить</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="tab-pane" id="tickets" style="margin-top:25px;">
             <div class="row">
                 <div class="col">
                     <table class="table table-bordered table-hover" id="tickets_table">
                         <thead>
-                            <tr>
-                                <th>Фильм</th>
-                                <th>Зал</th>
-                                <th>Место/Ряд</th>
-                                <th>Статус</th>
-                                <th>Время</th>
-                                <th>Сеанс</th>
-                                <th>Опции</th>
-                            </tr>
+                        <tr>
+                            <th>Фильм</th>
+                            <th>Зал</th>
+                            <th>Место/Ряд</th>
+                            <th>Статус</th>
+                            <th>Время</th>
+                            <th>Сеанс</th>
+                            <th>Опции</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {% for ticket in tickets %}
-                                <tr>
-                                    <th><a href="{{ ticket.session.movie.get_absolute_public_url }}">{{ ticket.session.movie.name }}</a></th>
-                                    <th><a href="{{ ticket.session.cinema_hall.number.get_absolute_public_url }}">{{ ticket.session.cinema_hall.number }}</a></th>
-                                    <th>{{ ticket.beauty_seat_number }}/{{ ticket.beauty_row_number }}</th>
-                                    <th>{{ ticket.status }}</th>
-                                    <th>{{ ticket.session.session_datetime_start }}</th>
-                                    <th><a href="{{ ticket.session.get_absolute_public_url }}">Детали</a></th>
-                                    <th>
-                                        {% if ticket.reserved %}
-                                            <a href="{% url 'cinema:revert_ticket' ticket.pk %}">Отменить бронь</a>
-                                        {% else %}
-                                            <a href="{% url 'cinema:revert_ticket' ticket.pk %}">Вернуть билет</a>
-                                        {% endif %}
-                                    </th>
-                                </tr>
-                            {% endfor %}
+                        {% for ticket in tickets %}
+                        <tr>
+                            <th><a href="{{ ticket.session.movie.get_absolute_public_url }}">{{ ticket.session.movie.name }}</a></th>
+                            <th><a href="{{ ticket.session.cinema_hall.number.get_absolute_public_url }}">{{ ticket.session.cinema_hall.number }}</a></th>
+                            <th>{{ ticket.beauty_seat_number }}/{{ ticket.beauty_row_number }}</th>
+                            <th>{{ ticket.status }}</th>
+                            <th>{{ ticket.session.session_datetime_start }}</th>
+                            <th><a href="{{ ticket.session.get_absolute_public_url }}">Детали</a></th>
+                            <th>
+                                {% if ticket.reserved %}
+                                <a href="{% url 'cinema:revert_ticket' ticket.pk %}">Отменить бронь</a>
+                                {% else %}
+                                <a href="{% url 'cinema:revert_ticket' ticket.pk %}">Вернуть билет</a>
+                                {% endif %}
+                            </th>
+                        </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -142,5 +155,26 @@
       "responsive": true, "lengthChange": false, "autoWidth": false,
     });
   });
+
+</script>
+<script>
+    $('#save').on('click', function(e){
+        $('#username').prop('disabled', false);
+        $('#email').prop('disabled', false);
+    });
+    $('.disable').each(function(){
+        $(this).prop('disabled', true);
+    });
+    $('#edit_info').on('click', function(){
+        $('.disable').each(function(){
+            if($(this).attr('id') != 'email' && $(this).attr('id') != 'username'){
+                $(this).prop('disabled', false);
+            }
+            
+        });
+        $('#save').css('display', '');
+        $(this).css('display', 'none');
+    });
+
 </script>
 {% endblock %}
