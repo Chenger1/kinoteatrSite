@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="justify-content:center;">
         <div class="col-2">
             <div class="row text-center">
                 <a href="#released" class="btn btn-light btn-lg btn-block {% if current_movies %}active{% endif %}" style="border-radius:unset; border-bottom:1px solid;"
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-10"  style="background-color:#161f27; padding-bottom:25px;">
+        <div class="col-9"  style="background-color:#161f27; padding-bottom:25px;">
             <div class="tab-content">
                 <div class="tab-pane {% if current_movies %}active{% endif %}" id="released">
                     <div class="row">
