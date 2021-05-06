@@ -76,7 +76,7 @@
                     <div class="row ">
                         <div class="col text-center">
                             {% if movie.released %}
-                             <a href="" class="btn btn-outline-success  btn-lg">Купить билет</a>
+                             <a href="{% url 'cinema:showtime' %}" class="btn btn-outline-success  btn-lg">Купить билет</a>
                             {% else%}
                                 <h5>В кино с {{ movie.release }}</h5>
                             {% endif %}
