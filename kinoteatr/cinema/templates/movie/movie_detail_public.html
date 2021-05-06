@@ -2,6 +2,13 @@
 {% load static %}
 {% load embed_video_tags %}
 
+{% block style %}
+<meta name="url" content="{{ movie.seo.seo_url }}">
+<meta name="title" content="{{ movie.seo.seo_title }}">
+<meta name="description" content="{{ movie.seo.seo_description }}">
+<meta name="keywords" content="{{ movie.seo.seo_keywords }}">
+{% endblock %}
+
 {% block title %}{{ movie.name }}{% endblock %}
 
 {% block content %}

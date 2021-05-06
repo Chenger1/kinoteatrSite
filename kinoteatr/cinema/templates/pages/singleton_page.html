@@ -1,6 +1,13 @@
 {% extends 'cinema_base.html' %}
 {% load static %}
 
+{% block style %}
+<meta name="url" content="{{ object.seo.seo_url }}">
+<meta name="title" content="{{ object.seo.seo_title }}">
+<meta name="description" content="{{ object.seo.seo_description }}">
+<meta name="keywords" content="{{ object.seo.seo_keywords }}">
+{% endblock %}
+
 {% block title %}
 {{ object.title }}
 {% endblock %}

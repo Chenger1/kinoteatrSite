@@ -1,6 +1,13 @@
 {% extends 'cinema_base.html' %}
 {% load static %}
 
+{% block style %}
+<meta name="url" content="{{ movie.seo.seo_url }}">
+<meta name="title" content="{{ movie.seo.seo_title }}">
+<meta name="description" content="{{ movie.seo.seo_description }}">
+<meta name="keywords" content="{{ movie.seo.seo_keywords }}">
+{% endblock %}
+
 {% block title %}
 Контакты
 {% endblock %}

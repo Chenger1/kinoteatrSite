@@ -3,6 +3,10 @@
 
 {% block title %}{{ cinema.name }}{% endblock %}
 {% block style %}
+<meta name="url" content="{{ cinema_hall.seo.seo_url }}">
+<meta name="title" content="{{ cinema_hall.seo.seo_title }}">
+<meta name="description" content="{{ cinema_hall.seo.seo_description }}">
+<meta name="keywords" content="{{ cinema_hall.seo.seo_keywords }}">
 <link rel="stylesheet" href="{% static 'admin_panel/css/scheme.css' %}">
 {% endblock %}
 
