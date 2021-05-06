@@ -46,5 +46,8 @@ class Statistic:
             total_seats += hall.seats_amount  # total number of seats
 
         bought_tickets = Ticket.objects.filter(bought=True).count()  # how many tickets bought
-        result = (bought_tickets*100)/total_seats
+        try:
+            result = (bought_tickets*100)/total_seats
+        except ZeroDivisionError:
+            result = 0
         return round(result, 2)
