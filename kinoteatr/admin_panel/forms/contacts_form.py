@@ -10,7 +10,8 @@ class ContactsForm(forms.ModelForm):
         exclude = ('seo', 'cinema')
         widgets = {
             'address': SummernoteWidget(attrs={'summernote': {'width': '100%'}}),
-            'map': forms.Textarea(attrs={'id': 'map', 'class': 'form-control'}),
+            'map': forms.Textarea(attrs={'id': 'map', 'class': 'form-control',
+                                         'placeholder': '<iframe src="https://www.google.com/maps/...."></iframe>'}),
             'status': forms.CheckboxInput(attrs={'id': 'status', 'class': 'custom-control-input',
                                                  'type': 'checkbox'}),
             'top_seo': forms.CheckboxInput(attrs={'id': 'top_seo', 'class': 'custom-control-input',
