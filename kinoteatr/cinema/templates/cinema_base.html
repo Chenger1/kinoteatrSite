@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Title{% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -35,9 +36,11 @@ class="d-flex flex-column min-vh-100">
         <div class="col-9">
             <div class="row">
                 <div class="col-3">
-                    <form action="">
-                        <input type="text" class="form-control" placeholder="Поиск...">
-                    </form>
+                    <div class="dropdown">
+                      <div id="myDropdown" class="dropdown-content">
+                        <input type="text" placeholder="Поиск.." id="myInput">
+                      </div>
+                    </div>
                 </div>
                 <div class="col-1"><img src="{% static 'images/social/facebook.png' %}" alt="" width="40" height="40"></div>
                 <div class="col-1"><img src="{% static 'images/social/twitter.png' %}" alt="" width="40" height="40"></div>
@@ -168,12 +171,19 @@ class="d-flex flex-column min-vh-100">
 <script src="{% static 'admin_panel/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
 <script src="{% static 'admin_panel/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
 <script src="{% static 'admin_panel/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'cinema/js/search.js' %}"></script>
 <script>
 {% if OnTopBanner %}
     $('#carouselOnTopBanner').carousel({
       interval: {% if OnTopBanner.speed == 1 %}5000{% elif OnTopBanner.speed == 2 %}10000{% endif %}
     });
 {% endif %}
+</script>
+<script>
+ $(document).ready(function(){
+    let searchObj = new SearchEvent('{% url 'cinema:search' %}');
+    searchObj.set_focus_event();   
+ })
 </script>
 </body>
 </html>

@@ -103,3 +103,19 @@ class MovieSessionDetail(View):
                 'detail': inst.get_absolute_public_url()
             }})
         return result
+
+
+class SearchView(View):
+    def get(self, request):
+        value = request.GET.get('value')
+        result = Movie.objects.filter(name__icontains=value)
+        return JsonResponse({'result': self.serialize_to_dict(result)})
+
+    def serialize_to_dict(self, query):
+        result = {}
+        for index, movie in enumerate(query):
+            result.update({f'{index}': {
+                'name': movie.name,
+                'url': movie.get_absolute_public_url()
+            }})
+        return result

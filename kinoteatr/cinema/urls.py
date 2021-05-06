@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.staticfiles.urls import static
 from django.conf import settings
 
-from cinema.views.views import DisplayMainPage, ListMovies, MovieDetail, MovieSessionDetail, ListSoonMovies
+from cinema.views.views import DisplayMainPage, ListMovies, MovieDetail, MovieSessionDetail, ListSoonMovies, SearchView
 from cinema.views.showtime_views import ShowTime, ShowTimeSession
 from cinema.views.user.user_views import UserDetail, Logout, LoginUser, RegistrationView, RevertTicket
 from cinema.views.sessions_view import SessionDetail, GetHallSchema, ReserveTicket, BuyTicket
@@ -20,6 +20,7 @@ urlpatterns = [
     path('show_movies_list_soon/', ListSoonMovies.as_view(), name='show_list_movies_soon'),
     path('movie_detail/<int:pk>/', MovieDetail.as_view(), name='movie_detail'),
     path('movie_detail/sessions', MovieSessionDetail.as_view(), name='movie_sessions'),
+    path('search/', SearchView.as_view(), name='search'),
 
     # NEWS
     path('news/', ListNews.as_view(), name='list_news'),
