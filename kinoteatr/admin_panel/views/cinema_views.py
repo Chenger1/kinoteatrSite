@@ -4,18 +4,17 @@ from django.views.generic import View
 from django.views.generic.edit import CreateView
 from django.db import transaction
 from django.http import JsonResponse
-from django.conf import settings
 
 from admin_panel.forms.cinema_forms import CinemaForm, CinemaGalleryFormSet, CinemaHallForm, CinemaHallGalleryFormSet
 from admin_panel.forms.seo_form import SeoForm
 from cinema.models.cinema import Cinema, CinemaHall
 from cinema.models.gallery import CinemaGallery, CinemaHallGallery
+from cinema.models.utils import DEFAULT_SCHEMA
 
 from admin_panel.views.page_views_mixin import AddPageMixin, UpdatePageMixin, DeleteMixin, DeleteGalleryImageMixin
 from admin_panel.views.permission_mixin import AdminPermissionMixin
 
 import json
-import os
 
 
 class ListCinema(AdminPermissionMixin, View):
@@ -75,7 +74,12 @@ class AddCinemaHall(AdminPermissionMixin, CreateView):
             data['formset'] = self.inline_form_set(self.request.POST, self.request.FILES)
             data['seo_form'] = SeoForm(self.request.POST)
             data['cinema'] = self.get_cinema(self.request.POST.get('cinema'))
-            data['schema_json'] = json.dumps(self.request.POST.get('schema_json'))
+
+            schema_json = json.dumps(self.request.POST.get('schema_json'))
+            if schema_json:
+                data['schema_json'] = json.dumps(self.request.POST.get('schema_json'))
+            else:
+                data['schema_json'] = json.dumps(DEFAULT_SCHEMA)
             data['next_number'] = self.cinema.next_hall_number
         else:
             data['formset'] = self.inline_form_set()

@@ -139,7 +139,7 @@
 
                         <div class="row">
                             <div class="col">
-                                <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                                <button type="submit" class="btn btn-outline-primary" id="save">Сохранить</button>
                                 {% if object %}
                                 <button type="button" class="btn btn-outline-danger" data-toggle="modal"
                                         data-target="#exampleModal">
@@ -156,6 +156,7 @@
     </div>
 </div>
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
 <script src="{% static 'admin_panel/js/hall/schema.js' %}"></script>
 <script src="{% static 'admin_panel/js/hall/builder.js' %}"></script>
@@ -187,5 +188,15 @@ $(document).ready(function(){
         }
     })
 });
+$('#save').on('click', function(e){
+    if($('#schema_json').attr('value') == '{}'){
+        e.preventDefault();
+          $(document).Toasts('create', {
+                class: 'bg-danger',
+                title: 'Схема зала',
+                body: 'Вы не сохранили схему зала!'
+            })
+    }
+})
 </script>
 {% endblock %}
