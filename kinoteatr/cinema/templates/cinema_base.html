@@ -10,7 +10,8 @@
     {% block style %}{% endblock %}
 
 </head>
-<body {% if BackgroundImage %} style=" background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed; margin:0;" {% endif %}>
+<body {% if BackgroundImage %} style=" background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed; margin:0;" {% endif %}
+class="d-flex flex-column min-vh-100">
 {% if OnTopBanner %}
 <div class="row" style="margin-right:0px;">
     <div id="carouselOnTopBanner" class="carousel slide" data-ride="carousel" style="width:100%;">
@@ -119,7 +120,7 @@
     </div>
 </div>
 
-<section style="margin-top:25px;">
+<section style="margin-top:25px;" class="flex-fill">
     {% block content %}{% endblock %}
 </section>
 
