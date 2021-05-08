@@ -1,0 +1,8 @@
+.idea
+kinoteatr_env
+migrations
+static/admin/
+cinema/migrations/
+media/
+kinoteatr/config.py
+db.sqlite3
