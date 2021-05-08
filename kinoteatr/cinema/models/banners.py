@@ -4,7 +4,7 @@ from cinema.models.receiver import *
 
 
 class BackgroundImage(SingletonModel):
-    image = models.ImageField(upload_to='background_image/', null=True)
+    image = models.ImageField(upload_to='background_image/', blank=True, null=True)
     status = models.BooleanField(default=False)
 
     def get_images(self):

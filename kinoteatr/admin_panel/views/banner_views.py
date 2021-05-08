@@ -19,6 +19,8 @@ class DisplayBanner(AdminPermissionMixin, View):
         on_top_banner = OnTopBanner.load()
         slider_banner = SliderBanner.load()
 
+        background_image_form = BackgroundImageForm(instance=background_image)
+
         on_top_banner_form = OnTopBannerForm()
         on_top_banner_gallery_form_set = OnTopBannerGalleryFormSet(instance=on_top_banner, prefix='on_top')
 
@@ -26,6 +28,7 @@ class DisplayBanner(AdminPermissionMixin, View):
         slider_banner_form_set = SliderBannerGalleryFormSet(instance=slider_banner, prefix='slider')
 
         return render(request, self.template_name, {'background_image': background_image,
+                                                    'background_image_form': background_image_form,
                                                     'on_top_banner': on_top_banner,
                                                     'on_top_banner_form': on_top_banner_form,
                                                     'on_top_banner_form_set': on_top_banner_gallery_form_set,
@@ -39,11 +42,14 @@ class SaveBackgroundImage(AdminPermissionMixin, View):
     form = BackgroundImageForm
 
     def post(self, request):
+        background = BackgroundImage.load()
         background_image_form = self.form(request.POST, request.FILES)
         if background_image_form.is_valid():
             instance = background_image_form.save(commit=False)
             status = bool(int(request.POST.get('status')))
             instance.status = status
+            if not instance.image and background.image:
+                instance.image = background.image
             instance.save()
         else:
             beautify_inline_error_messages(background_image_form.errors, request)

@@ -9,6 +9,11 @@ class BackgroundImageForm(forms.ModelForm):
         model = BackgroundImage
         fields = ('image', 'status')
 
+        widgets = {
+            'image': forms.FileInput(attrs={'id': 'BackgroundImage', 'class': 'form-control-file btn btn-light',
+                                            'name': 'image'})
+        }
+
 
 class OnTopBannerForm(forms.ModelForm):
     class Meta:

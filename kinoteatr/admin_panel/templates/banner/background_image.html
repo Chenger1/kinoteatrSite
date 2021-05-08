@@ -28,20 +28,26 @@
 
                 <div class="col-3">
                     {% if background_image.image %}
-                        <img src="{{ background_image.image.url }}" alt="" width="200" height="100">
+                        <img src="{{ background_image.image.url }}" alt="" width="200" height="100"
+                        name="background_image_preview_1">
                     {% else %}
-                        <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100">
+                        <img src="{% static 'images/default_form_image.png' %}" alt="" width="200" height="100"
+                        name="background_image_preview_1">
                     {% endif %}
                 </div>
 
                 <div class="col-7">
                     <div class="row" style="align-items: center;">
                         <div class="col">
-                            <input type="file" class="form-control-file btn btn-light" id="BackgroundImage"
-                            name="image">
+<!--                            <input type="file" class="form-control-file btn btn-light" id="BackgroundImage"-->
+<!--                            name="image" {% if background_image.image %}value="{{ background_image.image }}"{% endif %}>-->
+                            {{ background_image_form.image }}
                         </div>
                         <div class="col">
                             <a href="{% url 'admin_panel:delete_background_image' %}" class="btn btn-light">Удалить</a>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-primary">Сохранить</button>
                         </div>
                     </div>
                 </div>
@@ -50,5 +56,12 @@
     </div>
 </div>
 
+<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/checkbox_handling.js' %}"></script>
-<script src="{% static 'admin_panel/js/banners/submit_form_after_file_upload.js' %}"></script>
+<script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
+<script>
+    $("#BackgroundImage").change(function () {
+        setPreview(this, '1', 'background'); // set onchange function
+        $('#radio1').prop('disabled', false);
+    });
+</script>

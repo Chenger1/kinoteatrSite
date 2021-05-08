@@ -11,7 +11,7 @@
     {% block style %}{% endblock %}
 
 </head>
-<body {% if BackgroundImage %} style=" background: url({{ BackgroundImage.image.url }}); background-size:100%; background-size: 100%; background-attachment: fixed; margin:0;" {% endif %}
+<body {% if BackgroundImage %} style="background: url({{ BackgroundImage.image.url }});"{% else %}style="background: url({% static 'images/default_background_image.jpg' %})" {% endif %}
 class="d-flex flex-column min-vh-100">
 {% if OnTopBanner %}
 <div class="row" style="margin-right:0px;">
