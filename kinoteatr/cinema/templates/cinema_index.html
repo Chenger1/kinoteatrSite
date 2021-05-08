@@ -49,7 +49,7 @@
                     <div class="col" style="margin-top:10px; margin-bottom:10px;">
                         <div style="text-align:center;">
                             <div class="text-center">
-                                <a href="" class="btn btn-success">Посмотреть расписание</a>
+                                <a href="{% url 'cinema:showtime' %}" class="btn btn-success">Посмотреть расписание</a>
                             </div>
                         </div>
                     </div>
@@ -91,13 +91,15 @@
         {% endif %}
 
 {% include 'context_ads.html' with trigger=True %}
-        <hr>
-        <div class="row text-center" style="margin-top:50px;">
-            <div class="col">
-                <h5>Seo</h5>
-                <p>{{ MainPage.seo.seo_description }}</p>
+        {% if MainPage.seo.seo_description %}
+            <hr>
+            <div class="row text-center" style="margin-top:50px;">
+                <div class="col">
+                    <h5>Seo</h5>
+                    <p>{{ MainPage.seo.seo_description }}</p>
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
 
