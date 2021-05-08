@@ -6,6 +6,7 @@ django-appconf==1.0.4
 django-classy-tags==2.0.0
 django-embed-video==1.4.0
 django-summernote==0.8.11.6
+gunicorn==20.1.0
 idna==2.10
 Pillow==8.2.0
 psycopg2==2.8.6

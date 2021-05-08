@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 
-from kinoteatr.config import USER, PASSWORD
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -129,13 +127,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
-STATICFILES_DIRS = (
-    ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
-    ('images', Path(__file__).parent.parent.joinpath('static/images')),
-    ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
-    ('cinema', Path(__file__).parent.parent.joinpath('static/cinema'))
-)
+if DEBUG:
+    STATICFILES_DIRS = (
+        ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
+        ('images', Path(__file__).parent.parent.joinpath('static/images')),
+        ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
+        ('cinema', Path(__file__).parent.parent.joinpath('static/cinema'))
+    )
+else:
+    STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
 
 
 MEDIA_URL = '/media/'

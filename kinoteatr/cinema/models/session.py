@@ -49,7 +49,7 @@ class Ticket(models.Model):
     seat_number = models.IntegerField()
     reserved = models.BooleanField(default=False)
     bought = models.BooleanField(default=False)
-    user = models.ForeignKey(User, related_name='tickets', on_delete=models.CASCADE, blank=True)
+    user = models.ForeignKey(User, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
 
     @property
     def beauty_row_number(self):

@@ -145,7 +145,7 @@ class OnTopBannerGallery(models.Model):
     entity = models.ForeignKey(OnTopBanner, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='on_top_banner/gallery/')
     url = models.URLField(blank=True, null=True)
-    text = models.CharField(max_length=150, blank=True)
+    text = models.CharField(max_length=150, blank=True, null=True)
 
     def get_images(self):
         return [self.image.path]

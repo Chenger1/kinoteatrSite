@@ -11,7 +11,7 @@ class News(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=5000)
     main_image = models.ImageField(upload_to='news/main_images/')
-    url = models.URLField(blank=True)
+    url = models.URLField(blank=True, null=True)
     publication_date = models.DateField()
     status = models.BooleanField()
 
@@ -67,7 +67,7 @@ class MainPage(SingletonModel):
 
 class Contact(models.Model):
     cinema = models.OneToOneField(Cinema, related_name='contacts', on_delete=models.CASCADE)
-    address = models.TextField(blank=True)
+    address = models.TextField(blank=True, null=True)
     map = models.TextField()
     status = models.BooleanField(default=True)
     top_seo = models.BooleanField(default=False)
