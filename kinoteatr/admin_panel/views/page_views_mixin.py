@@ -90,7 +90,8 @@ class DeleteMixin(AdminPermissionMixin, View):
     def get(self, request, pk):
         inst = get_object_or_404(self.model, pk=pk)
         seo = inst.seo
-        seo.delete()
+        if seo:
+            seo.delete()
         inst.delete()
         return redirect(self.redirect_url)
 

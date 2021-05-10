@@ -28,9 +28,10 @@
                         <div><a href="{{ card.get_absolute_public_url }}"><img src="{{ card.main_image.url }}" alt="" width="250" height="250" style="border-radius: 20px;"></a></div>
                         <div><a href="{{ card.get_absolute_public_url }}" style="color: white;">{{ card.title }}</a></div>
                         <h5 style="color:white;">{{ card.publication_date }}</h5>
-                        <div style="color: white!important; text-align:left;" class="desc">
-                            {{ card.description |truncatewords_html:12|safe }}
-                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-3" style="text-align:center;">
+                        <h3 style="color:white;">Здесь пока ничего нет</h3>
                     </div>
                 {% endfor %}
             </div>

@@ -84,19 +84,19 @@ class="d-flex flex-column min-vh-100">
                               <a class="nav-link dropdown-toggle black-text" href="#" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">О кинотеатре</a>
                               <div class="dropdown-menu" aria-labelledby="dropdown10">
                                     <a class="dropdown-item" href="{% url 'cinema:list_news' %}">Новости</a>
-                                    {% if Advertisement %}
+                                    {% if Advertisement and Advertisement.description %}
                                     <a class="dropdown-item" href="{% url 'cinema:advertisement' %}">Реклама</a>
                                     {% endif %}
-                                    {% if CafeBar %}
+                                    {% if CafeBar and CafeBar.description%}
                                     <a class="dropdown-item" href="{% url 'cinema:cafe_bar' %}">Кафе</a>
                                     {% endif %}
-                                    {% if MobileApp %}
+                                    {% if MobileApp and MobileApp.description %}
                                     <a class="dropdown-item" href="{% url 'cinema:mobile_app' %}">Мобильные приложения</a>
                                     {% endif %}
-                                    {% if VipHall %}
+                                    {% if VipHall and VipHall.description %}
                                         <a class="dropdown-item" href="{% url 'cinema:vip_hall' %}">Vip-залы</a>
                                     {% endif %}
-                                    {% if AboutCinema %}
+                                    {% if AboutCinema and AboutCinema.description %}
                                         <a class="dropdown-item" href="{% url 'cinema:about_cinema' %}">О нашей сети</a>
                                     {% endif %}
                                     <a class="dropdown-item" href="{% url 'cinema:contacts' %}">Контакты</a>

@@ -60,16 +60,22 @@
                                         <div class="tab-content">
                                             <div class="active tab-pane" id="activity">
                                                 <!-- Post -->
-                                                <div class="info">
-                                                    {{ contact.address|safe }}
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col" style="min-height: 500px; text-align:center;">
-                                                        {% if contact.map %}
-                                                            {{ contact.map|safe }}
-                                                        {% endif %}
+                                                {% if contact.address %}
+                                                    <div class="info">
+                                                        {{ contact.address|safe }}
                                                     </div>
-                                                </div>
+                                                    <div class="row">
+                                                        <div class="col" style="min-height: 500px; text-align:center;">
+                                                            {% if contact.map %}
+                                                                {{ contact.map|safe }}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="info">
+                                                        <h4>Добавьте адрес</h4>
+                                                    </div>
+                                                {% endif %}
                                                 <!-- /.post -->
                                             </div>
                                             <!-- /.tab-pane -->
