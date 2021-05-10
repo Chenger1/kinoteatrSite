@@ -76,7 +76,7 @@ class Contact(models.Model):
 
 class AboutCinema(SingletonModel):
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=5000)
+    description = models.TextField()
     main_image = models.ImageField(upload_to='about_cinema/main_images/')
     status = models.BooleanField(default=True)
 
@@ -94,7 +94,7 @@ class AboutCinema(SingletonModel):
 
 class CafeBar(SingletonModel):
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=5000)
+    description = models.TextField()
     main_image = models.ImageField(upload_to='cafebar/main_images/')
     status = models.BooleanField(default=True)
 
@@ -109,7 +109,7 @@ class CafeBar(SingletonModel):
 
 class VipHall(SingletonModel):
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=5000)
+    description = models.TextField()
     main_image = models.ImageField(upload_to='vip_hall/main_images/')
     status = models.BooleanField(default=True)
 
@@ -124,7 +124,7 @@ class VipHall(SingletonModel):
 
 class Advertisement(SingletonModel):
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=5000)
+    description = models.TextField()
     main_image = models.ImageField(upload_to='Advertisement/main_images/')
     status = models.BooleanField(default=True)
 
@@ -139,7 +139,7 @@ class Advertisement(SingletonModel):
 
 class ChildRoom(SingletonModel):
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=5000)
+    description = models.TextField()
     main_image = models.ImageField(upload_to='child_room/main_images/')
     status = models.BooleanField(default=True)
 
@@ -154,7 +154,7 @@ class ChildRoom(SingletonModel):
 
 class MobileApp(SingletonModel):
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=5000)
+    description = models.TextField()
     main_image = models.ImageField(upload_to='mobile_app/main_images/')
     status = models.BooleanField(default=True)
 

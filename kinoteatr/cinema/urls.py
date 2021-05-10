@@ -8,7 +8,8 @@ from cinema.views.user.user_views import UserDetail, Logout, LoginUser, Registra
 from cinema.views.sessions_view import SessionDetail, GetHallSchema, ReserveTicket, BuyTicket
 from cinema.views.cinema.cinema_views import CinemaList, CinemaDetail, CinemaHallDetail, GetCinemaHallSchema
 from cinema.views.pages.ads_news_views import ListNews, ListAd, NewsDetail, AdDetail
-from cinema.views.pages.singleton_pages import DisplayAdvertisement, DisplayCafeBar, DisplayMobileApp, DisplayVipHall, DisplayAboutCinema
+from cinema.views.pages.singleton_pages import (DisplayAdvertisement, DisplayCafeBar, DisplayMobileApp, DisplayVipHall,
+                                                DisplayAboutCinema, DisplayChildRoom)
 from cinema.views.pages.contact_views import DisplayContactPage
 
 app_name = 'cinema'
@@ -58,6 +59,7 @@ urlpatterns = [
     path('mobile_app/', DisplayMobileApp.as_view(), name='mobile_app'),
     path('vip_hall/', DisplayVipHall.as_view(), name='vip_hall'),
     path('about_cinema/', DisplayAboutCinema.as_view(), name='about_cinema'),
+    path('child_room/', DisplayChildRoom.as_view(), name='child_room'),
 
     # CONTACTS
     path('contacts/', DisplayContactPage.as_view(), name='contacts'),
