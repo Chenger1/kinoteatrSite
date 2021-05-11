@@ -19,14 +19,21 @@
     <div class="row">
         <div class="col-10" style="background-color: #182029; padding-top:50px; padding-bottom:50px;">
             <h4 style="color: white; text-align:center;">{{ object.title }}</h4>
-            <div class="row" style="text-align:center;">
+            <div class="row text-center">
                 <div class="col">
                     <div class="desc">
                         {{ object.description|safe }}
                     </div>
                 </div>
             </div>
-            <div class="row">
+            {% if object.main_image %}
+                <div class="row text-center">
+                    <div class="col">
+                        <img src="{{ object.main_image.url }}" alt="banner" class="img-fluid">
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row text-center" style="margin-top:20px;">
                 {% for image in object.images.all %}
                     <div class="col-3">
                         <img src="{{ image.image.url }}" alt="" width="300" height="300">
