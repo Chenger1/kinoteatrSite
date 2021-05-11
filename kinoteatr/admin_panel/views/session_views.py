@@ -61,14 +61,16 @@ class AddSession(AdminPermissionMixin, CreateView):
                 return self.object
             else:  # if end session time has been given - created multiple instances for each day until the last
                 obj = form.save(commit=False)
-                saver = Saver(self.form_class, obj, context, self.request.POST)
-                result: [AddSessionForm] = saver.save_multiple()
-                # Saver class proceed multiple days and create form for each one
-                if result:
-                    for obj_form in result:  # save each form
-                        obj_form.save()
-                    return super().form_valid(form)
-                return super().form_invalid(form)
+                try:
+                    saver = Saver(self.form_class, obj, context, self.request.POST)
+                    result: [AddSessionForm] = saver.save_multiple()
+                    # Saver class proceed multiple days and create form for each one
+                    if result:
+                        for obj_form in result:  # save each form
+                            obj_form.save()
+                        return super().form_valid(form)
+                except ValueError as e:
+                    return super().form_invalid(e.args[0])
         return super().form_invalid(form)
 
 

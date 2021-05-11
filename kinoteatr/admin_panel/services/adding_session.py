@@ -50,5 +50,5 @@ class Saver:
                 self.objects.append(form)  # Don`t save forms, just add them to list
                 # Because if one of the form is invalid - we don`t want to save others
             else:
-                raise ValueError('Ошибка в данных')
+                raise ValueError(form)
         return self.objects
