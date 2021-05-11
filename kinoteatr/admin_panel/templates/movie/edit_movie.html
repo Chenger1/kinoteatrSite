@@ -26,7 +26,7 @@
         <div class="col">
             <div class="card card-default">
                 <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form action="" method="post" enctype="multipart/form-data" id="movie_form">
                         {% csrf_token %}
                         <div class="form-group limit_width">
                             <label for="movieName">Название фильма</label>
@@ -153,7 +153,7 @@
 
                         <div class="row">
                             <div class="col">
-                                <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                                <button type="submit" class="btn btn-outline-primary" id="save">Сохранить</button>
                                 {% if object %}
                                 <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
                                   Удалить
@@ -169,10 +169,27 @@
     </div>
 </div>
 <script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/update_img_after_upload.js' %}"></script>
 <script>
     $("#main_image").change(function () {
         setPreview(this, '1', 'movie'); // set onchange function
     });
+</script>
+<script>
+    $('#movie_form').submit(function(e){
+        let d2 = $('#2DType').prop('checked');
+        let d3 = $('#3DType').prop('checked');
+        let imax = $('#imaxType').prop('checked');
+        if(!d2 && !d3 && !imax){
+            e.preventDefault();
+            $(document).Toasts('create', {
+                class: 'bg-danger',
+                title: 'Формат фильма',
+                body: 'Вы не выбрали ни один формат для фильма.'
+            })
+            return false;
+        }
+    })
 </script>
 {% endblock %}
