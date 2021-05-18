@@ -12,4 +12,6 @@ class MainPageForm(forms.ModelForm):
             'phone_number2': forms.TextInput(attrs={'id': 'phoneNumber2', 'class': 'form-control'}),
             'status': forms.CheckboxInput(attrs={'id': 'status', 'class': 'custom-control-input',
                                                  'type': 'checkbox'}),
+            'phone_color': forms.CheckboxInput(attrs={'id': 'color', 'class': 'custom-control-input',
+                                                      'type': 'checkbox'}),
         }

@@ -48,7 +48,7 @@ class="d-flex flex-column min-vh-100">
                 <div class="col-1"><img src="{% static 'images/social/twitter.png' %}" alt="" width="40" height="40"></div>
                 <div class="col-1"><img src="{% static 'images/social/youtube.png' %}" alt="" width="40" height="40"></div>
                 <div class="col-1"><img src="{% static 'images/social/instagram.png' %}" alt="" width="40" height="40"></div>
-                <div class="col" style="color: white;">
+                <div class="col" style="{% if MainPage.phone_color %}color:black;{% else %}color: white;{% endif %}">
                     <div class="row">
                         <div class="col">
                             {{ MainPage.phone_number1 }}

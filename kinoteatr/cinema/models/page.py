@@ -60,6 +60,7 @@ class MainPage(SingletonModel):
     phone_number2 = models.CharField(max_length=16, validators=[phone_validation])
     status = models.BooleanField(default=True)
     seo = models.ForeignKey(Seo, related_name='main_page', on_delete=models.CASCADE, blank=True, null=True)
+    phone_color = models.BooleanField(default=0)
 
     def get_absolute_url(self):
         return reverse('admin_panel:edit_main_page_admin')
