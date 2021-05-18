@@ -141,7 +141,7 @@ class CinemaHallFormat(View):
         return JsonResponse(context, status=200)
 
 
-class DeleteSession(View):
+class DeleteSession(AdminPermissionMixin, View):
     model = Session
 
     def get(self, request, pk):

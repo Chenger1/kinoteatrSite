@@ -52,7 +52,7 @@ class DeleteMovieGalleryImage(DeleteGalleryImageMixin):
     redirect_url = 'admin_panel:edit_movie_admin'
 
 
-class DetailMovie(DetailView):
+class DetailMovie(AdminPermissionMixin, DetailView):
     model = Movie
     template_name = 'movie/movie_detail.html'
     context_object_name = 'movie'

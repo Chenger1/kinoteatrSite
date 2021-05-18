@@ -60,7 +60,7 @@
                                 <label for="textId-{{ form.instance.pk }}">Текст:</label>
                                 <input type="text" placeholder="Текст" id="textId-{{ form.instance.pk }}"
                                        name="on_top-{{forloop.counter0}}-text"
-                                       value="{{ form.instance.text }}">
+                                       value="{% if form.instance.text %}{{ form.instance.text }}{% endif %}">
                             </div>
                         </div>
                     </div>

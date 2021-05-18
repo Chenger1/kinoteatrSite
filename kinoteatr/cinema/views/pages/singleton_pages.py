@@ -1,5 +1,6 @@
 from django.views.generic import View
 from django.shortcuts import render
+from django.http import Http404
 
 from cinema.models.page import Advertisement, CafeBar, MobileApp, VipHall, AboutCinema, ChildRoom
 
@@ -13,6 +14,8 @@ class DisplaySingletonPage(View):
     def get(self, request):
         context = {}
         instance = self.model.load()
+        if not instance.status:  # If page is off, we raise 404 page
+            raise Http404()
         context.update(get_context_for_generic_views())
         context['object'] = instance
         return render(request, self.template_name, context)
