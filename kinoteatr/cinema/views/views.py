@@ -22,7 +22,7 @@ class DisplayMainPage(View):
     def get_context(self):
         context = {}
         context.update(get_context_for_generic_views())
-        context['released_movie'] = Movie.objects.filter(released=True)
+        context['released_movie'] = Movie.objects.filter(released=True)[::-1]
         context['movie_soon'] = Movie.objects.filter(released=False)
         context['day'] = get_current_date()
 
@@ -40,7 +40,7 @@ class ListMoviesMixin(View):
     def get_context(self):
         context = {}
         context.update(get_context_for_generic_views())
-        context['released_movie'] = Movie.objects.filter(released=True)
+        context['released_movie'] = Movie.objects.filter(released=True)[::-1]
         context['movie_soon'] = Movie.objects.filter(released=False)
         if self.current == 'movies':
             context['current_movies'] = True
