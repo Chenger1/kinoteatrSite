@@ -8,13 +8,15 @@
     {% include 'about_cinema_context.html' %}
 
     <div class="row">
-        <div class="col-10 vh-100" style="background-color: #182029;">
+        <div class="col-10" style="background-color: #182029;">
             <h4 style="color: white; text-align:center;">Наши кинотеатры</h4>
             <div class="row">
                 {% for cinema in cinemas %}
                     <div class="col-6" style="text-align:center;">
                         <div><a href="{{ cinema.get_absolute_public_url }}"><img src="{{ cinema.on_top_banner.url }}" alt="" width="350" height="350" style="border-radius: 20px;"></a></div>
-                        <div><h4><a href="{{ cinema.get_absolute_public_url }}" style="color: white;">{{ cinema.name }}</a></h4></div>
+                        <div><h4><a href="{{ cinema.get_absolute_public_url }}" style="color: white;">
+                            <p style="line-break:anywhere;">{{ cinema.name }}</p>
+                        </a></h4></div>
                     </div>
                 {% endfor %}
             </div>

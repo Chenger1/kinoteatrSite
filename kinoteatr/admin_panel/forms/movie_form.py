@@ -1,8 +1,11 @@
 from django import forms
 from django_summernote.fields import SummernoteWidget
+from django.core.exceptions import ValidationError
 
 from cinema.models.movie import Movie
 from cinema.models.gallery import MovieGallery
+
+import datetime
 
 
 class MovieForm(forms.ModelForm):
@@ -38,6 +41,17 @@ class MovieForm(forms.ModelForm):
                                                    'type': 'checkbox'})
 
         }
+
+    def clean(self):
+        super().clean()
+        released_status = self.cleaned_data['released']
+        release_date = self.cleaned_data['release']
+        now = datetime.date.today()
+        if released_status:
+            # if movie has released, its release date can be bigger than current.
+            if release_date > now:
+                message = f'Для фильма в прокате дата релиза не может быть больше текущей - {now.strftime("%Y-%m-%d")}'
+                raise ValidationError(message)
 
 
 class MovieGalleryInlineForm(forms.ModelForm):

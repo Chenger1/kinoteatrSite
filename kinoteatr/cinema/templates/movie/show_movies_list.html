@@ -37,7 +37,7 @@
                 <div class="tab-pane {% if current_movies %}active{% endif %}" id="released">
                     <div class="row">
                         {% for movie in released_movie %}
-                            <div class="col" style="margin-top:10px;">
+                            <div class="col-3" style="margin-top:10px;">
                                 <div style="text-align:center;">
                                     <img src="{{ movie.main_image.url }}" alt="logo" width="200" height="300">
                                     <div class="text-center">
