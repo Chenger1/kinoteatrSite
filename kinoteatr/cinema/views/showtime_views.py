@@ -14,9 +14,15 @@ import datetime
 class ShowTime(View):
     template_name = 'showtime.html'
 
-    def get(self, request):
+    def get(self, request, pk=None):
         context = get_context_for_generic_views()
-        context['cinemas'] = Cinema.objects.all()
+        if pk:
+            cinema = get_object_or_404(Cinema, pk=pk)
+            context['cinemas'] = list(Cinema.objects.exclude(pk=pk))
+            context['cinemas'].append(cinema)
+            context['cinemas'] = context['cinemas'][::-1]
+        else:
+            context['cinemas'] = Cinema.objects.all()
 
         return render(request, self.template_name, context)
 

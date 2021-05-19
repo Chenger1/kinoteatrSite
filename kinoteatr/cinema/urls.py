@@ -32,6 +32,7 @@ urlpatterns = [
 
     # SHOWTIME
     path('showtime/', ShowTime.as_view(), name='showtime'),
+    path('showtime/cinema/<int:pk>/', ShowTime.as_view(), name='showtime_cinema'),
     path('showtime/sessions/', ShowTimeSession.as_view(), name='showtime_sessions'),
 
     # USER
